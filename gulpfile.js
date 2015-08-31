@@ -35,7 +35,8 @@ gulp.task('minify-css', ['clean-css'], function() {
     .pipe(concat('styles.css'))
     .pipe(minifyCss())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/css'));
+    .pipe(gulp.dest('./public/css'))
+    .on('error', gutil.log);
 });
 gulp.task('dust-compile', function () {
     return gulp.src('views/*.dust')

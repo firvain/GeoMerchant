@@ -1,25 +1,26 @@
 var express = require('express');
 var router = express.Router();
-
+console.log(router.param);
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(req.params);
-  var data={};
-    if (!req.params.lang) {
-      data={
-       lang: 'en',
+    var data = {};
+        data = {
+            lang: 'el',
             title: 'Geomerchant',
-            intro: 'hello' 
-          };
+            languageChooser: 'Επιλέξτε Γλώσσα'
+        };
         res.render('index', data);
-    } else if (req.params.lang === 'el'){
-      data={
-       lang: 'el',
+
+});
+router.get('/en', function(req, res, next) {
+    var data = {};
+        data = {
+            lang: 'en',
             title: 'Geomerchant',
-            intro: 'Καλησπερα' 
-          };
-      res.render('index',data);
-    }
+           languageChooser: 'Choose Language'
+        };
+        res.render('index', data);
+        
 });
 
 module.exports = router;
