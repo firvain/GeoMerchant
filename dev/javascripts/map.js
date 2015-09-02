@@ -11,9 +11,17 @@ var bing = new ol.layer.Tile({
   nameEn: 'Satellite Image',
   id: 'bing'
 });
+var mapbox = new ol.layer.Tile({
+  source: new ol.source.XYZ({
+    attributions: new ol.Attribution({
+      html: '<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox &copy; OpenStreetMap</a>'
+    }),
+    url: 'https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA'
+  })
+});
 var map = new ol.Map({
   target: 'map',
-  layers: [bing],
+  layers: [mapbox],
   loadTilesWhileAnimating: true,
   loadTilesWhileInteracting: true,
   renderer: 'canvas',
@@ -41,7 +49,7 @@ var map = new ol.Map({
     })
   ]),
   view: new ol.View({
-    center: [3713616,4181258],
+    center: [3713616, 4181258],
     projection: 'EPSG:3857',
     zoom: 14,
     maxZoom: 19,

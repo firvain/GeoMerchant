@@ -1,0 +1,9 @@
+{
+  "apps": [{
+    "name": "GeoMerchant",
+    "script": "bin/www",
+    "watch"       : true,
+    "cwd"             : "../",
+    "log_date_format": "YYYY-MM-DD HH:mm Z"
+  }]
+}

@@ -1,0 +1,16 @@
+.infobox {
+    top: 12.000em;
+    left: 0.5em;
+    height: 5em;
+    width: 28.571em;
+    padding: 0.429em;
+    position: absolute;
+    background: white;
+    z-index: 15;
+    border-radius: 0.429em;
+    transition: height 1s;
+    transition-delay: 0.3s;
+}
+.infobox:hover{
+  height: 30em;
+}
