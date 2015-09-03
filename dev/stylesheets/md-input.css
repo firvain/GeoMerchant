@@ -9,7 +9,7 @@
     display: block;
     width: 27.714rem;
     border: none;
-    border-bottom: 1px solid #757575;
+    border-bottom: 1px solid #727272;
 }
 .group input:invalid {
     box-shadow:none;
@@ -22,7 +22,7 @@
 /* LABEL ======================================= */
 
 .group label {
-    color: #999;
+    color: #727272;
     font-size: 18px;
     font-weight: normal;
     position: absolute;
@@ -41,7 +41,7 @@
 .group input:valid ~ label {
     top: -20px;
     font-size: 14px;
-    color: #FF4081;
+    color: #9C27B0;
 }
 
 
@@ -60,7 +60,7 @@
     width: 0;
     bottom: 1px;
     position: absolute;
-    background: #FF4081;
+    background: #9C27B0;
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;

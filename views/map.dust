@@ -27,9 +27,10 @@
     <nav class="menu">
       <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
       <label class="menu-open-button default-primary-color paper-shadow-bottom-z-1" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
-      <input type="checkbox" href="#" class="with-font" name="geolocation" id="geolocation" />
+      <input type="checkbox" href="#" class="with-font geolocation" name="geolocation" id="geolocation" />
       <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="geolocation"></label>
-      <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1 addmarker"> <i class="fa fa-map-marker"></i> </a>
+      <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
+      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="marker"></label>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-heart"></i> </a>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-envelope"></i> </a>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-cog"></i> </a>

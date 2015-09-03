@@ -13,6 +13,10 @@
     transition: transform ease-out 200ms;
 }
 
+.menu {
+    z-index: 100;
+}
+
 .menu-open,
 .with-font {
     border: 0;
@@ -29,15 +33,8 @@ input[type=radio].with-font ~ label:before,
 input[type=checkbox].with-font ~ label:before {
     font-family: FontAwesome;
     display: inline-block;
-    content: "\f124";
     font-size: inherit;
     color: #FFFFFF;
-}
-
-input[type=radio].with-font ~ label:hover:before,
-input[type=checkbox].with-font ~ label:hover:before {
-    background: #FFFFFF;
-    color: #7B1FA2;
 }
 
 input[type=radio].with-font ~ label:hover,
@@ -45,22 +42,42 @@ input[type=checkbox].with-font ~ label:hover {
     cursor: pointer;
 }
 
-input[type=radio].with-font:checked ~ label,
-input[type=checkbox].with-font:checked ~ label {
+input[type=radio].with-font ~ label:hover:before,
+input[type=checkbox].with-font ~ label:hover:before {
+    background: transparent;
+    color: #7B1FA2;
+    -webkit-transform: rotate(360deg) scale(2);
+    transform: rotate(360deg) scale(2);
+    transition: all 0.8s ease-in-out;
+}
+
+input[type=radio].with-font:checked + label,
+input[type=checkbox].with-font:checked + label {
     background: #448AFF;
     color: #FFFFFF;
 }
 
-input[type=radio].with-font:checked ~ label:hover:before,
+
+/*input[type=radio].with-font:checked ~ label:hover:before,
 input[type=checkbox].with-font:checked ~ label:hover:before {
-      background: #FFFFFF;
+    background: #FFFFFF;
     color: #7B1FA2;
-}
+}*/
 
 input[type=radio].with-font:checked ~ label:hover,
 input[type=checkbox].with-font:checked ~ label:hover {
     background: #FFFFFF;
     color: #7B1FA2;
+}
+
+.geolocation ~ label:before {
+    content: "\f124";
+    z-index: 102;
+}
+
+.marker ~ label:before {
+    content: "\f041";
+    z-index: 103;
 }
 
 .hamburger {
@@ -120,7 +137,7 @@ input[type=checkbox].with-font:checked ~ label:hover {
 }
 
 .menu-open-button {
-    z-index: 2;
+    z-index: 101;
     transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition-duration: 400ms;
     -webkit-transform: scale(1.1, 1.1) translate3d(0, 0, 0);
@@ -150,31 +167,31 @@ input[type=checkbox].with-font:checked ~ label:hover {
     transform: translate3d(70px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(5) {
+.menu-open:checked ~ .menu-item:nth-child(6) {
     transition-duration: 290ms;
     -webkit-transform: translate3d(140px, 0, 0);
     transform: translate3d(140px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(6) {
+.menu-open:checked ~ .menu-item:nth-child(7) {
     transition-duration: 390ms;
     -webkit-transform: translate3d(210px, 0, 0);
     transform: translate3d(210px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(7) {
+.menu-open:checked ~ .menu-item:nth-child(8) {
     transition-duration: 490ms;
     -webkit-transform: translate3d(280px, 0, 0);
     transform: translate3d(280px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(8) {
+.menu-open:checked ~ .menu-item:nth-child(9) {
     transition-duration: 590ms;
     -webkit-transform: translate3d(350px, 0, 0);
     transform: translate3d(350px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(9) {
+.menu-open:checked ~ .menu-item:nth-child(10) {
     transition-duration: 690ms;
     -webkit-transform: translate3d(420px, 0, 0);
     transform: translate3d(420px, 0, 0);
