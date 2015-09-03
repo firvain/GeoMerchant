@@ -21,7 +21,7 @@ var mapbox = new ol.layer.Tile({
 });
 var map = new ol.Map({
   target: 'map',
-  layers: [mapbox],
+  // layers: [mapbox],
   loadTilesWhileAnimating: true,
   loadTilesWhileInteracting: true,
   renderer: 'canvas',

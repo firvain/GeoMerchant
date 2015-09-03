@@ -1,28 +1,72 @@
 .menu-item,
 .menu-open-button {
-    background: #FF4081;
     border-radius: 100%;
     width: 60px;
     height: 60px;
     margin-left: -30px;
     position: absolute;
     top: 7.000em;
-    color: white;
+    color: #FFFFFF;
     text-align: center;
     line-height: 60px;
     transition: -webkit-transform ease-out 200ms;
     transition: transform ease-out 200ms;
-   
 }
 
-.menu-open {
-    display: none;
+.menu-open,
+.with-font {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+input[type=radio].with-font ~ label:before,
+input[type=checkbox].with-font ~ label:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f124";
+    font-size: inherit;
+    color: #FFFFFF;
+}
+
+input[type=radio].with-font ~ label:hover:before,
+input[type=checkbox].with-font ~ label:hover:before {
+    background: #FFFFFF;
+    color: #7B1FA2;
+}
+
+input[type=radio].with-font ~ label:hover,
+input[type=checkbox].with-font ~ label:hover {
+    cursor: pointer;
+}
+
+input[type=radio].with-font:checked ~ label,
+input[type=checkbox].with-font:checked ~ label {
+    background: #448AFF;
+    color: #FFFFFF;
+}
+
+input[type=radio].with-font:checked ~ label:hover:before,
+input[type=checkbox].with-font:checked ~ label:hover:before {
+      background: #FFFFFF;
+    color: #7B1FA2;
+}
+
+input[type=radio].with-font:checked ~ label:hover,
+input[type=checkbox].with-font:checked ~ label:hover {
+    background: #FFFFFF;
+    color: #7B1FA2;
 }
 
 .hamburger {
     width: 25px;
     height: 3px;
-    background: white;
+    background: #FFFFFF;
     display: block;
     position: absolute;
     top: 50%;
@@ -71,7 +115,7 @@
 }
 
 .menu-item:hover {
-    background: white;
+    background: #FFFFFF;
     color: #FF4081;
 }
 
@@ -100,37 +144,37 @@
     transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(3) {
+.menu-open:checked ~ .menu-item:nth-child(4) {
     transition-duration: 190ms;
     -webkit-transform: translate3d(70px, 0, 0);
     transform: translate3d(70px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(4) {
+.menu-open:checked ~ .menu-item:nth-child(5) {
     transition-duration: 290ms;
     -webkit-transform: translate3d(140px, 0, 0);
     transform: translate3d(140px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(5) {
+.menu-open:checked ~ .menu-item:nth-child(6) {
     transition-duration: 390ms;
     -webkit-transform: translate3d(210px, 0, 0);
     transform: translate3d(210px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(6) {
+.menu-open:checked ~ .menu-item:nth-child(7) {
     transition-duration: 490ms;
     -webkit-transform: translate3d(280px, 0, 0);
     transform: translate3d(280px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(7) {
+.menu-open:checked ~ .menu-item:nth-child(8) {
     transition-duration: 590ms;
     -webkit-transform: translate3d(350px, 0, 0);
     transform: translate3d(350px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(8) {
+.menu-open:checked ~ .menu-item:nth-child(9) {
     transition-duration: 690ms;
     -webkit-transform: translate3d(420px, 0, 0);
     transform: translate3d(420px, 0, 0);
