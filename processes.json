@@ -3,7 +3,7 @@
     "name": "GeoMerchant",
     "script": "bin/www",
     "watch"       : true,
-    "cwd"             : "../",
+    "cwd"             : "/",
     "log_date_format": "YYYY-MM-DD HH:mm Z"
   }]
 }
