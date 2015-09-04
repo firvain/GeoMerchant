@@ -79,7 +79,14 @@ input[type=checkbox].with-font:checked ~ label:hover {
     content: "\f041";
     z-index: 103;
 }
-
+.info ~ label:before {
+    content: "\f129";
+    z-index: 104;
+}
+.weather ~ label:before {
+    content: "\f0c2";
+    z-index: 105;
+}
 .hamburger {
     width: 25px;
     height: 3px;
@@ -173,26 +180,31 @@ input[type=checkbox].with-font:checked ~ label:hover {
     transform: translate3d(140px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(7) {
+.menu-open:checked ~ .menu-item:nth-child(8) {
     transition-duration: 390ms;
     -webkit-transform: translate3d(210px, 0, 0);
     transform: translate3d(210px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(8) {
+.menu-open:checked ~ .menu-item:nth-child(10) {
     transition-duration: 490ms;
     -webkit-transform: translate3d(280px, 0, 0);
     transform: translate3d(280px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(9) {
+.menu-open:checked ~ .menu-item:nth-child(11) {
     transition-duration: 590ms;
     -webkit-transform: translate3d(350px, 0, 0);
     transform: translate3d(350px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(10) {
+.menu-open:checked ~ .menu-item:nth-child(12) {
     transition-duration: 690ms;
     -webkit-transform: translate3d(420px, 0, 0);
     transform: translate3d(420px, 0, 0);
+}
+.menu-open:checked ~ .menu-item:nth-child(13) {
+    transition-duration: 790ms;
+    -webkit-transform: translate3d(490px, 0, 0);
+    transform: translate3d(490px, 0, 0);
 }

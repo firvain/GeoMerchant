@@ -1,0 +1,10 @@
+.weather-popup {
+    position: absolute;
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #B6B6B6;
+    bottom: 12px;
+    left: -50px;
+}
+

@@ -24,6 +24,11 @@
 <body>
   <div class="appwrapper">
     <div class="map" id="map"> </div>
+    <div id="popup" class="ol-popup paper-shadow-bottom-z-4">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+  
     <nav class="menu">
       <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
       <label class="menu-open-button default-primary-color paper-shadow-bottom-z-1" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
@@ -31,7 +36,10 @@
       <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="geolocation"></label>
       <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
       <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="marker"></label>
-      <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-heart"></i> </a>
+      <input type="checkbox" href="#" class="with-font info" name="info" id="info" />
+      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="info"></label>
+      <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
+      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="weather"></label>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-envelope"></i> </a>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-cog"></i> </a>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-ellipsis-h"></i> </a>
