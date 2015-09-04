@@ -25,7 +25,7 @@ gulp.task('clean-css', function() {
     return del(['public/**/*.css']);
 });
 gulp.task('minify-css', ['clean-css'], function() {
-    return gulp.src('dev/stylesheets/*.css')
+    return gulp.src(['dev/stylesheets/resets.css','dev/stylesheets/!(resets)*.css'])
         .pipe(changed('public/css'))
         .pipe(sourcemaps.init())
         .pipe(minifyCss())

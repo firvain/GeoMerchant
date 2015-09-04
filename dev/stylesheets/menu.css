@@ -1,3 +1,8 @@
+.menu {
+    z-index: 100;
+    text-align: center;
+}
+
 .menu-item,
 .menu-open-button {
     border-radius: 100%;
@@ -7,14 +12,9 @@
     position: absolute;
     top: 7.000em;
     color: #FFFFFF;
-    text-align: center;
     line-height: 60px;
     transition: -webkit-transform ease-out 200ms;
     transition: transform ease-out 200ms;
-}
-
-.menu {
-    z-index: 100;
 }
 
 .menu-open,
