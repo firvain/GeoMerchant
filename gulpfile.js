@@ -10,7 +10,7 @@ var del = require('del');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 gulp.task('clean-scripts', function() {
-    return del(['public/**/*.js']);
+    return del(['public/js/*.js']);
 });
 gulp.task('scripts', ['clean-scripts'], function() {
     return gulp.src(['dev/javascripts/map.js', 'dev/javascripts/!(map)*.js'])
@@ -18,11 +18,12 @@ gulp.task('scripts', ['clean-scripts'], function() {
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(concat('scripts.min.js'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
         .on('error', gutil.log);
 });
 gulp.task('clean-css', function() {
-    return del(['public/**/*.css']);
+    return del(['public/css/*.css']);
 });
 gulp.task('minify-css', ['clean-css'], function() {
     return gulp.src(['dev/stylesheets/resets.css','dev/stylesheets/!(resets)*.css'])
@@ -36,14 +37,14 @@ gulp.task('minify-css', ['clean-css'], function() {
 });
 gulp.task('dust-compile', function() {
     return gulp.src('templates/*.dust')
-        .pipe(changed('public/templates/js'))
         .pipe(dust())
-        .pipe(gulp.dest('public/templates/js'));
+        .pipe(gulp.dest('public/templates'));
 });
 
 gulp.task('watch', function() {
     gulp.watch('dev/**/*.js', ['scripts']);
     gulp.watch('dev/**/*.css', ['minify-css'])
+    gulp.watch('templates/*.dust', ['dust-compile'])
         .on('error', gutil.log);
 });
 gulp.task('default', ['watch']);

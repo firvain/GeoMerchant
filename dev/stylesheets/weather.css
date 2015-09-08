@@ -1,10 +1,51 @@
+@font-face {
+    font-family: 'MeteoconsRegular';
+    src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eotmeteocons-webfont.eot');
+    src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.woff') format('woff'),
+         url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.ttf') format('truetype'),
+         url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.svg#MeteoconsRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 .weather-popup {
-    position: absolute;
-    background-color: #FFFFFF;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #B6B6B6;
-    bottom: 12px;
-    left: -50px;
+  position: absolute;
+  bottom: 12px;
+  left: -50px;
+  display: flex;
+  padding: 15px;
+  border: 1px solid #b6b6b6;
+  border-radius: 10px;
+  margin: 0;
+  flex-direction: column;
+  font-size: 0.714rem;
 }
 
+.weather-popup-title {
+  text-align: center;
+  color: #fff;
+  font-size: 1.143rem;
+}
+
+.weather-popup-content {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.weather-popup-content > ul {
+  margin: 0;
+  padding: 0;
+}
+
+.weather-popup-content > ul > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.weather-icon:before {
+  font-family: 'MeteoconsRegular';
+  content: attr(data-icon);
+   font-size: 2rem;
+}
