@@ -74,7 +74,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
-  <script src="/templates/weatherPopup.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
 
 </body>
 
