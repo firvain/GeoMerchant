@@ -38,7 +38,7 @@ gulp.task('minify-css', ['clean-css'], function() {
 gulp.task('dust-compile', function() {
     return gulp.src('templates/*.dust')
         .pipe(dust())
-        .pipe(gulp.dest('public/templates'));
+        .pipe(gulp.dest('public/js/tpl'));
 });
 
 gulp.task('watch', function() {
