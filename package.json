@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "pm2 start processes.json",
-    "stop": "pm2 stop processes.json"
+    "stop": "pm2 stop processes.json",
+    "restart" : "pm2 restart processes.json"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

@@ -2,8 +2,11 @@
   "apps": [{
     "name": "GeoMerchant",
     "script": "bin/www",
-    "watch"       : true,
-    "cwd"             : "/",
-    "log_date_format": "YYYY-MM-DD HH:mm Z"
+    "watch": true,
+    "cwd": "./",
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "merge_logs": true,
+    "error_file": "log/geomerchant.stderr.log",
+    "out_file": "log/geomerchant.stdout.log"
   }]
 }

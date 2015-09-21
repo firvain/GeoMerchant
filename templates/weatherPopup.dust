@@ -1,8 +1,8 @@
-<div class="weather-popup-title text-primary-color ">{name}</div>
+{! <div class="weather-popup-title text-primary-color ">{name}</div> !}
 <div class="weather-popup-content text-primary-color">
   <ul>
     <li>{temp} <a class="weather-icon" data-icon="*"></a></li>
-    <li>{pressure}</li>
-    <li>{humidity}</li>
+    <li>{pressure}<a class="weather-icon" data-icon="'"></a></li>
+    <li>{humidity}<a class="weather-icon">% humidity </li>
   </ul>
 </div>

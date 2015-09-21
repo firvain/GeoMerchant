@@ -9,11 +9,10 @@
     font-style: normal;
 }
 .weather-popup {
-  position: absolute;
-  bottom: 12px;
-  left: -50px;
+ 
+ 
   display: flex;
-  padding: 15px;
+  padding: 5px;
   border: 1px solid #b6b6b6;
   border-radius: 10px;
   margin: 0;
@@ -36,16 +35,18 @@
 .weather-popup-content > ul {
   margin: 0;
   padding: 0;
+  min-width: 7.143em;
 }
 
 .weather-popup-content > ul > li {
   margin: 0;
   padding: 0;
   list-style: none;
+  /*display: inline-block;*/
 }
 
 .weather-icon:before {
   font-family: 'MeteoconsRegular';
   content: attr(data-icon);
-   font-size: 2rem;
+   font-size: 1.5em;
 }

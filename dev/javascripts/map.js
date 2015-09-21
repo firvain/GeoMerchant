@@ -36,7 +36,7 @@ var map = new ol.Map({
     }), new ol.control.OverviewMap({
       className: 'ol-overviewmap ol-custom-overviewmap',
       collapsible: true,
-      collapsed: false,
+      collapsed: true,
       layers: [new ol.layer.Tile({
         source: new ol.source.OSM(),
         visible: true,
@@ -50,6 +50,7 @@ var map = new ol.Map({
   ]),
   view: new ol.View({
     center: [3713616, 4181258],
+    extent : [3590094,4102833,3855483,4261211],
     projection: 'EPSG:3857',
     zoom: 14,
     maxZoom: 19,

@@ -43,7 +43,7 @@ gulp.task('dust-compile', function() {
 
 gulp.task('watch', function() {
     gulp.watch('dev/**/*.js', ['scripts']);
-    gulp.watch('dev/**/*.css', ['minify-css'])
+    gulp.watch('dev/**/*.css', ['minify-css']);
     gulp.watch('templates/*.dust', ['dust-compile'])
         .on('error', gutil.log);
 });

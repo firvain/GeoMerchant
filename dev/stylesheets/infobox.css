@@ -1,7 +1,7 @@
 .infobox {
     top: 12.000em;
     left: 0.5em;
-    height: 5em;
+    height: auto;
     width: 28.571em;
     padding: 0.429em;
     position: absolute;
@@ -11,6 +11,4 @@
     transition: height 1s;
     transition-delay: 0.3s;
 }
-.infobox:hover{
-  height: 30em;
-}
+

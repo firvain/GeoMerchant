@@ -41,13 +41,27 @@
       <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="weather"></label>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-envelope"></i> </a>
       <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-cog"></i> </a>
-      <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-ellipsis-h"></i> </a>
+      <a href="/" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-home"></i> </a>
     </nav>
     <div class="infobox paper-shadow-bottom-z-3" id="infobox">
       <form>
         <div class="group">
           <input type="text" required> <span class="highlight"></span> <span class="bar"></span>
           <label>{search}</label>
+        </div>
+      </form>
+      <form>
+        <div id="check-awesome" class="form-group check-awesome earthquakesToggler">
+          <input type="checkbox" class="hidden" id="earthquakesToggler">
+          <label for="earthquakesToggler"> <span class="check"></span> <span class="box"></span> Notifications </label>
+          <p>Notify me about how great I am every hour.</p>
+        </div>
+      </form>
+      <form>
+        <div id="check-awesome" class="form-group check-awesome aToggler">
+          <input type="checkbox" class="hidden" id="check-me">
+          <label for="check-me"> <span class="check"></span> <span class="box"></span> Notifications </label>
+          <p>Notify me about how great I am every hour.</p>
         </div>
       </form>
     </div>
@@ -61,6 +75,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
   <script src="/templates/weatherPopup.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
