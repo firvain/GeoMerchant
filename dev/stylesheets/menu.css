@@ -87,6 +87,10 @@ input[type=checkbox].with-font:checked ~ label:hover {
     content: "\f0c2";
     z-index: 105;
 }
+.home ~ label:before {
+    content: "\f015";
+    z-index: 106;
+}
 .hamburger {
     width: 25px;
     height: 3px;
@@ -203,7 +207,7 @@ input[type=checkbox].with-font:checked ~ label:hover {
     -webkit-transform: translate3d(420px, 0, 0);
     transform: translate3d(420px, 0, 0);
 }
-.menu-open:checked ~ .menu-item:nth-child(13) {
+.menu-open:checked ~ .menu-item:nth-child(14) {
     transition-duration: 790ms;
     -webkit-transform: translate3d(490px, 0, 0);
     transform: translate3d(490px, 0, 0);

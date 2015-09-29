@@ -24,7 +24,6 @@ var mapbox = new ol.layer.Tile({
   })
 });
 var propertyStyleFunction = function(feature, resolution) {
-  console.log(feature.get('features'));
   var size = feature.get('features').length;
   var style = styleCache[size];
   if (!style) {

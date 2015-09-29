@@ -1,0 +1,12 @@
+.estate-card-square {
+  background: #9C27B0;
+  margin-top: 0.313rem;
+}
+
+.estate-card-square .mdl-card__title {
+  color: inherit;
+}
+
+.estate-card-square .mdl-card__supporting-text {
+  color: inherit;
+}

@@ -1,0 +1,18 @@
+<table class="mdl-data-table mdl-js-data-table">
+  <thead>
+  {#title}
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">{type}</th>
+      <th class="mdl-data-table__cell--non-numeric">{area}</th>
+      <th class="mdl-data-table__cell--non-numeric">{address}</th>
+    </tr>
+  {/title}
+  </thead>
+  <tbody> {#features}
+   {#feature}
+    <tr>
+      <td class="mdl-data-table__cell--non-numeric">{type}</td>
+      <td class="mdl-data-table__cell--non-numeric">{area}</td>
+      <td class="mdl-data-table__cell--non-numeric">{address}</td>
+    </tr>  {/feature}{/features} </tbody>
+</table>

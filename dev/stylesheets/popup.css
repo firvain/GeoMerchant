@@ -36,13 +36,13 @@
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;
-    top: 2px;
-    right: 8px;
+    top: 0;
+    right: 2px;
 }
 
 .ol-popup-closer:after {
     font-family: FontAwesome;
     display: inline-block;
-    font-size: inherit;
+    font-size: 18px;
     content: "\f00d";
 }

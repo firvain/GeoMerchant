@@ -4,15 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <!-- Bootstrap CSS -->{!
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"> !}
   <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.purple-indigo.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.9.0/ol.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous">
-  {! <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"> !}
+  <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous"> {!
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"> !}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -24,46 +26,40 @@
 <body>
   <div class="appwrapper">
     <div class="map" id="map"> </div>
-    <div id="popup" class="ol-popup paper-shadow-bottom-z-4">
+    <div id="popup" class="ol-popup  mdl-shadow--2dp">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
       <div id="popup-content"></div>
     </div>
     <nav class="menu">
-      <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-      <label class="menu-open-button default-primary-color paper-shadow-bottom-z-1" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
-      <input type="checkbox" href="#" class="with-font geolocation" name="geolocation" id="geolocation" />
-      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="geolocation"></label>
-      <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
-      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="marker"></label>
-      <input type="checkbox" href="#" class="with-font info" name="info" id="info" />
-      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="info"></label>
-      <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
-      <label class="menu-item  default-primary-color paper-shadow-bottom-z-1" for="weather"></label>
-      <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-envelope"></i> </a>
-      <a href="#" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-cog"></i> </a>
-      <a href="/" class="menu-item default-primary-color paper-shadow-bottom-z-1"> <i class="fa fa-home"></i> </a>
+      <form action="#" autocomplete="off">
+        <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+        <label class="menu-open-button default-primary-color mdl-shadow--8dp" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
+        <input type="checkbox" href="#" class="with-font geolocation" name="geolocation" id="geolocation" />
+        <label class="menu-item  default-primary-color mdl-shadow--2dp" for="geolocation"></label>
+        <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
+        <label class="menu-item  default-primary-color mdl-shadow--2dp" for="marker"></label>
+        <input type="checkbox" href="#" class="with-font info" name="info" id="info" />
+        <label class="menu-item  default-primary-color mdl-shadow--2dp" for="info"></label>
+        <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
+        <label class="menu-item  default-primary-color mdl-shadow--2dp" for="weather"></label>
+        <a href="#" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-envelope"></i> </a>
+        <a href="#" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-cog"></i> </a>
+        <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick='window.location.assign("/")' />
+        <label class="menu-item  default-primary-color mdl-shadow--2dp" for="home"></label>
+      </form>
     </nav>
-    <div class="infobox paper-shadow-bottom-z-3" id="infobox">
-      <form>
-        <div class="group">
-          <input type="text" required> <span class="highlight"></span> <span class="bar"></span>
-          <label>{search}</label>
+    <div class="infobox mdl-shadow--16dp" id="infobox">
+      <form action="#" autocomplete="off">
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="search" />
+          <label class="mdl-textfield__label" for="search">{search}</label>
         </div>
       </form>
-      <form>
-        <div id="check-awesome" class="form-group check-awesome earthquakesToggler">
-          <input type="checkbox" class="hidden" id="earthquakesToggler">
-          <label for="earthquakesToggler"> <span class="check"></span> <span class="box"></span> Notifications </label>
-          <p>Notify me about how great I am every hour.</p>
-        </div>
+      <form action="#" autocomplete="off">
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+          <input type="checkbox" id="switch-1" class="mdl-switch__input" checked /> <span class="mdl-switch__label"></span> </label>
       </form>
-      <form>
-        <div id="check-awesome" class="form-group check-awesome aToggler">
-          <input type="checkbox" class="hidden" id="check-me">
-          <label for="check-me"> <span class="check"></span> <span class="box"></span> Notifications </label>
-          <p>Notify me about how great I am every hour.</p>
-        </div>
-      </form>
+      <form action="#" class="hidden estate-cards"> </form>
     </div>
   </div>
   <!-- jQuery -->
@@ -73,9 +69,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.9.0/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
   <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
-
+  <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
