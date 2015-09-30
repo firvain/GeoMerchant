@@ -2,8 +2,8 @@
 // ==============================================
 var express = require('express');
 var pg = require('pg');
-var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus";
-// var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@localhost/cyprus";
+// var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus";
+var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@localhost/cyprus";
 var dbgeo = require("dbgeo");
 // var client = new pg.Client(conString);
 pg.defaults.poolSize = 25;
