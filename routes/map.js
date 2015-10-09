@@ -8,7 +8,12 @@ router.get('/:lang', function(req, res, next) {
       lang: 'en',
       title: 'Geomerchant',
       basemap : 'BaseMap',
-      search : 'Search'
+      search : 'Search',
+      estateType: 'Buy',
+      price:'Price',
+      from:'From',
+      to:'To',
+      priceError:'Input is not a number!'
     };
     res.render('map', data);
   } else if (req.params.lang === 'el') {
@@ -16,7 +21,12 @@ router.get('/:lang', function(req, res, next) {
       lang: 'el',
       title: 'Geomerchant',
       basemap : 'Υπόβαθρο',
-      search:'Αναζήτηση'
+      search:'Αναζήτηση',
+      estateType:'Αγορά',
+      price:'Τιμή',
+      from:'Από',
+      to:'Εως',
+      priceError:'Η τιμή δεν είναι αριθμός!'
     };
     res.render('map', data);
   }

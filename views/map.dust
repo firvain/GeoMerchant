@@ -25,11 +25,21 @@
 
 <body>
   <div class="appwrapper">
-    <div class="map" id="map"> </div>
+    <div id="openModal" class="modalDialog">
+      <div>
+        <a href="#close" title="Close" class="close">
+          <button class="mdl-button mdl-js-button mdl-button--icon"> <i class="material-icons">close</i> </button>
+        </a>
+        <div class="modal-content">
+        
+        </div>
+      </div>
+    </div>
+    <div class="map" id="map"> </div> {!
     <div id="popup" class="ol-popup  mdl-shadow--2dp">
       <a href="#" id="popup-closer" class="ol-popup-closer"></a>
       <div id="popup-content"></div>
-    </div>
+    </div> !}
     <nav class="menu">
       <form action="#" autocomplete="off">
         <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
@@ -49,17 +59,29 @@
       </form>
     </nav>
     <div class="infobox mdl-shadow--16dp" id="infobox">
-      <form action="#" autocomplete="off">
+      <form class="infobox-item" action="#" autocomplete="off">
         <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" type="text" id="search" />
           <label class="mdl-textfield__label" for="search">{search}</label>
         </div>
       </form>
-      <form action="#" autocomplete="off">
+      <form class="infobox-item" action="#" autocomplete="off" style="align-self:flex-start">
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-          <input type="checkbox" id="switch-1" class="mdl-switch__input" checked /> <span class="mdl-switch__label"></span> </label>
+          <input type="checkbox" id="switch-1" class="mdl-switch__input" checked /> <span class="mdl-switch__label">{estateType}</span> </label>
       </form>
-      <form action="#" class="hidden estate-cards"> </form>
+      <form class="infobox-item" action="#">
+        <fieldset>
+          <legend>
+            <h6>{price}</h6></legend>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startPrice" />
+            <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
+            <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+        </fieldset>
+      </form>
+      <form action="#" class="visuallyhidden estate-cards infobox-item"> </form>
     </div>
   </div>
   <!-- jQuery -->
@@ -74,6 +96,7 @@
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

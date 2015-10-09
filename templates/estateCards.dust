@@ -1,17 +1,26 @@
-{#features}
- {#feature}
-<div class="estate-card-square mdl-card mdl-shadow--2dp text-primary-color">
+
+{#features} {#feature}
+<div class="estate-card-square mdl-card mdl-shadow--8dp data-gid="{gid}"">
   <div class="mdl-card__title mdl-card--expand">
     <h2 class="mdl-card__title-text">{type}</h2>
   </div>
   <div class="mdl-card__supporting-text">
-    {address}
+    <div>{title.address} : {address}</div>
+   <div>{title.area} : {area}</div>
+    <div>{title.bedrooms} :{~s}{bedrooms}</div>
+    <div>{title.price} : {price} &euro;</i></div>
+    {@eq key=new type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.new}" ><i class="fa fa-star"></i></a>{/eq}{~s}
+    {@eq key=furnished type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.furnished}" ><i class="fa fa-bed"></i></a>{/eq}{~s}
+    {@eq key=pets type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.pets}" ><i class="fa fa-paw"></i></a>{/eq}
   </div>
   <div class="mdl-card__actions mdl-card--border">
-    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent mdl-button--raised">
-      Info
+  <a href="#openModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent" onclick="showEstateInfo()">
+     info
+    </a>
+    <div class="mdl-layout-spacer"></div>
+ <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" >
+     contact
     </a>
   </div>
-</div>
- {/feature}
-{/features}
+</div>{/feature}{/features}
+
