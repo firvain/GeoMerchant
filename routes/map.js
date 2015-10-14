@@ -9,7 +9,8 @@ router.get('/:lang', function(req, res, next) {
       title: 'Geomerchant',
       basemap : 'BaseMap',
       search : 'Search',
-      estateType: 'Buy',
+      sale: 'Buy',
+      rent: 'Rent',
       price:'Price',
       from:'From',
       to:'To',
@@ -22,11 +23,13 @@ router.get('/:lang', function(req, res, next) {
       title: 'Geomerchant',
       basemap : 'Υπόβαθρο',
       search:'Αναζήτηση',
-      estateType:'Αγορά',
+      // estateType:'Αγορά',
+      sale:'Αγορά',
+      rent:'Ενοικίαση',
       price:'Τιμή',
       from:'Από',
       to:'Εως',
-      priceError:'Η τιμή δεν είναι αριθμός!'
+      priceError:'Η τιμή δεν είναι αριθμός!',
     };
     res.render('map', data);
   }

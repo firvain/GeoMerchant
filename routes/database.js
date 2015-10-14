@@ -65,10 +65,10 @@ router.get('/property', function(req, res, next) {
       console.log("Could not connect to postgres");
     } else {
       console.log("Connected");
-      var qstring = 'public.owner.name,public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,'+
+      var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,'+
   'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,'+
   'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,'+
-  'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."new",public.owner.lastname,public.owner.fathername,'+
+  'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."new",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,'+
   'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,'+
   'public.listing.type_el,public.listing.type_en,public.owner.phone2';
   var qfrom = 'public.owner_property '+

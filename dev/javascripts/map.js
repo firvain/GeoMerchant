@@ -27,41 +27,40 @@
  });
  var propertyStyleFunction = function(feature, resolution) {
    var size = feature.get('features').length;
-   var maxFeatureCount =  propertySource.getFeatures().length;
-   var radius =Math.round( 0.01 * ol.extent.getWidth(propertySource.getExtent())+ol.extent.getHeight(propertySource.getExtent())/(map.getView().getResolution()));
+   var maxFeatureCount = propertySource.getFeatures().length;
+   var radius = 20;
    var style = styleCache[size];
    if (!style) {
-    if (size > 1){
-      style = [new ol.style.Style({
-       image: new ol.style.Circle({
-         radius: radius,
-         stroke: new ol.style.Stroke({
-           color: [156, 39, 176,1],
-           width: 5
+     if (size > 1) {
+       style = [new ol.style.Style({
+         image: new ol.style.Circle({
+           radius: radius,
+           stroke: new ol.style.Stroke({
+             color: [156, 39, 176, 1],
+             width: 5
+           }),
+           fill: new ol.style.Fill({
+             color: [68, 138, 255, 0.8]
+           })
          }),
-         fill: new ol.style.Fill({
-           color: [68, 138, 255, Math.min(0.8, 0.4 + (size / maxFeatureCount))]
-         })
-       }),
-       text: new ol.style.Text({
-         text: size.toString(),
-         fill: new ol.style.Fill({
-           color: '#FFFFFF'
-         })
-       }),
-       zIndex: 101
-     })];
-    } else {
-      style = [new ol.style.Style({
-        image: new ol.style.Icon(({
-         src: '../images/map-icons/pins/48/pin5.png',
-         anchorOrigin: 'bottom-left',
-         anchor: [0,0],
-         scale: 1,
-       }))
-      })];
-    }
-     
+         text: new ol.style.Text({
+           text: size.toString(),
+           fill: new ol.style.Fill({
+             color: '#FFFFFF'
+           })
+         }),
+         zIndex: 101
+       })];
+     } else {
+       style = [new ol.style.Style({
+         image: new ol.style.Icon(({
+           src: '../images/map-icons/pins/48/pin5.png',
+           anchorOrigin: 'bottom-left',
+           anchor: [0, 0],
+           scale: 0.7,
+         }))
+       })];
+     }
      styleCache[size] = style;
    }
    return style;
@@ -177,4 +176,71 @@
    bing.set('name', 'Sattelite Image');
    mapbox.set('name', 'Map');
    property.set('name', 'Properties');
+ }
+
+ function filteredEsateStyle(feature, resolution) {
+   styleCache = [new ol.style.Style({
+     image: new ol.style.Icon(({
+       src: '../images/map-icons/pins/48/pin4.png',
+       anchorOrigin: 'bottom-left',
+       anchor: [0.5, 0.5],
+       scale: 0.7,
+     }))
+   })];
+   return styleCache;
+ }
+ var filteredEstates = new ol.layer.Vector({
+   source: new ol.source.Vector(),
+   id: 'filteredEstates',
+   visible: false,
+   style: filteredEsateStyle
+ });
+ map.addLayer(filteredEstates);
+
+ function selectByFilters() {
+   var params = {};
+   params.leaseType = $("input[name=options]:checked").val();
+   params.startPrice = $('#startPrice').val();
+   params.endPrice = $('#endPrice').val();
+   features = getFilteredEstates(params);
+   if (features.length > 0) {
+     filteredEstates.getSource().clear();
+     filteredEstates.getSource().addFeatures(features);
+     filteredEstates.setVisible(true);
+     property.setVisible(false);
+     var extent = filteredEstates.getSource().getExtent();
+     var center = [];
+   }else{
+    filteredEstates.setVisible(false);
+     property.setVisible(true);
+   }
+ }
+
+ function getFilteredEstates(params) {
+   var features = [];
+   var whichOne = {
+     'Rent': function(params) {
+       propertySource.getFeatures().forEach(function(f) {
+         var fprice = f.get('price');
+         var ftype = f.get('type_en');
+         if (ftype === 'Rent' && fprice >= params.startPrice && fprice <= params.endPrice) {
+           var feature = f.clone();
+           features.push(feature);
+         }
+       });
+       return features;
+     },
+     'Sale': function(params) {
+       propertySource.getFeatures().forEach(function(f) {
+         var fprice = f.get('price');
+         var ftype = f.get('type_en');
+         if (ftype === 'Sale' && fprice >= params.startPrice && fprice <= params.endPrice) {
+           var feature = f.clone();
+           features.push(feature);
+         }
+       });
+       return features;
+     }
+   };
+   if (whichOne[params.leaseType]) return whichOne[params.leaseType](params);
  }

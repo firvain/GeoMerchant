@@ -1,5 +1,47 @@
 {#features} {#feature}
-<h4>{title}</h4>
-<p>This is a sample modal box that can be created using the powers of CSS3.</p>
-<p>You could do a lot of things here like have a pop-up ad that shows when your website loads, or create a login/register form for users.</p>
-{/feature}{/features}
+<h4>{type}</h4>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col">
+    <ul>
+      <li>{title.estateCode}</li>
+      <li>{title.address}</li>
+      <li>{title.area}</li>
+      <li>{title.bedrooms}</li>
+      <li>{title.price}</li>
+      <li>{title.new}</li>
+      <li>{title.parking}</li>
+      <li>{title.furnished}</li>
+      <li>{title.pets}</li>
+      <li>{title.view}</li>
+      <li>{title.heating}</li>
+      <li>{title.cooling}</li>
+    </ul>
+  </div>
+  <div class="mdl-cell mdl-cell--2-col">
+    <ul>
+      <li>{gid}</li>
+      <li>{address}</li>
+      <li>{area}</li>
+      <li>{bedrooms}</li>
+      <li>{price}</li>
+      <li>{@eq key=new type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=parking type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=furnished type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=pets type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=view type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=heating type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=cooling type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+    </ul>
+  </div>
+  <div class="mdl-cell mdl-cell--8-col"><img style="max-width: 100%;" src="../images/properties/placeholder-big.png" alt="Big Property Image"></div>
+</div>
+<h6>{title.contactInfo}</h6>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col">
+    <address> {title.name} : {name}<br> 
+      {title.lastname} : {lastname}<br> 
+      {title.phone} : {phone}<br> 
+      {title.email} : <a href="mailto:{email}">{email}</a><br> 
+    </address>
+  </div>
+</div> {/feature}{/features}

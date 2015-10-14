@@ -17,8 +17,8 @@
   pointer-events: auto;
 }
 
-.modalDialog > div {
-  width: 400px;
+.modalwraper {
+  width: 900px;
   position: relative;
   margin: 10% auto;
   padding: 5px 20px 13px 20px;
@@ -36,7 +36,12 @@
 .close:hover {
   color: #7B1FA2;
 }
-
+.modal-content li {
+  display:flex;
+}
+.modal-content ul, .modal-content li {
+  padding: 0;
+}
 
 /* ----------- iPhone 6 ----------- */
 

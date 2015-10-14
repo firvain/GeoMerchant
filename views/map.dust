@@ -6,33 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
-  <!-- Bootstrap CSS -->{!
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"> !}
   <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.purple-indigo.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.9.0/ol.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous"> {!
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"> !}
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+  <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous"> </head>
 
 <body>
   <div class="appwrapper">
     <div id="openModal" class="modalDialog">
-      <div>
+      <div class="modalwraper">
         <a href="#close" title="Close" class="close">
           <button class="mdl-button mdl-js-button mdl-button--icon"> <i class="material-icons">close</i> </button>
         </a>
-        <div class="modal-content">
-        
-        </div>
+        <div class="modal-content"> </div>
       </div>
     </div>
     <div class="map" id="map"> </div> {!
@@ -59,17 +47,17 @@
       </form>
     </nav>
     <div class="infobox mdl-shadow--16dp" id="infobox">
-      <form class="infobox-item" action="#" autocomplete="off">
+      <form class="infobox-item" name="filters" action="javascript:selectByFilters()" autocomplete="off">
         <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" type="text" id="search" />
           <label class="mdl-textfield__label" for="search">{search}</label>
         </div>
-      </form>
-      <form class="infobox-item" action="#" autocomplete="off" style="align-self:flex-start">
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-          <input type="checkbox" id="switch-1" class="mdl-switch__input" checked /> <span class="mdl-switch__label">{estateType}</span> </label>
-      </form>
-      <form class="infobox-item" action="#">
+        <fieldset>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked /> <span class="mdl-radio__label">{rent}</span> </label>
+          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
+        </fieldset>
         <fieldset>
           <legend>
             <h6>{price}</h6></legend>
@@ -79,6 +67,7 @@
           <div class="mdl-textfield mdl-js-textfield">
             <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
             <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+          <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Go">
         </fieldset>
       </form>
       <form action="#" class="visuallyhidden estate-cards infobox-item"> </form>
@@ -88,7 +77,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <!-- Bootstrap JavaScript -->{!
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script> !}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.9.0/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
