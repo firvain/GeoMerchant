@@ -52,22 +52,31 @@
           <input class="mdl-textfield__input" type="text" id="search" />
           <label class="mdl-textfield__label" for="search">{search}</label>
         </div>
-        <fieldset>
-          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked /> <span class="mdl-radio__label">{rent}</span> </label>
-          <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
+        <fieldset style="padding:0 20%">
+          <div style="display:flex;flex-direction: row;">
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked="checked" /> <span class="mdl-radio__label">{rent}</span> </label>
+            <div class="mdl-layout-spacer"></div>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+              <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
+          </div>
         </fieldset>
         <fieldset>
           <legend>
             <h6>{price}</h6></legend>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startPrice" />
-            <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
-            <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
-          <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Go">
+          <div style="display:flex;flex-direction: row;">
+            <div class="mdl-textfield mdl-js-textfield" style="width:40%">
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startPrice" />
+              <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield" style="width: 40%">
+              <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
+              <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+          </div>
+          <div style="display:flex;flex-direction: row;">
+            <input class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit" value="Go">
+            <div class="mdl-layout-spacer"></div>
+            <input id="clearFilters" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="reset" value="Reset!"> </div>
         </fieldset>
       </form>
       <form action="#" class="visuallyhidden estate-cards infobox-item"> </form>

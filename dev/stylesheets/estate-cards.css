@@ -14,7 +14,9 @@
 }*/
 
 
-
+.estate-card-square{
+  margin-top: 5px;
+}
 .estate-card-square.mdl-card {
   width: 300px;
   height: 300px;

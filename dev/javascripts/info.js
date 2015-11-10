@@ -1,19 +1,4 @@
 (function() {
-  // var container = document.getElementById('popup');
-  // var closer = document.getElementById('popup-closer');
-  // closer.onclick = function() {
-  //   info.setPosition(undefined);
-  //   closer.blur();
-  //   return false;
-  // };
-  // var info = new ol.Overlay(({
-  //   element: container,
-  //   autoPan: true,
-  //   autoPanAnimation: {
-  //     duration: 250
-  //   }
-  // }));
-  // map.addOverlay(info);
   function handleInfo(evt) {
     evt.preventDefault();
     var coordinate = evt.coordinate;
@@ -71,13 +56,14 @@
           layer: layer
         };
       }, this, function(layer) {
+        console.log(layer.get('id'));
         if (layer.get('id') === 'estates' || layer.get('id') === 'filteredEstates') {
           return true;
         }
       }, this);
       if (clickedFeature) {
-        clickedFeature.feature.get('features').forEach(function(f) {
-          a = f;
+        if (clickedFeature.layer.get('id') === 'filteredEstates') {
+          var f = clickedFeature.feature;
           var feature = {};
           feature.gid = f.get('gid');
           feature.type = f.get('estatetype');
@@ -140,10 +126,72 @@
             strategy: ol.loadingstrategy.all
           });
           PSA.setSource(PSASource);
-        });
-        // dust.render('estateInfo.dust', obj, function(err, out) {
-        //   $("#popup-content").html(out);
-        // });
+        } else {
+          clickedFeature.feature.get('features').forEach(function(f) {
+            var feature = {};
+            feature.gid = f.get('gid');
+            feature.type = f.get('estatetype');
+            feature.area = f.get('estatearea');
+            if (lang === 'el') {
+              feature.address = f.get('street_el') + ' ' + f.get('h_num_el');
+            } else {
+              feature.address = f.get('street_en') + ' ' + f.get('h_num_en');
+            }
+            feature.bedrooms = f.get('bedrooms');
+            feature.price = f.get('price');
+            feature.new = f.get('new');
+            feature.parking = f.get('parking');
+            feature.furnished = f.get('furnished');
+            feature.pets = f.get('pets');
+            feature.view = f.get('view');
+            feature.heating = f.get('heating');
+            feature.cooling = f.get('cooling');
+            if (lang === 'el') {
+              feature.name = f.get('name_el');
+              feature.lastname = f.get('lastname_el');
+            } else {
+              feature.name = f.get('name_en');
+              feature.lastname = f.get('lastname_en');
+            }
+            feature.phone = f.get('phone1');
+            feature.email = f.get('email');
+            features.push({
+              feature: feature
+            });
+            featureCoordinate = f.get('geometry').getCoordinates();
+            obj.features = features;
+            var PSASource = new ol.source.Vector({
+              attributions: [new ol.Attribution({
+                html: 'POI by ' + '<a href="http://www.terracognita.gr/">Terra Cognita</a>'
+              })],
+              format: geoJSONFormat,
+              loader: function(extent, resolution, projection) {
+                var url = 'http://localhost:3000/db/uses/' + feature.gid;
+                var that = this;
+                $.ajax({
+                  url: url,
+                  type: 'GET',
+                  dataType: 'json',
+                }).done(function(response) {
+                  var features = geoJSONFormat.readFeatures(response.property_services_analysis, {
+                    featureProjection: 'EPSG:3857'
+                  });
+                  var area = new ol.style.Style({
+                    fill: new ol.style.Fill({
+                      color: [156, 39, 176, 0.1]
+                    })
+                  });
+                  features[0].setStyle(area);
+                  that.addFeatures(features);
+                }).fail(function() {
+                  console.log("error");
+                });
+              },
+              strategy: ol.loadingstrategy.all
+            });
+            PSA.setSource(PSASource);
+          });
+        }
         dust.render('estateCards.dust', obj, function(err, out) {
           $('.estate-cards').html(out);
           $('.estate-cards').removeClass('visuallyhidden');
@@ -154,7 +202,6 @@
           });
         });
         map.getView().setCenter(featureCoordinate);
-        // info.setPosition(featureCoordinate);
       }
     }
   }
