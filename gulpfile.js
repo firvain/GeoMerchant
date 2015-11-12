@@ -16,7 +16,7 @@ gulp.task('scripts', ['clean-scripts'], function() {
     return gulp.src(['dev/javascripts/map.js', 'dev/javascripts/!(map)*.js'])
         .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(concat('scripts.min.js'))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))

@@ -1,4 +1,4 @@
-{#features} {#feature}
+{#feature}
 <h4>{type}</h4>
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--2-col">
@@ -44,4 +44,4 @@
       {title.email} : <a href="mailto:{email}">{email}</a><br> 
     </address>
   </div>
-</div> {/feature}{/features}
+</div> {/feature}

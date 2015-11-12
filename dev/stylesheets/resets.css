@@ -8,9 +8,7 @@ body {
   margin: 0;
   padding: 0;
 }
-fieldset + fieldset {
-  margin-top: 100px;
-}
+
 
 /*html {
   box-sizing: border-box;

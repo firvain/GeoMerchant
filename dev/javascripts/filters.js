@@ -15,7 +15,13 @@
    params.leaseType = $("input[name=options]:checked").val();
    params.startPrice = $('#startPrice').val();
    params.endPrice = $('#endPrice').val();
-   features = getFilteredEstates(params);
+   params.parking = $('#checkbox-1').prop('checked');
+   params.funished = $('#checkbox-2').prop('checked');
+   params.heating = $('#checkbox-3').prop('checked');
+   params.cooling = $('#checkbox-4').prop('checked');
+   params.view = $('#checkbox-5').prop('checked');
+   PSA.setSource(null);
+   var features = getFilteredEstates(params);
    if (features.length > 0) {
      filteredEstates.getSource().clear();
      filteredEstates.getSource().addFeatures(features);
@@ -36,6 +42,10 @@
        propertySource.getFeatures().forEach(function(f) {
          var fprice = f.get('price');
          var ftype = f.get('type_en');
+         var fparking = f.get('parking');
+         var furnished = f.get('furnished');
+         var fheating = f.get('heating');
+         var fcooling = f.get('cooling');
          if (ftype === 'Rent' && fprice >= params.startPrice && fprice <= params.endPrice) {
            var feature = f.clone();
            features.push(feature);
@@ -61,4 +71,5 @@
    filteredEstates.getSource().clear();
    filteredEstates.setVisible(false);
    property.setVisible(true);
+   PSA.setSource(null);
  });

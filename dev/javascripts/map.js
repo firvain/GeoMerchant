@@ -25,46 +25,65 @@
    }),
    id: 'mapbox'
  });
- var propertyStyleFunction = function(feature, resolution) {
+
+ function createPropertyStyle(feature) {
+  var src;
+  if (feature.get('type_en')==='Sale'){
+    src= '../images/map-icons/pins/48/pin2.png';
+  } else {
+    src='../images/map-icons/pins/48/pin5.png';
+  }
+   return new ol.style.Style({
+    geometry: feature.getGeometry(),
+     image: new ol.style.Icon(({
+       src: src,
+       anchorOrigin: 'bottom-left',
+       anchor: [0, 0],
+       scale: 0.7,
+     }))
+   });
+ }
+
+ function propertyStyleFunction(feature, resolution) {
    var size = feature.get('features').length;
-   var maxFeatureCount = propertySource.getFeatures().length;
-   var radius = 20;
-   var style = styleCache[size];
-   if (!style) {
-     if (size > 1) {
-       style = [new ol.style.Style({
-         image: new ol.style.Circle({
-           radius: radius,
-           stroke: new ol.style.Stroke({
-             color: [156, 39, 176, 1],
-             width: 5
-           }),
-           fill: new ol.style.Fill({
-             color: [68, 138, 255, 0.8]
-           })
+   if (size > 1) {
+     style = [new ol.style.Style({
+       image: new ol.style.Circle({
+         radius: 20,
+         stroke: new ol.style.Stroke({
+           color: [156, 39, 176, 1],
+           width: 5
          }),
-         text: new ol.style.Text({
-           text: size.toString(),
-           fill: new ol.style.Fill({
-             color: '#FFFFFF'
-           })
-         }),
-         zIndex: 101
-       })];
-     } else {
-       style = [new ol.style.Style({
-         image: new ol.style.Icon(({
-           src: '../images/map-icons/pins/48/pin5.png',
-           anchorOrigin: 'bottom-left',
-           anchor: [0, 0],
-           scale: 0.7,
-         }))
-       })];
-     }
-     styleCache[size] = style;
+         fill: new ol.style.Fill({
+           color: [68, 138, 255, 0.8]
+         })
+       }),
+       text: new ol.style.Text({
+         text: size.toString(),
+         fill: new ol.style.Fill({
+           color: '#FFFFFF'
+         })
+       }),
+       zIndex: 101
+     })];
+   } else {
+     var originalFeature = feature.get('features')[0];
+     style = [createPropertyStyle(originalFeature)];
    }
    return style;
- };
+ }
+
+ function selectStyleFunction(feature, resolution) {
+   var styles = [new ol.style.Style({
+   })];
+   var originalFeatures = feature.get('features');
+   var originaFeature;
+   for (var i = originalFeatures.length - 1; i >= 0; --i) {
+     originalFeature = originalFeatures[i];
+     styles.push(createPropertyStyle(originalFeature));
+   }
+   return styles;
+ }
  var propertySource = new ol.source.Vector({
    format: geoJSONFormat,
    loader: function(extent, resolution, projection) {
@@ -80,7 +99,6 @@
        var features = geoJSONFormat.readFeatures(response, {
          featureProjection: 'EPSG:3857'
        });
-       // that.clear();
        that.addFeatures(features);
      }).fail(function() {
        console.log("error");
@@ -135,16 +153,21 @@
    maxResolution: 3
  });
  PSA.setZIndex(1);
-  var filteredEstates = new ol.layer.Vector({
+ var filteredEstates = new ol.layer.Vector({
    source: new ol.source.Vector(),
    id: 'filteredEstates',
    visible: false,
    style: filteredEsateStyle
  });
-
  var map = new ol.Map({
    target: 'map',
    layers: [mapbox, property, PSA, filteredEstates],
+   // interactions: ol.interaction.defaults().extend([new ol.interaction.Select({
+   //   condition: function(evt) {
+   //     return evt.type === 'singleclick' && ol.events.condition.shiftKeyOnly(evt);
+   //   },
+   //   style: selectStyleFunction
+   // })]),
    loadTilesWhileAnimating: true,
    loadTilesWhileInteracting: true,
    renderer: 'canvas',
@@ -184,5 +207,3 @@
    mapbox.set('name', 'Map');
    property.set('name', 'Properties');
  }
-
-
