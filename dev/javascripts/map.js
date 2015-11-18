@@ -27,14 +27,14 @@
  });
 
  function createPropertyStyle(feature) {
-  var src;
-  if (feature.get('type_en')==='Sale'){
-    src= '../images/map-icons/pins/48/pin2.png';
-  } else {
-    src='../images/map-icons/pins/48/pin5.png';
-  }
+   var src;
+   if (feature.get('type_en') === 'Sale') {
+     src = '../images/map-icons/pins/48/pin2.png';
+   } else {
+     src = '../images/map-icons/pins/48/pin5.png';
+   }
    return new ol.style.Style({
-    geometry: feature.getGeometry(),
+     geometry: feature.getGeometry(),
      image: new ol.style.Icon(({
        src: src,
        anchorOrigin: 'bottom-left',
@@ -74,8 +74,7 @@
  }
 
  function selectStyleFunction(feature, resolution) {
-   var styles = [new ol.style.Style({
-   })];
+   var styles = [new ol.style.Style({})];
    var originalFeatures = feature.get('features');
    var originaFeature;
    for (var i = originalFeatures.length - 1; i >= 0; --i) {
@@ -153,12 +152,27 @@
    maxResolution: 3
  });
  PSA.setZIndex(1);
+
+ function filteredEsateStyle(feature, resolution) {
+   styleCache = [new ol.style.Style({
+     image: new ol.style.Icon(({
+       src: '../images/map-icons/pins/48/pin4.png',
+       anchorOrigin: 'bottom-left',
+       anchor: [0.5, 0.5],
+       scale: 0.7,
+     }))
+   })];
+   return styleCache;
+ }
  var filteredEstates = new ol.layer.Vector({
-   source: new ol.source.Vector(),
+   source: new ol.source.Vector({
+     format: geoJSONFormat
+   }),
    id: 'filteredEstates',
-   visible: false,
+   visible: true,
    style: filteredEsateStyle
  });
+ filteredEstates.setZIndex(2);
  var map = new ol.Map({
    target: 'map',
    layers: [mapbox, property, PSA, filteredEstates],

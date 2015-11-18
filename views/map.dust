@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.purple-indigo.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous"> </head>
 
 <body>
@@ -48,14 +49,14 @@
     </nav>
     <div class="infobox mdl-shadow--16dp" id="infobox">
       <form class="infobox-item" name="filters" action="javascript:selectByFilters()" autocomplete="off">
-        <div class="mdl-textfield mdl-js-textfield">
+    {!     <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" type="text" id="search" />
           <label class="mdl-textfield__label" for="search">{search}</label>
-        </div>
+        </div> !}
         <fieldset style="padding:0 20%">
           <div style="display:flex;flex-direction: row;">
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked="checked" /> <span class="mdl-radio__label">{rent}</span> </label>
+              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent"  /> <span class="mdl-radio__label">{rent}</span> </label>
             <div class="mdl-layout-spacer"></div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
               <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
@@ -102,6 +103,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
