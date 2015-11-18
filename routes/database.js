@@ -7,7 +7,7 @@ var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus"
 var dbgeo = require("dbgeo");
 // var client = new pg.Client(conString);
 pg.defaults.poolSize = 25;
-var parking, furnished, heating, cooling, view, leaseType;
+var parking, furnished, heating, cooling, view, leaseType,qprice,startPrice,endPrice;
 // Connect to postgres
 // client.connect(function(error, success) {
 //   if (error) {
@@ -120,6 +120,17 @@ router.get('/filteredproperty', function(req, res, next) {
   } else {
     view = false;
   }
+  if (req.query.startPrice===''){
+    startPrice =0;
+  } else {
+    startPrice =parseInt(req.query.startPrice);
+  }
+  if (req.query.endPrice===''){
+    endPrice =9999999;
+  } else {
+    endPrice=parseInt(req.query.endPrice);
+  }
+  // console.log(req.params.startPrice.req.params.endPrice)
   pg.connect(conString, function(err, client, done) {
     if (err) {
       console.log("Could not connect to postgres");
@@ -149,10 +160,10 @@ router.get('/filteredproperty', function(req, res, next) {
       if (view === 'true') {
         sqlQuery += qview;
       }
-      if (req.query.startPrice !== '' && req.query.endPrice !== '') {
-        var qprice = ' AND public.listing.price BETWEEN ' + req.params.startPrice + ' AND ' + req.params.endPrice;
+      
+       qprice = ' AND public.listing.price BETWEEN ' + startPrice + ' AND ' + endPrice;
         sqlQuery += qprice;
-      }
+      
       var query = client.query(sqlQuery, function(error, result) {
         done();
         console.log(query.text);
