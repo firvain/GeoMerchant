@@ -25,8 +25,8 @@ overflow: hidden;
 .ol-custom-overviewmap.ol-uncollapsible {
     bottom: auto;
     left: auto;
-    right: 0;
-    top: 0;
+    right: 0.5em;
+    top: 7em;
 }
 
 .ol-custom-overviewmap:not(.ol-collapsed) {
@@ -47,4 +47,17 @@ overflow: hidden;
     left: auto;
     right: 0.071em;
     top: 0.071em;
+}
+.ol-zoom {
+    bottom: auto;
+    left: auto;
+    right: 0.5em;
+    top: 0.5em;
+    
+}
+.ol-zoom-extent {
+    bottom: auto;
+    left: auto;
+    right: 0.5em;
+    top: 4.643em;
 }

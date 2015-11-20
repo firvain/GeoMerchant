@@ -1,6 +1,7 @@
  function selectByFilters() {
    PSA.setSource(null);
    var params = {};
+   var epsg4326Extent;
    params.leaseType = $("input[name=options]:checked").val();
    params.startPrice = $('#startPrice').val();
    params.endPrice = $('#endPrice').val();
@@ -9,24 +10,28 @@
    params.heating = $('#checkbox-3').prop('checked');
    params.cooling = $('#checkbox-4').prop('checked');
    params.view = $('#checkbox-5').prop('checked');
-   var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-        toastr.options = {
-         "closeButton": false,
-         "debug": false,
-         "newestOnTop": false,
-         "progressBar": false,
-         "positionClass": "toast-top-center",
-         "preventDuplicates": false,
-         "onclick": null,
-         "showDuration": "300",
-         "hideDuration": "1000",
-         "timeOut": "5000",
-         "extendedTimeOut": "1000",
-         "showEasing": "swing",
-         "hideEasing": "linear",
-         "showMethod": "fadeIn",
-         "hideMethod": "fadeOut"
-       };
+   if (selectSource.getFeatures().length === 0) {
+     epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
+   } else {
+     epsg4326Extent = ol.proj.transformExtent(selectSource.getFeatures()[0].getGeometry().getExtent(), 'EPSG:3857', 'EPSG:4326');
+   }
+   toastr.options = {
+     "closeButton": false,
+     "debug": false,
+     "newestOnTop": false,
+     "progressBar": false,
+     "positionClass": "toast-top-center",
+     "preventDuplicates": false,
+     "onclick": null,
+     "showDuration": "300",
+     "hideDuration": "1000",
+     "timeOut": "5000",
+     "extendedTimeOut": "1000",
+     "showEasing": "swing",
+     "hideEasing": "linear",
+     "showMethod": "fadeIn",
+     "hideMethod": "fadeOut"
+   };
    $.ajax({
      url: 'http://localhost:3000/db/filteredproperty?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3],
      type: 'GET',
@@ -45,9 +50,9 @@
      var features = geoJSONFormat.readFeatures(response, {
        featureProjection: 'EPSG:3857'
      });
-     console.log(features.length);
+
      if (features.length > 0) {
-      toastr.clear();
+       toastr.clear();
        filteredEstates.getSource().clear();
        filteredEstates.getSource().addFeatures(features);
        filteredEstates.setVisible(true);
@@ -70,7 +75,45 @@
    $('label[for=checkbox-3]').removeClass('is-checked');
    $('label[for=checkbox-4]').removeClass('is-checked');
    $('label[for=checkbox-5]').removeClass('is-checked');
+   $('label[for=checkbox-6]').removeClass('is-checked');
    filteredEstates.getSource().clear();
    property.setVisible(true);
    PSA.setSource(null);
+   selectSource.clear();
+   map.removeInteraction(draw);
+ });
+ var draw;
+
+ function addInteraction() {
+   selectSource.clear();
+   draw = new ol.interaction.Draw({
+     source: selectSource,
+     type: 'LineString',
+     geometryFunction: geometryFunction,
+     maxPoints: 2
+   });
+   draw.on('drawstart', function() {
+     selectSource.clear();
+   });
+   map.addInteraction(draw);
+ }
+
+ function geometryFunction(coordinates, geometry) {
+   if (!geometry) {
+     geometry = new ol.geom.Polygon(null);
+   }
+   var start = coordinates[0];
+   var end = coordinates[1];
+   geometry.setCoordinates([
+     [start, [start[0], end[1]], end, [end[0], start[1]], start]
+   ]);
+   return geometry;
+ }
+ $("#checkbox-6").change(function() {
+   if (this.checked) {
+     addInteraction();
+   } else {
+     map.removeInteraction(draw);
+     selectSource.clear();
+   }
  });

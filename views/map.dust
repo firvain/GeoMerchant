@@ -8,7 +8,7 @@
   <title>{title}</title>
   <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.purple-indigo.min.css" />
+  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.purple-indigo.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
@@ -48,31 +48,39 @@
       </form>
     </nav>
     <div class="infobox mdl-shadow--16dp" id="infobox">
-      <form class="infobox-item" name="filters" action="javascript:selectByFilters()" autocomplete="off">
-    {!     <div class="mdl-textfield mdl-js-textfield">
+      <form class="infobox-item" name="filters" action="javascript:selectByFilters()" autocomplete="off"> {!
+        <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" type="text" id="search" />
           <label class="mdl-textfield__label" for="search">{search}</label>
         </div> !}
-        <fieldset style="padding:0 20%">
+        <fieldset>
+           <div>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
+              <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{chooseArea}</span> </label>
+          </div>
+        </fieldset>
+        <fieldset style="padding: 0 30% 0 0">
+        <legend><h6 style="color: red;">{type} *</h6></legend>
           <div style="display:flex;flex-direction: row;">
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent"  /> <span class="mdl-radio__label">{rent}</span> </label>
+              <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" /> <span class="mdl-radio__label">{rent}</span> </label>
             <div class="mdl-layout-spacer"></div>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
               <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
           </div>
         </fieldset>
         <fieldset>
+        <legend><h6>{estateProperties}</h6></legend>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
-            <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">Parking</span> </label>
+            <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{parking}</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
-            <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">Furnished</span> </label>
+            <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{furnished}</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3">
-            <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">Heating</span> </label>
+            <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{heating}</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
-            <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">Cooling</span> </label>
+            <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{cooling}</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
-            <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">View</span> </label>
+            <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{view}</span> </label>
         </fieldset>
         <fieldset>
           <legend>
@@ -102,7 +110,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
-  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>

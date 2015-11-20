@@ -173,9 +173,30 @@
    style: filteredEsateStyle
  });
  filteredEstates.setZIndex(2);
+ var selectSource = new ol.source.Vector({});
+
+var selectBox = new ol.layer.Vector({
+  source: selectSource,
+  style: new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(227, 72, 27, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#E3481B',
+      width: 2
+    }),
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({
+        color: '#E3481B'
+      })
+    })
+  })
+});
+selectBox.setZIndex(3);
  var map = new ol.Map({
    target: 'map',
-   layers: [mapbox, property, PSA, filteredEstates],
+   layers: [mapbox, property, PSA, filteredEstates,selectBox],
    // interactions: ol.interaction.defaults().extend([new ol.interaction.Select({
    //   condition: function(evt) {
    //     return evt.type === 'singleclick' && ol.events.condition.shiftKeyOnly(evt);

@@ -1,5 +1,6 @@
 function handleInfo(evt) {
   evt.preventDefault();
+  map.removeInteraction(draw);
   var coordinate = evt.coordinate;
   var obj = {};
   var title = {};
@@ -59,17 +60,17 @@ function handleInfo(evt) {
   if (clickedFeature) {
     if (clickedFeature.layer.get('id') === 'estates' && clickedFeature.feature.get('features').length === 1) {
       f = clickedFeature.feature.getProperties().features[0];
-      createPSAandCard(f,obj);
+      createPSAandCard(f, obj);
     } else if (clickedFeature.layer.get('id') === 'filteredEstates') {
       f = clickedFeature.feature;
-      createPSAandCard(f,obj);
+      createPSAandCard(f, obj);
     }
   } else {
     PSA.setSource(null);
   }
 }
 
-function createPSAandCard(f,obj) {
+function createPSAandCard(f, obj) {
   var feature = {};
   feature.gid = f.get('gid');
   feature.type = f.get('estatetype');
@@ -144,6 +145,7 @@ function createPSAandCard(f,obj) {
 $('.info').on('change', function(e) {
   e.preventDefault();
   PSA.setSource(null);
+    
   if ($(this).prop('checked') === true) {
     map.on('click', handleInfo);
   } else {
