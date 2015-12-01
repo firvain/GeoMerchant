@@ -7,7 +7,7 @@ var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus"
 var dbgeo = require("dbgeo");
 // var client = new pg.Client(conString);
 pg.defaults.poolSize = 25;
-var parking, furnished, heating, cooling, view, leaseType,qprice,startPrice,endPrice;
+var parking, furnished, heating, cooling, view, leaseType, qprice, startPrice, endPrice;
 // Connect to postgres
 // client.connect(function(error, success) {
 //   if (error) {
@@ -120,15 +120,15 @@ router.get('/filteredproperty', function(req, res, next) {
   } else {
     view = false;
   }
-  if (req.query.startPrice===''){
-    startPrice =0;
+  if (req.query.startPrice === '') {
+    startPrice = 0;
   } else {
-    startPrice =parseInt(req.query.startPrice);
+    startPrice = parseInt(req.query.startPrice);
   }
-  if (req.query.endPrice===''){
-    endPrice =9999999;
+  if (req.query.endPrice === '') {
+    endPrice = 9999999;
   } else {
-    endPrice=parseInt(req.query.endPrice);
+    endPrice = parseInt(req.query.endPrice);
   }
   // console.log(req.params.startPrice.req.params.endPrice)
   pg.connect(conString, function(err, client, done) {
@@ -160,10 +160,8 @@ router.get('/filteredproperty', function(req, res, next) {
       if (view === 'true') {
         sqlQuery += qview;
       }
-      
-       qprice = ' AND public.listing.price BETWEEN ' + startPrice + ' AND ' + endPrice;
-        sqlQuery += qprice;
-      
+      qprice = ' AND public.listing.price BETWEEN ' + startPrice + ' AND ' + endPrice;
+      sqlQuery += qprice;
       var query = client.query(sqlQuery, function(error, result) {
         done();
         console.log(query.text);
@@ -206,6 +204,40 @@ router.get('/uses/:propertygid', function(req, res, next) {
           res.end();
         } else {
           console.log('error in quering db');
+        }
+      });
+    }
+  });
+});
+router.get('/admin', function(req, res, next) {
+  var gid = req.query.id;
+  console.log('adminid= ' + gid);
+  pg.connect(conString, function(err, client, done) {
+    if (err) {
+      console.log("Could not connect to postgres");
+    } else {
+      console.log("Connected");
+      var whatTofetch = "public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,      public.property.title,        public.property.year,        public.property.other,        public.property.parcel_num,        public.property.plan_num,        public.property.area_name,public.property.street_el,        public.property.h_num_el,        public.property.ps_code,public.property.floor,public.property.street_en,public.property.h_num_en,public.property.\"new\"";
+      
+      var from = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id)' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid)';
+      var query = client.query('select ' + whatTofetch +',ST_AsGeoJSON(public.property.the_geom) as geom ' + 'FROM ' + from + ' where public.owner.id=$1 ',[gid],  function(error, result) {
+        done();
+   if (result) {
+          dbgeo.parse({
+            "data": result.rows,
+            "geometryColumn": "geom",
+          }, function(error, result) {
+            if (error) {
+              console.log(" --- error --- ", error);
+            } else {
+              res.header("Access-Control-Allow-Origin", "*");
+              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+              res.send(result);
+              res.end();
+            }
+          });
+        } else {
+          console.log(error);
         }
       });
     }

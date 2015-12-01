@@ -69,6 +69,7 @@ router.get('/:lang', function(req, res, next) {
       phone: 'Τηλέφωνο',
       email: 'Ηλεκτρονική Διεύθυνση'
     };
+    data.map='map';
     res.render('map', data);
   }
 });

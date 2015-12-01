@@ -86,10 +86,12 @@
  var propertySource = new ol.source.Vector({
    format: geoJSONFormat,
    loader: function(extent, resolution, projection) {
+    console.log(resolution);
      var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
      var url = 'http://localhost:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
      var that = this;
      this.clear();
+     console.log(extent);
      $.ajax({
        url: url,
        type: 'GET',
@@ -98,6 +100,7 @@
        var features = geoJSONFormat.readFeatures(response, {
          featureProjection: 'EPSG:3857'
        });
+
        that.addFeatures(features);
      }).fail(function() {
        console.log("error");
@@ -226,7 +229,7 @@ selectBox.setZIndex(3);
    ]),
    view: new ol.View({
      center: center,
-     extent: extent,
+     // extent: extent,
      projection: 'EPSG:3857',
      zoom: 14,
      maxZoom: 19,
