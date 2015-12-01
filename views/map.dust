@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/styles.min.css" crossorigin="anonymous"> </head>
+  <link rel="stylesheet" href="/css/map.min.css" crossorigin="anonymous"> </head>
 
 <body>
   <div class="appwrapper">
@@ -112,7 +112,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-  <script src="/js/scripts.min.js" crossorigin="anonymous"></script>
+  <script src="/js/map.min.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
