@@ -26,7 +26,7 @@
     <div class="divider animated fadeInDownBig"> </div>
     <nav class="menu animated bounceInUp">
       <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-      <label class="menu-open-button default-primary-color paper-shadow-bottom-z-4" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label> <a href="/map/en" class="menu-item default-primary-color paper-shadow-bottom-z-4"><span  class="flag-icon flag-icon-gb"></span></a> <a href="/map/el" class="menu-item default-primary-color paper-shadow-bottom-z-4"><span  class="flag-icon flag-icon-gr"></span></a> </nav>
+      <label class="menu-open-button default-primary-color paper-shadow-bottom-z-4" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label> <a href="/map?lang=en" class="menu-item default-primary-color paper-shadow-bottom-z-4"><span  class="flag-icon flag-icon-gb"></span></a> <a href="/map?lang=el" class="menu-item default-primary-color paper-shadow-bottom-z-4"><span  class="flag-icon flag-icon-gr"></span></a> </nav>
   </div> {!
   <nav class="navbar navbar-default" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->

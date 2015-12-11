@@ -1,11 +1,14 @@
 var express = require('express');
+var passport = require('passport');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
+var flash = require('connect-flash');
 var router = express.Router();
-
 /* GET users listing. */
-router.get('/:lang', function(req, res, next) {
-  console.log(req.query.id);
+router.get('/', ensureLoggedIn, function(req, res, next) {
   var data = {};
-  if (req.params.lang === 'en') {
+  var lang = String(req.flash('lang'));
+  var id = String(req.flash('id'));
+  if (lang === 'en') {
     data = {
       lang: 'en',
       title: 'Geomerchant',
@@ -19,7 +22,7 @@ router.get('/:lang', function(req, res, next) {
       priceError: 'Input is not a number!',
       estateCode: 'Estate Code',
       estateProperties: 'Estate Properites',
-      chooseArea : 'Choose Area of Search',
+      chooseArea: 'Choose Area of Search',
       type: 'Type',
       area: 'Size',
       address: 'Address',
@@ -35,10 +38,18 @@ router.get('/:lang', function(req, res, next) {
       name: 'Name',
       lastname: 'Last Name',
       phone: 'Telephone',
-      email: 'Email'
+      email: 'Email',
+      user: req.user,
+      btns: {
+        'insert': 'insert',
+        'delete': 'delete',
+        'move': 'move',
+        'logout': 'logout'
+      },
+      id: id
     };
-    res.render('map', data);
-  } else if (req.params.lang === 'el') {
+    res.render('admin', data);
+  } else if (lang === 'el') {
     data = {
       lang: 'el',
       title: 'Geomerchant',
@@ -53,7 +64,7 @@ router.get('/:lang', function(req, res, next) {
       priceError: 'Η τιμή δεν είναι αριθμός!',
       estateCode: 'Κωδικός Ιδιοκτησίας',
       estateProperties: 'Χαρακτηριστικά Ακινήτου',
-      chooseArea : 'Επιλογή Περιοχής για Αναζήτηση',
+      chooseArea: 'Επιλογή Περιοχής για Αναζήτηση',
       type: 'Τύπος',
       area: 'Εμβαδό',
       address: 'Διευθυνση',
@@ -69,10 +80,17 @@ router.get('/:lang', function(req, res, next) {
       name: 'Όνομα',
       lastname: 'Επίθετο',
       phone: 'Τηλέφωνο',
-      email: 'Ηλεκτρονική Διεύθυνση'
+      email: 'Ηλεκτρονική Διεύθυνση',
+      user: req.user,
+      btns: {
+        'insert': 'εισαγωγή',
+        'delete': 'διαγραφή',
+        'move': 'μετακίνηση',
+        'logout': 'αποσυνδεση'
+      },
+      id: id
     };
     res.render('admin', data);
   }
 });
-
 module.exports = router;

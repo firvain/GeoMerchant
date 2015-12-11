@@ -26,8 +26,6 @@
    id: 'mapbox'
  });
 
-
-
  function PropertyStyle() {
    var src;
    src = '../images/map-icons/pins/48/pin1.png';
@@ -47,10 +45,15 @@
      this.clear();
      $.ajax({
        url: url,
-       type: 'GET',
+       type: 'POST',
+       'beforeSend': function(xhr) {
+         if (localStorage.getItem('userToken')) {
+           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
+         }
+       },
        dataType: 'json',
        data: {
-         id: 1
+         id: id
        },
      }).done(function(response) {
        var features = geoJSONFormat.readFeatures(response, {
@@ -183,8 +186,8 @@
  select.setActive(false);
  //translate(move)
  var translate = new ol.interaction.Translate({
-  features: select.getFeatures()
-});
+   features: select.getFeatures()
+ });
  //====== info ======
  map.on('click', clickInfo);
 
@@ -251,16 +254,19 @@
        toastr.options.closeButton = true;
        var $toast = toastr.warning('<p>Are you sure?</p><div class="toastr-btns"><button id="yesDelete" class="mdl-button mdl-js-button ">Yes</button><button id="noDelete" class="mdl-button mdl-js-button">No</button></div>');
        if ($toast.find('#yesDelete').length) {
-         $toast.on( 'click','#yesDelete', function() {
+         $toast.on('click', '#yesDelete', function() {
            alert('you clicked ok');
            $toast.remove();
          });
        }
        if ($toast.find('#noDelete').length) {
-         $toast.on( 'click','#noDelete', function() {
+         $toast.on('click', '#noDelete', function() {
            alert('Surprise! you clicked me.');
          });
        }
      }
    });
+ });
+ $('#logout').click(function() {
+   location.href = "/map/logout";
  });

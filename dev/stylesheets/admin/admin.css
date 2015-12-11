@@ -108,3 +108,11 @@ overflow: hidden;
 .toastr-btns >button{
   color :white;
 }
+.userinfo{
+  margin: 0 auto;
+  float: none;
+}
+.userinfo p{
+  font-size: 1.2em;
+  text-align: center;
+}

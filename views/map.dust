@@ -42,7 +42,7 @@
         <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
         <label class="menu-item  default-primary-color mdl-shadow--2dp" for="weather"></label>
         <a href="#" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-envelope"></i> </a>
-        <a href="#" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-cog"></i> </a>
+        <a id="adminLogin" href="javascript:void(0)" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-user"></i> </a>
         <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick='window.location.assign("/")' />
         <label class="menu-item  default-primary-color mdl-shadow--2dp" for="home"></label>
       </form>
@@ -54,13 +54,14 @@
           <label class="mdl-textfield__label" for="search">{search}</label>
         </div> !}
         <fieldset>
-           <div>
+          <div>
             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
               <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{chooseArea}</span> </label>
           </div>
         </fieldset>
         <fieldset style="padding: 0 30% 0 0">
-        <legend><h6 style="color: red;">{type} *</h6></legend>
+          <legend>
+            <h6 style="color: red;">{type} *</h6></legend>
           <div style="display:flex;flex-direction: row;">
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
               <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" /> <span class="mdl-radio__label">{rent}</span> </label>
@@ -70,7 +71,8 @@
           </div>
         </fieldset>
         <fieldset>
-        <legend><h6>{estateProperties}</h6></legend>
+          <legend>
+            <h6>{estateProperties}</h6></legend>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
             <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{parking}</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
@@ -112,11 +114,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="https://cdn.auth0.com/js/lock-7.11.js"></script>
   <script src="/js/map.min.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+  var lock = new Auth0Lock('{env.AUTH0_CLIENT_ID}', '{env.AUTH0_DOMAIN}');
+  $('#adminLogin').click(function() {
+    lock.show({
+      callbackURL: '{env.AUTH0_CALLBACK_URL}',
+      responseType: 'code',
+      authParams: {
+        scope: 'openid name email picture user_metadata'
+      }
+    });
+  });
+  </script>
 </body>
 
 </html>

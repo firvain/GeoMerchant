@@ -62,7 +62,7 @@ gulp.task('dust-compile', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('dev/javascripts/**/*.js', ['scripts-map'],['scripts-admin'],['clean-scripts']).on('error', gutil.log);
+    gulp.watch('dev/javascripts/**/*.js', ['clean-scripts','scripts-map','scripts-admin']).on('error', gutil.log);
     gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);
     gulp.watch('templates/*.dust', ['dust-compile'])
         .on('error', gutil.log);

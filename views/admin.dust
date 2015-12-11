@@ -19,13 +19,16 @@
   <div class="appwrapper">
     <div class='adminMap' id='adminMap'> </div>
     <div class="infobox mdl-shadow--8dp">
-    <div class="actions">
-      <button id="insertProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> insert </button>
-      <button id="deleteProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> delete </button>
-      <button id="updateProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> move </button>
-      
-    </div>
-    <div class="property-info visuallyhidden mdl-shadow--4dp"> </div>
+      <div class="userinfo">
+        <p>Welcome {user.nickname}!</p>
+      </div>
+      <div class="actions">
+        <button id="insertProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.insert} </button>
+        <button id="deleteProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.delete} </button>
+        <button id="updateProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.move} </button>
+        <button id="logout" class="mdl-button mdl-js-button mdl-button--raised "> {btns.logout} </button>
+      </div>
+      <div class="property-info visuallyhidden mdl-shadow--4dp"> </div>
     </div>
   </div>
   <!-- jQuery -->
@@ -36,6 +39,9 @@
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="/js/tpl/adminEstateInfo.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+  var id = parseInt('{id}');
+  </script>
   <script src="/js/admin.min.js" crossorigin="anonymous"></script>
 </body>
 

@@ -1,6 +1,8 @@
 // BASE SETUP
 // ==============================================
 var express = require('express');
+var passport = require('passport');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
 var pg = require('pg');
 var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus";
 // var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@localhost/cyprus";
@@ -8,6 +10,7 @@ var dbgeo = require("dbgeo");
 // var client = new pg.Client(conString);
 pg.defaults.poolSize = 25;
 var parking, furnished, heating, cooling, view, leaseType, qprice, startPrice, endPrice;
+
 // Connect to postgres
 // client.connect(function(error, success) {
 //   if (error) {
@@ -21,45 +24,9 @@ var parking, furnished, heating, cooling, view, leaseType, qprice, startPrice, e
 // create routes 
 // get an instance of router
 var router = express.Router();
-// router.get('/:layer', function(req, res, next) {
-//   var layer = req.params.layer;
-//   var bbox = req.query.bbox;
-//   pg.connect(conString, function(err, client, done) {
-//     if (err) {
-//       console.log("Could not connect to postgres");
-//     } else {
-//       console.log("Connected");
-//       var query = client.query('SELECT *,ST_AsGeoJSON(' + layer + '.the_geom) as geom FROM ' + layer + ' WHERE ' + layer + '.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)', function(error, result) {
-//         done();
-//         if (result) {
-//           dbgeo.parse({
-//             "data": result.rows,
-//             "geometryColumn": "geom",
-//           }, function(error, result) {
-//             if (error) {
-//               console.log(" --- error --- ", error);
-//             } else {
-//               res.header("Access-Control-Allow-Origin", "*");
-//               res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//               res.send(result);
-//               res.end();
-//             }
-//           });
-//         } else {
-//           console.log(error);
-//         }
-//       });
-//     }
-//     done();
-//   });
-// });
+
 router.get('/property', function(req, res, next) {
-  // var type;
-  // if (req.params.type==='rent'){
-  //   type = 'Rent';
-  // } else if (req.params.type==='sale'){
-  //   type = 'Sale';
-  // }
+
   var bbox = req.query.bbox;
   pg.connect(conString, function(err, client, done) {
     if (err) {
@@ -90,7 +57,6 @@ router.get('/property', function(req, res, next) {
         }
       });
     }
-    done();
   });
 });
 router.get('/filteredproperty', function(req, res, next) {
@@ -209,9 +175,8 @@ router.get('/uses/:propertygid', function(req, res, next) {
     }
   });
 });
-router.get('/admin', function(req, res, next) {
-  var gid = req.query.id;
-  console.log('adminid= ' + gid);
+router.post('/admin', ensureLoggedIn, function(req, res, next) {
+  var gid = req.body.id;
   pg.connect(conString, function(err, client, done) {
     if (err) {
       console.log("Could not connect to postgres");
