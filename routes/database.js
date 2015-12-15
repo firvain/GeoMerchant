@@ -37,7 +37,7 @@ router.get('/property', function(req, res, next) {
       var qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
       var query = client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom + 'WHERE public.property.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)', function(error, result) {
         done();
-        console.log(query.text);
+        // console.log(query.text);
         if (result) {
           dbgeo.parse({
             "data": result.rows,
@@ -46,10 +46,7 @@ router.get('/property', function(req, res, next) {
             if (error) {
               console.log(" --- error --- ", error);
             } else {
-              res.header("Access-Control-Allow-Origin", "*");
-              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
               res.send(result);
-              res.end();
             }
           });
         } else {
@@ -130,7 +127,7 @@ router.get('/filteredproperty', function(req, res, next) {
       sqlQuery += qprice;
       var query = client.query(sqlQuery, function(error, result) {
         done();
-        console.log(query.text);
+        // console.log(query.text);
         if (result) {
           dbgeo.parse({
             "data": result.rows,
@@ -139,10 +136,7 @@ router.get('/filteredproperty', function(req, res, next) {
             if (error) {
               console.log(" --- error --- ", error);
             } else {
-              res.header("Access-Control-Allow-Origin", "*");
-              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
               res.send(result);
-              res.end();
             }
           });
         } else {
@@ -161,13 +155,10 @@ router.get('/uses/:propertygid', function(req, res, next) {
       console.log("Connected");
       var query = client.query('select property_services_analysis(' + gid + ');', function(error, result) {
         done();
-        console.log(query);
+        // console.log(query);
         console.log(error);
         if (result) {
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           res.send(result.rows[0]);
-          res.end();
         } else {
           console.log('error in quering db');
         }
@@ -194,10 +185,7 @@ router.post('/admin', ensureLoggedIn, function(req, res, next) {
             if (error) {
               console.log(" --- error --- ", error);
             } else {
-              res.header("Access-Control-Allow-Origin", "*");
-              res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
               res.send(result);
-              res.end();
             }
           });
         } else {

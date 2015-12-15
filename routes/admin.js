@@ -8,6 +8,7 @@ router.get('/', ensureLoggedIn, function(req, res, next) {
   var data = {};
   var lang = String(req.flash('lang'));
   var id = String(req.flash('id'));
+
   if (lang === 'en') {
     data = {
       lang: 'en',

@@ -7,9 +7,10 @@ var env = {
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
   AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
 };
+var lang;
 /* GET map page. */
 router.get('/', function(req, res, next) {
-  var lang = req.query.lang;
+  lang = req.query.lang;
   var data = {};
   if (lang === 'en') {
     data = {
@@ -96,7 +97,7 @@ router.get('/callback', passport.authenticate('auth0', {
 }), function(req, res) {
   var id = req.user._json.user_metadata.gid;
   req.flash('id', id);
-  req.flash('lang', 'en');
+  req.flash('lang', lang);
   res.redirect(req.session.returnTo || '/admin');
 });
 module.exports = router;

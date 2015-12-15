@@ -17,6 +17,7 @@ var passport = require('passport');
 var Auth0Strategy = require('passport-auth0');
 //load .env vars
 dotenv.load();
+
 //route requires
 var index = require('./routes/index');
 var admin = require('./routes/admin');
@@ -44,6 +45,7 @@ passport.deserializeUser(function(user, done) {
 });
 ///================ Initialize app ================//
 var app = express();
+console.log(app.get('env'));
 // view engine setup
 app.engine('dust', cons.dust);
 app.set('view engine', 'dust');
