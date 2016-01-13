@@ -104,7 +104,7 @@
      zoom: 14,
      maxZoom: 19,
      minZoom: 10
-   }),
+   })
  });
  if (lang === 'el') {
    bing.set('name', 'Δορυφορική εικόνα');
