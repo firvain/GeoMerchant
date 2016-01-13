@@ -135,17 +135,21 @@ function createPSAandCard(f, obj) {
   dust.render('estateCards.dust', obj, function(err, out) {
     $('.estate-cards').html(out);
     $('.estate-cards').removeClass('visuallyhidden');
+    $('#infobox').addClass('visuallyhidden');
   });
   $('a[href="#openModal"]').click(function() {
     dust.render('modalInfo.dust', obj, function(err, out) {
       $('.modal-content').html(out);
     });
   });
+  $('a[href="#closeEstateCard"]').click(function() {
+    $('.estate-cards').addClass('visuallyhidden');
+    $('#infobox').removeClass('visuallyhidden');
+  });
 }
 $('.info').on('change', function(e) {
   e.preventDefault();
   PSA.setSource(null);
-    
   if ($(this).prop('checked') === true) {
     map.on('click', handleInfo);
   } else {

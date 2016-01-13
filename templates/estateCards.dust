@@ -16,6 +16,9 @@
     <a href="#openModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent">
      info
     </a>
+    <a href="#closeEstateCard" class="mdl-button mdl-js-button ">
+     close
+    </a>
     
   </div>
 </div>{/feature}
