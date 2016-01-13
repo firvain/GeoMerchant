@@ -1,22 +1,10 @@
-/*.estate-card-square .mdl-card__title {
-  color: inherit;
+.card-wrapper{
+  position: absolute;
+    top: 6.000em;
+  left: 0.5em;
+  z-index: 16;
 }
 
-.estate-card-square .mdl-card__supporting-text {
-  color: inherit;
-}*/
-
-
-/*.mdl-card__supporting-text > p{
-  font-size: inherit;
-  line-height: 18px;
-  padding: 0;
-}*/
-
-
-.estate-card-square{
-  margin-top: 5px;
-}
 .estate-card-square.mdl-card {
   width: 300px;
   height: 300px;
@@ -37,7 +25,11 @@
 }
 
 .estate-card-square > .mdl-card__actions {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   box-sizing: border-box;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
 }
