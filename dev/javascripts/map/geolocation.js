@@ -39,7 +39,7 @@
     e.preventDefault();
     if ($(this).prop("checked") === true) {
       geolocation.setTracking(true);
-      featuresOverlaySource.addFeatures([positionFeature,accuracyFeature]);
+      featuresOverlaySource.addFeatures([positionFeature, accuracyFeature]);
     } else {
       geolocation.setTracking(false);
       featuresOverlaySource.clear();

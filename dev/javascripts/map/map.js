@@ -95,12 +95,11 @@
      $.ajax({
        url: url,
        type: "GET",
-       dataType: "json",
+       dataType: "json"
      }).done(function(response) {
        var features = geoJSONFormat.readFeatures(response, {
          featureProjection: "EPSG:3857"
        });
-
        that.addFeatures(features);
      }).fail(function() {
        console.log("error");
@@ -136,7 +135,7 @@
          src: "../images/maki/renders/" + symbol + "-24.png",
          anchorOrigin: "bottom-left",
          anchor: [0.5, 0.5],
-         scale: 1,
+         scale: 1
        })),
        text: new ol.style.Text({
          text: text,
@@ -162,7 +161,7 @@
        src: "../images/map-icons/pins/48/pin4.png",
        anchorOrigin: "bottom-left",
        anchor: [0.5, 0.5],
-       scale: 0.7,
+       scale: 0.7
      }))
    })];
    return styleCache;
@@ -177,29 +176,28 @@
  });
  filteredEstates.setZIndex(2);
  var selectSource = new ol.source.Vector({});
-
  var selectBox = new ol.layer.Vector({
-  source: selectSource,
-  style: new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: "rgba(227, 72, 27, 0.2)"
-    }),
-    stroke: new ol.style.Stroke({
-      color: "#E3481B",
-      width: 2
-    }),
-    image: new ol.style.Circle({
-      radius: 7,
-      fill: new ol.style.Fill({
-        color: "#E3481B"
-      })
-    })
-  })
-});
+   source: selectSource,
+   style: new ol.style.Style({
+     fill: new ol.style.Fill({
+       color: "rgba(227, 72, 27, 0.2)"
+     }),
+     stroke: new ol.style.Stroke({
+       color: "#E3481B",
+       width: 2
+     }),
+     image: new ol.style.Circle({
+       radius: 7,
+       fill: new ol.style.Fill({
+         color: "#E3481B"
+       })
+     })
+   })
+ });
  selectBox.setZIndex(3);
  var map = new ol.Map({
    target: "map",
-   layers: [mapbox, property, PSA, filteredEstates,selectBox],
+   layers: [mapbox, property, PSA, filteredEstates, selectBox],
    // interactions: ol.interaction.defaults().extend([new ol.interaction.Select({
    //   condition: function(evt) {
    //     return evt.type === 'singleclick' && ol.events.condition.shiftKeyOnly(evt);
@@ -234,7 +232,7 @@
      zoom: 14,
      maxZoom: 19,
      minZoom: 10
-   }),
+   })
  });
  if (lang === "el") {
    bing.set("name", "Δορυφορική εικόνα");

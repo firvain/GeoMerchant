@@ -110,7 +110,7 @@ function createPSAandCard(f, obj) {
       $.ajax({
         url: url,
         type: "GET",
-        dataType: "json",
+        dataType: "json"
       }).done(function(response) {
         var features = geoJSONFormat.readFeatures(response.property_services_analysis, {
           featureProjection: "EPSG:3857"

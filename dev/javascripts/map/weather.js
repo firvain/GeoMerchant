@@ -2,18 +2,18 @@
   $(".weather").change(function() {
     if ($(this).prop("checked") === true) {
       map.getOverlays().forEach(function(ovl) {
-          if (ovl.get("name") === "weather") {
+        if (ovl.get("name") === "weather") {
           ($(ovl.getElement()).parent()).remove();
           $(ovl.getElement()).remove();
         }
-        });
+      });
       var center = ol.proj.transform(map.getView().getCenter(), "EPSG:3857", "EPSG:4326");
       var lat = center[1];
       var lon = center[0];
       $.ajax({
         url: "http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon + "&cnt=5&cluster=no&units=metric&type=accurate&APPID=f9cd9fa2c427c3b115e87e4862619c5c",
         type: "GET",
-        dataType: "json",
+        dataType: "json"
       }).done(function(data) {
         function createWeatherOverlay(position, index) {
           var elem = document.createElement("div");
@@ -22,7 +22,7 @@
           elem.setAttribute("data-name", "weather");
           return new ol.Overlay({
             element: elem,
-            position: position,
+            position: position
           });
         }
         var objs = data.list;
