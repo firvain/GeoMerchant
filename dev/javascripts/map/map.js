@@ -3,49 +3,49 @@
    lang = document.documentElement.lang,
    styleCache = {},
    geoJSONFormat = new ol.format.GeoJSON({
-     defaultDataProjection: 'EPSG:4326'
+     defaultDataProjection: "EPSG:4326"
    });
  var bing = new ol.layer.Tile({
    visible: true,
    source: new ol.source.BingMaps({
-     key: 'Ak2Gq8VUfICsPpuf7LRANXmXt2sHWmSLPhohmVLFtFIEwYjs_5MCyAhAFwRSVpLj',
-     imagerySet: 'Aerial'
+     key: "Ak2Gq8VUfICsPpuf7LRANXmXt2sHWmSLPhohmVLFtFIEwYjs_5MCyAhAFwRSVpLj",
+     imagerySet: "Aerial"
    }),
    maxZoom: 19,
-   crossOrigin: 'anonymous',
+   crossOrigin: "anonymous",
    preload: Infinity,
-   id: 'bing'
+   id: "bing"
  });
  var mapbox = new ol.layer.Tile({
    source: new ol.source.XYZ({
      attributions: [new ol.Attribution({
-       html: '<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox &copy; OpenStreetMap</a>'
+       html: "<a href=\"https://www.mapbox.com/about/maps/\" target=\"_blank\">&copy; Mapbox &copy; OpenStreetMap</a>"
      })],
-     url: 'https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA'
+     url: "https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA"
    }),
-   id: 'mapbox'
+   id: "mapbox"
  });
 
  function createPropertyStyle(feature) {
    var src;
-   if (feature.get('type_en') === 'Sale') {
-     src = '../images/map-icons/pins/48/pin2.png';
+   if (feature.get("type_en") === "Sale") {
+     src = "../images/map-icons/pins/48/pin2.png";
    } else {
-     src = '../images/map-icons/pins/48/pin5.png';
+     src = "../images/map-icons/pins/48/pin5.png";
    }
    return new ol.style.Style({
      geometry: feature.getGeometry(),
      image: new ol.style.Icon(({
        src: src,
-       anchorOrigin: 'bottom-left',
+       anchorOrigin: "bottom-left",
        anchor: [0, 0],
-       scale: 0.7,
+       scale: 0.7
      }))
    });
  }
 
  function propertyStyleFunction(feature, resolution) {
-   var size = feature.get('features').length;
+   var size = feature.get("features").length;
    if (size > 1) {
      style = [new ol.style.Style({
        image: new ol.style.Circle({
@@ -61,13 +61,13 @@
        text: new ol.style.Text({
          text: size.toString(),
          fill: new ol.style.Fill({
-           color: '#FFFFFF'
+           color: "#FFFFFF"
          })
        }),
        zIndex: 101
      })];
    } else {
-     var originalFeature = feature.get('features')[0];
+     var originalFeature = feature.get("features")[0];
      style = [createPropertyStyle(originalFeature)];
    }
    return style;
@@ -75,7 +75,7 @@
 
  function selectStyleFunction(feature, resolution) {
    var styles = [new ol.style.Style({})];
-   var originalFeatures = feature.get('features');
+   var originalFeatures = feature.get("features");
    var originaFeature;
    for (var i = originalFeatures.length - 1; i >= 0; --i) {
      originalFeature = originalFeatures[i];
@@ -86,19 +86,19 @@
  var propertySource = new ol.source.Vector({
    format: geoJSONFormat,
    loader: function(extent, resolution, projection) {
-    console.log(resolution);
-     var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-     var url = 'http://localhost:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
+     console.log(resolution);
+     var epsg4326Extent = ol.proj.transformExtent(extent, "EPSG:3857", "EPSG:4326");
+     var url = "http://localhost:3000/db/property?bbox[x1]=" + epsg4326Extent[0] + "&bbox[y1]=" + epsg4326Extent[1] + "&bbox[x2]=" + epsg4326Extent[2] + "&bbox[y2]=" + epsg4326Extent[3];
      var that = this;
      this.clear();
      console.log(extent);
      $.ajax({
        url: url,
-       type: 'GET',
-       dataType: 'json',
+       type: "GET",
+       dataType: "json",
      }).done(function(response) {
        var features = geoJSONFormat.readFeatures(response, {
-         featureProjection: 'EPSG:3857'
+         featureProjection: "EPSG:3857"
        });
 
        that.addFeatures(features);
@@ -112,29 +112,29 @@
    distance: 40,
    source: propertySource,
    attributions: [new ol.Attribution({
-     html: 'All maps © ' + '<a href="http://www.terracognita.gr/">Terra Cognita</a>'
+     html: "All maps © " + "<a href=\"http://www.terracognita.gr/\">Terra Cognita</a>"
    })]
  });
  var property = new ol.layer.Vector({
    source: propertyClusterSource,
-   id: 'estates',
+   id: "estates",
    visible: true,
    style: propertyStyleFunction
  });
  property.setZIndex(2);
  var PSAStyleFunction = function(feature, resolution) {
-   var symbol = feature.get('style');
+   var symbol = feature.get("style");
    var text;
-   if (lang === 'el') {
-     text = feature.get('name_el');
+   if (lang === "el") {
+     text = feature.get("name_el");
    } else {
-     text = feature.get('name_en');
+     text = feature.get("name_en");
    }
    if (!styleCache[symbol]) {
      styleCache = [new ol.style.Style({
        image: new ol.style.Icon(({
-         src: '../images/maki/renders/' + symbol + '-24.png',
-         anchorOrigin: 'bottom-left',
+         src: "../images/maki/renders/" + symbol + "-24.png",
+         anchorOrigin: "bottom-left",
          anchor: [0.5, 0.5],
          scale: 1,
        })),
@@ -159,8 +159,8 @@
  function filteredEsateStyle(feature, resolution) {
    styleCache = [new ol.style.Style({
      image: new ol.style.Icon(({
-       src: '../images/map-icons/pins/48/pin4.png',
-       anchorOrigin: 'bottom-left',
+       src: "../images/map-icons/pins/48/pin4.png",
+       anchorOrigin: "bottom-left",
        anchor: [0.5, 0.5],
        scale: 0.7,
      }))
@@ -171,34 +171,34 @@
    source: new ol.source.Vector({
      format: geoJSONFormat
    }),
-   id: 'filteredEstates',
+   id: "filteredEstates",
    visible: true,
    style: filteredEsateStyle
  });
  filteredEstates.setZIndex(2);
  var selectSource = new ol.source.Vector({});
 
-var selectBox = new ol.layer.Vector({
+ var selectBox = new ol.layer.Vector({
   source: selectSource,
   style: new ol.style.Style({
     fill: new ol.style.Fill({
-      color: 'rgba(227, 72, 27, 0.2)'
+      color: "rgba(227, 72, 27, 0.2)"
     }),
     stroke: new ol.style.Stroke({
-      color: '#E3481B',
+      color: "#E3481B",
       width: 2
     }),
     image: new ol.style.Circle({
       radius: 7,
       fill: new ol.style.Fill({
-        color: '#E3481B'
+        color: "#E3481B"
       })
     })
   })
 });
-selectBox.setZIndex(3);
+ selectBox.setZIndex(3);
  var map = new ol.Map({
-   target: 'map',
+   target: "map",
    layers: [mapbox, property, PSA, filteredEstates,selectBox],
    // interactions: ol.interaction.defaults().extend([new ol.interaction.Select({
    //   condition: function(evt) {
@@ -208,7 +208,7 @@ selectBox.setZIndex(3);
    // })]),
    loadTilesWhileAnimating: true,
    loadTilesWhileInteracting: true,
-   renderer: 'canvas',
+   renderer: "canvas",
    controls: ol.control.defaults({
      attributionOptions: {
        collapsible: false,
@@ -216,9 +216,9 @@ selectBox.setZIndex(3);
      }
    }).extend([
      new ol.control.ScaleLine({
-       units: 'metric'
+       units: "metric"
      }), new ol.control.OverviewMap({
-       className: 'ol-overviewmap ol-custom-overviewmap',
+       className: "ol-overviewmap ol-custom-overviewmap",
        collapsible: true,
        collapsed: true,
        layers: [bing]
@@ -230,18 +230,18 @@ selectBox.setZIndex(3);
    view: new ol.View({
      center: center,
      // extent: extent,
-     projection: 'EPSG:3857',
+     projection: "EPSG:3857",
      zoom: 14,
      maxZoom: 19,
      minZoom: 10
    }),
  });
- if (lang === 'el') {
-   bing.set('name', 'Δορυφορική εικόνα');
-   mapbox.set('name', 'Χάρτης');
-   property.set('name', 'Ακίνητα');
+ if (lang === "el") {
+   bing.set("name", "Δορυφορική εικόνα");
+   mapbox.set("name", "Χάρτης");
+   property.set("name", "Ακίνητα");
  } else {
-   bing.set('name', 'Sattelite Image');
-   mapbox.set('name', 'Map');
-   property.set('name', 'Properties');
+   bing.set("name", "Sattelite Image");
+   mapbox.set("name", "Map");
+   property.set("name", "Properties");
  }
