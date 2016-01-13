@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var minifyCss = require('gulp-minify-css');
+var cssnano = require('gulp-cssnano');
 var dust = require('gulp-dust');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
@@ -36,21 +36,21 @@ gulp.task('clean-css', function() {
     return del(['public/css/*.css']);
 });
 gulp.task('minify-css-map', function() {
-    return gulp.src(['dev/stylesheets/map/*.css'])
+    return gulp.src(['dev/stylesheets/*.css','dev/stylesheets/map/*.css'])
         .pipe(changed('public/css/map'))
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.css'))
-        .pipe(minifyCss())
+        .pipe(cssnano())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
 });
 gulp.task('minify-css-admin', function() {
-    return gulp.src(['dev/stylesheets/admin/*.css'])
+    return gulp.src(['dev/stylesheets/*.css','dev/stylesheets/admin/*.css'])
         .pipe(changed('public/css/admin'))
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.css'))
-        .pipe(minifyCss())
+        .pipe(cssnano())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
