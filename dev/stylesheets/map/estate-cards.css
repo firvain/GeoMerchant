@@ -1,18 +1,26 @@
-.card-wrapper{
-  position: absolute;
-    top: 6.000em;
-  left: 0.5em;
-  z-index: 16;
-}
 
-.estate-card-square.mdl-card {
-  width: 300px;
-  height: 300px;
+.estate-cards {
+    position: absolute;
+  top: 100%;
+  left: 0;
+  height: 0;
+  width: 100%;
+  
+  transition: height 0.3s ease;
+  z-index: 17;
 }
-
+.estate-cards.estate-cards-active{
+  top: 0;
+  height: 27em;
+  transition: all 0.3s ease;
+}
+.estate-card-square{
+  height:auto;
+  min-height: 0;
+}
 .estate-card-square > .mdl-card__title {
   color: #fff;
-  background: url('../images/properties/placeholder.png') bottom right 15% no-repeat;
+  background: red;
 }
 
 .estate-card-square a:hover {
@@ -24,12 +32,4 @@
   text-align: center;
 }
 
-.estate-card-square > .mdl-card__actions {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  box-sizing: border-box;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
+
