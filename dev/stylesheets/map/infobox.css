@@ -1,14 +1,14 @@
 .infobox {
-  top: 6.000em;
-  left: 0.5em;
-  height: 27em;
-  width: 30%;
-  min-width: 30%;
-  padding: 0.357em;
   position: absolute;
-  background: white;
   z-index: 15;
-  border-radius: 0.429em;
+  top: 6.000em;
+  left: .5em;
+  width: 27em;
+  min-width: 27em;
+  height: 27em;
+  max-height: 27em;
+  border-radius: .429em;
+  background: white;
 }
 
 .input-align-center {
@@ -23,7 +23,8 @@
 
 .filters {
   position: absolute;
-  height: 27em;
+padding-left: 0.5em;
+padding-right: 0.5em;
   z-index: 16;
+  height: 27em;
 }
-

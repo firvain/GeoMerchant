@@ -16,25 +16,19 @@
   positionFeature.setStyle(new ol.style.Style({
     image: new ol.style.Circle({
       radius: 6,
-      fill: new ol.style.Fill({
-        color: "#3399CC"
-      }),
-      stroke: new ol.style.Stroke({
-        color: "#fff",
-        width: 2
-      })
+      fill: new ol.style.Fill({color: "#3399CC"}),
+      stroke: new ol.style.Stroke({color: "#fff", width: 2})
     })
   }));
   // listen to changes in position
   geolocation.on("change:position", function() {
     var coordinates = geolocation.getPosition();
-    positionFeature.setGeometry(coordinates ? new ol.geom.Point(coordinates) : null);
+    positionFeature.setGeometry(coordinates
+      ? new ol.geom.Point(coordinates)
+      : null);
   });
   featuresOverlaySource = new ol.source.Vector({});
-  var featuresOverlay = new ol.layer.Vector({
-    map: map,
-    source: featuresOverlaySource
-  });
+  var featuresOverlay = new ol.layer.Vector({map: map, source: featuresOverlaySource});
   $(".geolocation").on("change", function(e) {
     e.preventDefault();
     if ($(this).prop("checked") === true) {

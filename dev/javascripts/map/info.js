@@ -106,7 +106,7 @@ function createPSAandCard(f, obj) {
     format: geoJSONFormat,
     loader: function(extent, resolution, projection) {
       var url = "http://localhost:3000/db/uses/" + feature.gid;
-      var that = this;
+      var self = this;
       $.ajax({
         url: url,
         type: "GET",
@@ -121,7 +121,7 @@ function createPSAandCard(f, obj) {
           })
         });
         features[0].setStyle(area);
-        that.addFeatures(features);
+        self.addFeatures(features);
       }).fail(function() {
         console.log("error");
       });

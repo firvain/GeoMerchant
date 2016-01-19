@@ -1,23 +1,26 @@
-
 .estate-cards {
-    position: absolute;
+  position: absolute;
+  z-index: 17;
   top: 100%;
   left: 0;
-  height: 0;
   width: 100%;
-  
+  height: 0;
   transition: height 0.3s ease;
-  z-index: 17;
+
 }
-.estate-cards.estate-cards-active{
+
+.estate-cards.estate-cards-active {
   top: 0;
   height: 27em;
-  transition: all 0.3s ease;
+  transition: all .3s ease;
 }
-.estate-card-square{
-  height:auto;
+
+.estate-card-square {
+  width: 100%;
+  height: inherit;
   min-height: 0;
 }
+
 .estate-card-square > .mdl-card__title {
   color: #fff;
   background: red;
@@ -28,8 +31,6 @@
 }
 
 .estate-card-square a {
-  color: inherit;
   text-align: center;
+  color: inherit;
 }
-
-
