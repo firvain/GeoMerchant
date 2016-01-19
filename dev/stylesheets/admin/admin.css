@@ -8,7 +8,6 @@ body
     height: 100vh;
 }
 
-
 .adminMap
 {
     position: absolute;
@@ -16,6 +15,7 @@ body
     width: inherit;
     height: inherit;
 }
+
 .ol-custom-overviewmap,
 .ol-custom-overviewmap.ol-uncollapsible
 {
@@ -49,6 +49,7 @@ body
     bottom: auto;
     left: auto;
 }
+
 .ol-zoom
 {
     top: .5em;
@@ -56,6 +57,7 @@ body
     bottom: auto;
     left: auto;
 }
+
 .ol-zoom-extent
 {
     top: 4.643em;
@@ -63,6 +65,7 @@ body
     bottom: auto;
     left: auto;
 }
+
 .infobox
 {
     position: absolute;
@@ -77,6 +80,7 @@ body
     border-radius: .429em;
     background: white;
 }
+
 .actions
 {
     display: -webkit-flex;
@@ -87,6 +91,7 @@ body
     -ms-flex-pack: distribute;
             justify-content: space-around;
 }
+
 .property-info
 {
     display: -webkit-flex;
@@ -99,10 +104,12 @@ body
 
     border-radius: .5em;
 }
+
 .property-info > li
 {
     margin-top: .07142em;
 }
+
 .toast-message
 {
     display: -webkit-flex;
@@ -116,12 +123,14 @@ body
     -ms-flex-align: center;
             align-items: center;
 }
+
 .toast-message > p
 {
     font-size: 16px;
 
     margin: 0;
 }
+
 .toastr-btns
 {
     display: -webkit-flex;
@@ -132,22 +141,26 @@ body
     -ms-flex-pack: distribute;
             justify-content: space-around;
 }
+
 .toastr-btns > button
 {
     color: white;
 }
+
 .userinfo
 {
     float: none;
 
     margin: 0 auto;
 }
+
 .userinfo p
 {
     font-size: 1.2em;
 
     text-align: center;
 }
+
 .modal-dialog
 {
     position: absolute;
@@ -155,19 +168,19 @@ body
     top: 50%;
     left: 50%;
 
-
-    padding: 3em;
-
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
 
     border-radius: 1em;
     background: #fff;
 }
+
 .modal-content
 {
     position: relative;
 }
-.modal-content .mdl-textfield {
-  width: auto;
+
+.modal-content .mdl-textfield
+{
+    width: auto;
 }

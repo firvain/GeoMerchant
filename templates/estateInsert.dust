@@ -1,4 +1,4 @@
-<form class="insertProperty" action="#" method="post" autocomplete="off">
+<form class="insertProperty" action="#" method="post" autocomplete="off" name="insertProperty">
   <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--4-col">
       <fieldset>
@@ -77,11 +77,20 @@
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="view">
             <input type="checkbox" id="view" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">view</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="heating">
-            <input type="checkbox" id="view" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">heating</span> </label>
+            <input type="checkbox" id="heating" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">heating</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="cooling">
-            <input type="checkbox" id="view" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">cooling</span> </label>
+            <input type="checkbox" id="cooling" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">cooling</span> </label>
 
       </fieldset>
     </div>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--6-col">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+  Submit
+</button></div>
+  <div class="mdl-cell mdl-cell--6-col">
+<button class="mdl-button mdl-js-button mdl-js-ripple-effect">
+  Button
+</button></div></div>
   </div>
 </form>

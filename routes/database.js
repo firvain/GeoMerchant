@@ -191,4 +191,8 @@ router.post('/admin', ensureLoggedIn, function (req, res, next) {
     }
   });
 });
+router.post('/insert', ensureLoggedIn, function (req, res, next) {
+  console.log(req.body);
+  res.status(201).send({ status: 'ok!!!' });
+});
 module.exports = router;

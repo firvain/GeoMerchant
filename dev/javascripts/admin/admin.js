@@ -241,14 +241,13 @@ $('#insertProperty').click(function () {
   draw.on('drawend', function (evt) {
     evt.preventDefault();
     draw.setActive(false);
-    var obj={};
+    var obj = {};
     $('.modal-dialog').removeClass('visuallyhidden');
-    dust.render('estateInsert.dust', obj, function(err, out) {
+    dust.render('estateInsert.dust', obj, function (err, out) {
       $('.modal-content').html(out);
       componentHandler.upgradeDom();
     });
   });
-
 });
 //====== delete ======
 $('#deleteProperty').click(function (event) {
