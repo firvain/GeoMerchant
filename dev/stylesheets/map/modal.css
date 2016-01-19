@@ -1,46 +1,61 @@
-.modalDialog {
-  position: fixed;
-  font-family: Arial, Helvetica, sans-serif;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 99999;
-  opacity: 0;
-  transition: opacity 400ms ease-in;
-  pointer-events: none;
+.modalDialog
+{
+    font-family: Arial, Helvetica, sans-serif;
+
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+
+    opacity: 0;
+    background: rgba(0, 0, 0, .8);
 }
 
-.modalDialog:target {
-  opacity: 1;
-  pointer-events: auto;
+.modalDialog:target
+{
+    pointer-events: auto;
+
+    opacity: 1;
 }
 
-.modalwraper {
-  width: 900px;
-  position: relative;
-  margin: 10% auto;
-  padding: 5px 20px 13px 20px;
-  border-radius: 10px;
-  background: #fff;
+.modalwraper
+{
+    position: relative;
+
+    width: 900px;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+
+    border-radius: 10px;
+    background: #fff;
 }
 
-.close {
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  color: #212121;
+.close
+{
+    position: absolute;
+    top: 10px;
+    right: 12px;
+
+    color: #212121;
 }
 
-.close:hover {
-  color: #7B1FA2;
+.close:hover
+{
+    color: #7b1fa2;
 }
-.modal-content li {
-  display:flex;
+.modal-content li
+{
+    display: flex;
 }
-.modal-content ul, .modal-content li {
-  padding: 0;
+.modal-content ul,
+.modal-content li
+{
+    padding: 0;
 }
 
 /* ----------- iPhone 6 ----------- */
@@ -48,19 +63,23 @@
 
 /* Portrait */
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  .modalDialog > div {
-    width: 300px;
-  }
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)
+{
+    .modalDialog > div
+    {
+        width: 300px;
+    }
 }
 
 
 /* Landscape */
 
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-  .modalDialog > div {
-    width: 400px;
-  }
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape)
+{
+    .modalDialog > div
+    {
+        width: 400px;
+    }
 }
 
 
@@ -69,42 +88,50 @@
 
 /* Portrait */
 
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-  .modalDialog > div {
-    width: 300px;
-  }
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait)
+{
+    .modalDialog > div
+    {
+        width: 300px;
+    }
 }
 
 
 /* Landscape */
 
-@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-  .modalDialog > div {
-    width: 400px;
-  }
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape)
+{
+    .modalDialog > div
+    {
+        width: 400px;
+    }
 }
 /* ----------- Galaxy S4 ----------- */
 
 /* Portrait */
-@media screen 
-  and (device-width: 320px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) 
-  and (orientation: portrait) {
-.modalDialog > div {
-    width: 300px;
-  }
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait)
+{
+    .modalDialog > div
+    {
+        width: 300px;
+    }
 }
 
 /* Landscape */
-@media screen 
-  and (device-width: 320px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) 
-  and (orientation: landscape) {
-.modalDialog > div {
-    width: 400px;
-  }
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: landscape)
+{
+    .modalDialog > div
+    {
+        width: 400px;
+    }
 }
 
 /* ----------- Galaxy S5 ----------- */
@@ -112,23 +139,27 @@
 
 
 /* Portrait */
-@media screen 
-  and (device-width: 360px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) 
-  and (orientation: portrait) {
-.modalDialog > div {
-    width: 300px;
-  }
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait)
+{
+    .modalDialog > div
+    {
+        width: 300px;
+    }
 }
 
 /* Landscape */
-@media screen 
-  and (device-width: 360px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) 
-  and (orientation: landscape) {
-.modalDialog > div {
-    width: 400px;
-  }
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: landscape)
+{
+    .modalDialog > div
+    {
+        width: 400px;
+    }
 }

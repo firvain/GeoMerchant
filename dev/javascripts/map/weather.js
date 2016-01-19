@@ -20,15 +20,15 @@
           elem.setAttribute("class", "weather-popup default-primary-color mdl-shadow--6dp");
           elem.setAttribute("id", index);
           elem.setAttribute("data-name", "weather");
-          return new ol.Overlay({
-            element: elem,
-            position: position
-          });
+          return new ol.Overlay({element: elem, position: position});
         }
         var objs = data.list;
-        var overlay, coordinates;
+        var overlay,
+          coordinates;
         $.each(objs, function(index, val) {
-          coordinates = ol.proj.transform([val.coord.lon, val.coord.lat], "EPSG:4326", "EPSG:3857");
+          coordinates = ol.proj.transform([
+            val.coord.lon, val.coord.lat
+          ], "EPSG:4326", "EPSG:3857");
           overlay = createWeatherOverlay(coordinates, index);
           map.addOverlay(overlay);
           overlay.set("name", "weather");

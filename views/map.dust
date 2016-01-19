@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
-  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.purple-indigo.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.10.1/ol.min.css" crossorigin="anonymous">
@@ -43,86 +43,92 @@
         <label class="menu-item  default-primary-color mdl-shadow--2dp" for="weather"></label>
         <a href="#" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-envelope"></i> </a>
         <a id="adminLogin" href="javascript:void(0)" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-user"></i> </a>
-        <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick='window.location.assign("/")' />
+        <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick="window.location.assign('/')" />
         <label class="menu-item  default-primary-color mdl-shadow--2dp" for="home"></label>
       </form>
     </nav>
     <div class="infobox mdl-shadow--16dp" id="infobox">
-      <form name="filters" action="#" autocomplete="off">
-        <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-            <fieldset>
-              <div>
-                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
-                  <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{chooseArea}</span> </label>
-              </div>
-            </fieldset>
-          </div>
-        </div>
-        <fieldset>
-          <legend>
-            <h6>{type}</h6></legend>
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col">
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked/> <span class="mdl-radio__label">{rent}</span> </label>
-            </div>
-            <div class="mdl-cell mdl-cell--6-col">
-              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>
-            <h6>{estateProperties}</h6></legend>
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col">
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
-                <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{parking}</span> </label>
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
-                <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{furnished}</span> </label>
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3">
-                <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{heating}</span> </label>
-            </div>
-            <div class="mdl-cell mdl-cell--6-col">
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
-                <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{cooling}</span> </label>
-              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
-                <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{view}</span> </label>
-            </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>
-            <h6>{price}</h6></legend>
-          <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col">
-              <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startPrice" />
-                <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
-            </div>
-            <div class="mdl-cell mdl-cell--6-col">
-              <div class="mdl-textfield mdl-js-textfield">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
-                <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
-            </div>
-          </div>
-          <div class="mdl-grid mdl-grid-center">
-            <div class="mdl-cell mdl-cell--6-col">
-              <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="Go"> </div>
-            <div class="mdl-cell mdl-cell--6-col">
-              <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="reset" value="Reset!"> </div>
-          </div>
-        </fieldset>
-      </form>
+      <div class="infobox-content">
+      <div class="filters">
 
-    </div>
-     <div class="card-wrapper">
-       
-            <form action="#" class="visuallyhidden estate-cards"> </form>
-         
+
+        <form name="filters" action="#" autocomplete="off">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col">
+              <fieldset>
+                <div>
+                  <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
+                    <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{chooseArea}</span> </label>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+          <fieldset>
+            <legend>
+              <h6>{type}</h6></legend>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--6-col">
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                  <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked/> <span class="mdl-radio__label">{rent}</span> </label>
+              </div>
+              <div class="mdl-cell mdl-cell--6-col">
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                  <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{sale}</span> </label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>
+              <h6>{estateProperties}</h6></legend>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--6-col">
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-1">
+                  <input type="checkbox" id="checkbox-1" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{parking}</span> </label>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
+                  <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{furnished}</span> </label>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3">
+                  <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{heating}</span> </label>
+              </div>
+              <div class="mdl-cell mdl-cell--6-col">
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-4">
+                  <input type="checkbox" id="checkbox-4" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{cooling}</span> </label>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
+                  <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input"> <span class="mdl-checkbox__label">{view}</span> </label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>
+              <h6>{price}</h6></legend>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="startPrice" />
+                  <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+              </div>
+              <div class="mdl-cell mdl-cell--6-col">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="endPrice" />
+                  <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span> </div>
+              </div>
+            </div>
+            <div class="mdl-grid mdl-grid-center">
+              <div class="mdl-cell mdl-cell--6-col">
+                <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="Go"> </div>
+              <div class="mdl-cell mdl-cell--6-col">
+                <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="reset" value="Reset!"> </div>
+            </div>
+          </fieldset>
+        </form>
+        </div>
+
+           <form action="#" class="estate-cards "> </form>
+
       </div>
+    </div>
+   {!  <div class="card-wrapper">
+      <form action="#" class="visuallyhidden estate-cards"> </form>
+    </div> !}
   </div>
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

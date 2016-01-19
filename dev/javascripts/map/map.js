@@ -45,7 +45,8 @@
  }
 
  function propertyStyleFunction(feature, resolution) {
-   var size = feature.get("features").length;
+   var size = feature.get("features")
+     .length;
    if (size > 1) {
      style = [new ol.style.Style({
        image: new ol.style.Circle({
@@ -89,21 +90,23 @@
      console.log(resolution);
      var epsg4326Extent = ol.proj.transformExtent(extent, "EPSG:3857", "EPSG:4326");
      var url = "http://localhost:3000/db/property?bbox[x1]=" + epsg4326Extent[0] + "&bbox[y1]=" + epsg4326Extent[1] + "&bbox[x2]=" + epsg4326Extent[2] + "&bbox[y2]=" + epsg4326Extent[3];
-     var that = this;
+     var self = this;
      this.clear();
      console.log(extent);
      $.ajax({
-       url: url,
-       type: "GET",
-       dataType: "json"
-     }).done(function(response) {
-       var features = geoJSONFormat.readFeatures(response, {
-         featureProjection: "EPSG:3857"
+         url: url,
+         type: "GET",
+         dataType: "json"
+       })
+       .done(function(response) {
+         var features = geoJSONFormat.readFeatures(response, {
+           featureProjection: "EPSG:3857"
+         });
+         self.addFeatures(features);
+       })
+       .fail(function() {
+         console.log("error");
        });
-       that.addFeatures(features);
-     }).fail(function() {
-       console.log("error");
-     });
    },
    strategy: ol.loadingstrategy.bbox
  });
@@ -208,23 +211,24 @@
    loadTilesWhileInteracting: true,
    renderer: "canvas",
    controls: ol.control.defaults({
-     attributionOptions: {
-       collapsible: false,
-       collapsed: false
-     }
-   }).extend([
-     new ol.control.ScaleLine({
-       units: "metric"
-     }), new ol.control.OverviewMap({
-       className: "ol-overviewmap ol-custom-overviewmap",
-       collapsible: true,
-       collapsed: true,
-       layers: [bing]
-     }),
-     new ol.control.ZoomToExtent({
-       extent: extent
+       attributionOptions: {
+         collapsible: false,
+         collapsed: false
+       }
      })
-   ]),
+     .extend([
+       new ol.control.ScaleLine({
+         units: "metric"
+       }), new ol.control.OverviewMap({
+         className: "ol-overviewmap ol-custom-overviewmap",
+         collapsible: true,
+         collapsed: true,
+         layers: [bing]
+       }),
+       new ol.control.ZoomToExtent({
+         extent: extent
+       })
+     ]),
    view: new ol.View({
      center: center,
      // extent: extent,

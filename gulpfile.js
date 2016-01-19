@@ -9,6 +9,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
+var autoprefixer = require('gulp-autoprefixer');
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
 });
@@ -40,6 +41,10 @@ gulp.task('minify-css-map', function() {
         .pipe(changed('public/css/map'))
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.css'))
+        .pipe(autoprefixer({
+          browsers: ['last 4 versions'],
+          cascade: false
+        }))
         .pipe(cssnano())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))

@@ -1,8 +1,11 @@
 (function() {
   var marker = new ol.Feature();
   var iconStyle = new ol.style.Style({
-    image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
-      anchor: [0.5, 1],
+    image: new ol.style.Icon(/** @type {olx.style.IconOptions} */
+    ({
+      anchor: [
+        0.5, 1
+      ],
       anchorXUnits: "fraction",
       anchorYUnits: "fraction",
       opacity: 1,
@@ -29,7 +32,6 @@
     NameEn: "Route"
   });
   var routeCoords = [];
-
   function handleMarker(event) {
     event.preventDefault();
     var featureCount = featuresOverlay.getSource().getFeatures().length;
@@ -52,15 +54,14 @@
       featuresOverlay.getSource().clear();
     }
   }
-
-  geoJSONFormat = new ol.format.GeoJSON({
-    defaultDataProjection: "EPSG:4326",
-    geometryName: "geometry"
-  });
-
+  geoJSONFormat = new ol.format.GeoJSON({defaultDataProjection: "EPSG:4326", geometryName: "geometry"});
   function callRoute(routeCoords) {
-    var first = ol.proj.transform([routeCoords[0], routeCoords[1]], "EPSG:3857", "EPSG:4326");
-    var second = ol.proj.transform([routeCoords[2], routeCoords[3]], "EPSG:3857", "EPSG:4326");
+    var first = ol.proj.transform([
+      routeCoords[0], routeCoords[1]
+    ], "EPSG:3857", "EPSG:4326");
+    var second = ol.proj.transform([
+      routeCoords[2], routeCoords[3]
+    ], "EPSG:3857", "EPSG:4326");
     var x1 = first[0];
     var y1 = first[1];
     var x2 = second[0];
@@ -70,8 +71,8 @@
       type: "GET",
       dataType: "json"
     }).done(function(data) {
-      var route={};
-      route.type ="Feature";
+      var route = {};
+      route.type = "Feature";
       route.geometry = data.routes[0].geometry;
       featuresOverlay.getSource().addFeatures(geoJSONFormat.readFeatures(route, {
         dataProjection: "EPSG:4326",
@@ -79,9 +80,9 @@
       }));
       map.getView().fit(featuresOverlay.getSource().getExtent(), map.getSize());
     }).fail(function() {
-      console.log("error");
+      // console.log("error");
     }).always(function() {
-      console.log("complete");
+      // console.log("complete");
     });
   }
   $(".marker").on("change", function(event) {

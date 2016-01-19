@@ -1,22 +1,30 @@
 .infobox {
-  top: 6.000em;
-  left: 0.5em;
-  height: auto;
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
-  min-width: -webkit-min-content;
-  min-width: -moz-min-content;
-  min-width: min-content;
-  padding: 0.357em;
   position: absolute;
-  background: white;
   z-index: 15;
-  border-radius: 0.429em;
-  transition: all .3s ease;
+  top: 6.000em;
+  left: .5em;
+  width: 27em;
+  min-width: 27em;
+  height: 27em;
+  max-height: 27em;
+  border-radius: .429em;
+  background: white;
 }
 
-.input-align-center{
- display:block;
- margin: 0 auto;
+.input-align-center {
+  display: block;
+  margin: 0 auto;
+}
+
+.infobox-content {
+  position: relative;
+  height: auto;
+}
+
+.filters {
+  position: absolute;
+padding-left: 0.5em;
+padding-right: 0.5em;
+  z-index: 16;
+  height: 27em;
 }

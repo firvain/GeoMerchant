@@ -106,7 +106,7 @@ function createPSAandCard(f, obj) {
     format: geoJSONFormat,
     loader: function(extent, resolution, projection) {
       var url = "http://localhost:3000/db/uses/" + feature.gid;
-      var that = this;
+      var self = this;
       $.ajax({
         url: url,
         type: "GET",
@@ -121,7 +121,7 @@ function createPSAandCard(f, obj) {
           })
         });
         features[0].setStyle(area);
-        that.addFeatures(features);
+        self.addFeatures(features);
       }).fail(function() {
         console.log("error");
       });
@@ -134,8 +134,8 @@ function createPSAandCard(f, obj) {
   obj.feature = feature;
   dust.render("estateCards.dust", obj, function(err, out) {
     $(".estate-cards").html(out);
-    $(".estate-cards").removeClass("visuallyhidden");
-    $("#infobox").addClass("visuallyhidden");
+    $(".estate-cards").addClass("estate-cards-active");
+    // $("#infobox").addClass("visuallyhidden");
   });
   $("a[href=\"#openModal\"]").click(function() {
     dust.render("modalInfo.dust", obj, function(err, out) {
@@ -143,8 +143,7 @@ function createPSAandCard(f, obj) {
     });
   });
   $("a[href=\"#closeEstateCard\"]").click(function() {
-    $(".estate-cards").addClass("visuallyhidden");
-    $("#infobox").removeClass("visuallyhidden");
+    $(".estate-cards").removeClass("estate-cards-active");
   });
 }
 $(".info").on("change", function(e) {
