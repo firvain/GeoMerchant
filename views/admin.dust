@@ -7,16 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.purple-indigo.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.11.2/ol.min.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/admin.min.css" crossorigin="anonymous"> </head>
 
 <body>
-  <div class="appwrapper">
+
+
+    <div id="openModal" class="modal-dialog mdl-shadow--16dp visuallyhidden">
+      <div class="modal-content"> </div>
+    </div>
     <div class="adminMap" id="adminMap"> </div>
     <div class="infobox mdl-shadow--8dp">
       <div class="userinfo">
@@ -30,7 +33,7 @@
       </div>
       <div class="property-info visuallyhidden mdl-shadow--4dp"> </div>
     </div>
-  </div>
+
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.11.2/ol.min.js" crossorigin="anonymous"></script>
@@ -39,6 +42,7 @@
   <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="/js/tpl/adminEstateInfo.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/estateinsert.js" crossorigin="anonymous"></script>
   <script type="text/javascript">
   var id = parseInt('{id}');
   </script>

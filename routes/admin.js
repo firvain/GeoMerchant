@@ -4,11 +4,10 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login'
 var flash = require('connect-flash');
 var router = express.Router();
 /* GET users listing. */
-router.get('/', ensureLoggedIn, function(req, res, next) {
+router.get('/', ensureLoggedIn, function (req, res, next) {
   var data = {};
   var lang = String(req.flash('lang'));
   var id = String(req.flash('id'));
-
   if (lang === 'en') {
     data = {
       lang: 'en',

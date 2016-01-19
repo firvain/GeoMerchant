@@ -27,7 +27,7 @@ var strategy = new Auth0Strategy({
   domain: process.env.AUTH0_DOMAIN,
   clientID: process.env.AUTH0_CLIENT_ID,
   clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  callbackURL: process.env.AUTH0_CALLBACK_URL || "http://localhost:3000/callback"
+  callbackURL: process.env.AUTH0_CALLBACK_URL || "http://127.0.0.1:3000/callback"
 }, function(accessToken, refreshToken, extraParams, profile, done) {
   // accessToken is the token to call Auth0 API (not needed in the most cases)
   // extraParams.id_token has the JSON Web Token
@@ -44,7 +44,6 @@ passport.deserializeUser(function(user, done) {
 });
 ///================ Initialize app ================//
 var app = express();
-console.log(app.get("env"));
 // view engine setup
 app.engine("dust", cons.dust);
 app.set("view engine", "dust");
@@ -60,7 +59,7 @@ app.use(cookieParser());
 //static files by express
 app.use(express.static(path.join(__dirname, "public")));
 //Passport setup and init//
-app.use(session({secret: "shhhhhhhhh", resave: true, saveUninitialized: true}));
+app.use(session({secret: "shhhhhhhhh", resave: false, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
 ///================ Routes ================//
