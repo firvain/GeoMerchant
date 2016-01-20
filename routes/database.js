@@ -30,7 +30,7 @@ router.get('/property', function (req, res, next) {
       console.log('Could not connect to postgres');
     } else {
       console.log('Connected');
-      var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."new",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,' + 'public.listing.type_el,public.listing.type_en,public.owner.phone2';
+      var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,' + 'public.listing.type_el,public.listing.type_en,public.owner.phone2';
       var qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
       var query = client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom + 'WHERE public.property.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)', function (error, result) {
         done();
@@ -95,7 +95,7 @@ router.get('/filteredproperty', function (req, res, next) {
       console.log('Could not connect to postgres');
     } else {
       console.log('Connected');
-      var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."new",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,' + 'public.listing.type_el,public.listing.type_en,public.owner.phone2';
+      var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,' + 'public.listing.type_el,public.listing.type_en,public.owner.phone2';
       var qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
       var qleaseType = ' AND  public.listing.type_en=\'' + req.query.leaseType + '\'';
       var qparking = ' AND public.property.parking=' + parking;
@@ -152,7 +152,9 @@ router.get('/uses/:propertygid', function (req, res, next) {
       var query = client.query('select property_services_analysis(' + gid + ');', function (error, result) {
         done();
         // console.log(query);
-        console.log(error);
+        if (error) {
+          console.log(error);
+        }
         if (result) {
           res.send(result.rows[0]);
         } else {
@@ -169,7 +171,7 @@ router.post('/admin', ensureLoggedIn, function (req, res, next) {
       console.log('Could not connect to postgres');
     } else {
       console.log('Connected');
-      var whatTofetch = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,      public.property.title,        public.property.year,        public.property.other,        public.property.parcel_num,        public.property.plan_num,        public.property.area_name,public.property.street_el,        public.property.h_num_el,        public.property.ps_code,public.property.floor,public.property.street_en,public.property.h_num_en,public.property."new"';
+      var whatTofetch = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,      public.property.title,        public.property.year,        public.property.other,        public.property.parcel_num,        public.property.plan_num,        public.property.area_name,public.property.street_el,        public.property.h_num_el,        public.property.ps_code,public.property.floor,public.property.street_en,public.property.h_num_en,public.property."isnew"';
       var from = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id)' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid)';
       var query = client.query('select ' + whatTofetch + ',ST_AsGeoJSON(public.property.the_geom) as geom ' + 'FROM ' + from + ' where public.owner.id=$1 ', [gid], function (error, result) {
         done();
@@ -191,8 +193,59 @@ router.post('/admin', ensureLoggedIn, function (req, res, next) {
     }
   });
 });
-router.post('/insert', ensureLoggedIn, function (req, res, next) {
-  console.log(req.body);
-  res.status(201).send({ status: 'ok!!!' });
+router.post('/insert', function (req, res, next) {
+  var estatetype = req.body.estatetype;
+  var estatearea = req.body.estatearea;
+  var plotarea = req.body.plotarea;
+  var bedrooms = req.body.bedrooms;
+  var parking = req.body.parking;
+  var furnished = req.body.furnished;
+  var title = req.body.title;
+  var year = req.body.year;
+  var other = req.body.other;
+  var parcel_num = req.body.parcel_num;
+  var plan_num = req.body.plan_num;
+  var area_name = req.body.area_name;
+  var street_el = req.body.street_el;
+  var h_num_el = req.body.h_num_el;
+  var ps_code = req.body.ps_code;
+  var floor = req.body.floor;
+  var street_en = req.body.street_en;
+  var h_num_en = req.body.h_num_en;
+  var isnew = req.body.isnew;
+  var view = req.body.view;
+  var heating = req.body.heating;
+  var cooling = req.body.cooling;
+  var x = req.body.x;
+  var y = req.body.y;
+  var adminId = req.body.adminId;
+  pg.connect(conString, function (err, client, done) {
+    if (err) {
+      console.log('Could not connect to postgres');
+    } else {
+      console.log('Connected');
+      var columns = '(estatetype,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,h_num_el,ps_code,floor,street_en,h_num_en,isnew,view,heating,cooling,the_geom) ';
+      var values = estatetype + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcel_num + ',' + plan_num + ',' + area_name + ',' + street_el + ',' + h_num_el + ',' + ps_code + ',' + floor + ',' + street_en + ',' + h_num_en + ',' + isnew + ',' + view + ',' + heating + ',' + cooling
+      var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
+      var query = client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function (error, result) {
+        if (error) {
+          console.log(error);
+        } else {
+          var propertygid = result.rows[0].gid;
+          var query2 = client.query('INSERT INTO public.owner_property (owner_id,property_gid) VALUES (' + adminId + ',' + propertygid + ')', function (error, result) {
+            console.log(query2.text);
+            if (error) throw error;
+            else {
+              console.log(result);
+            }
+          });
+        }
+      });
+    }
+    done();
+  });
+  res.send({
+    message: 'hey'
+  });
 });
 module.exports = router;

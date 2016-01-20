@@ -14,7 +14,7 @@ function handleInfo(evt) {
     title.address = "Διευθυνση";
     title.bedrooms = "Υπνοδωμάτια";
     title.price = "Τιμή";
-    title.new = "Νεόδμητο";
+    title.isnew = "Νεόδμητο";
     title.parking = "Στάθμεση";
     title.furnished = "Επιπλωμένο";
     title.pets = "Κατοικίδια";
@@ -33,7 +33,7 @@ function handleInfo(evt) {
     title.address = "Address";
     title.bedrooms = "Bedrooms";
     title.price = "Price";
-    title.new = "Newly Build";
+    title.isnew = "Newly Build";
     title.parking = "Parking";
     title.furnished = "Furnished";
     title.pets = "Pets Allowed";
@@ -82,7 +82,7 @@ function createPSAandCard(f, obj) {
   }
   feature.bedrooms = f.get("bedrooms");
   feature.price = f.get("price");
-  feature.new = f.get("new");
+  feature.isnew = f.get("isnew");
   feature.parking = f.get("parking");
   feature.furnished = f.get("furnished");
   feature.pets = f.get("pets");

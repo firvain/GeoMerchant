@@ -9,7 +9,7 @@
   <li>Εμβαδό Ακινήτου/Estate Area : <b>{estatearea}</b></li>
   <li>Εβαδό Οικοπέδου/Plot Area : <b>{plotarea}</b></li>
   <li>Αριθμός Οικοπέδου/Plot Number : <b>{plot_num}</b></li>
-  <li>Νεόδμητο/Newly Build : <b>{@eq key=new type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
+  <li>Νεόδμητο/Newly Build : <b>{@eq key=isnew type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
   <li>Χρόνος Κατασκευής/Construction Year : <b>{year}</b></li>
   <li>Estate Title/Τίτλος Ιδικτησίας : <b>{title}</b></li>
   <li>Όροφος/Floor : <b>{floor}</b></li>
@@ -24,4 +24,3 @@
 
 {/feature}
 </ul>
-

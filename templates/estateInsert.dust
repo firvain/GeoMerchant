@@ -27,7 +27,11 @@
           <input class="mdl-textfield__input" type="text" id="parcel_num">
           <label class="mdl-textfield__label" for="parcel_num">parcel_num</label>
         </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="bedrooms">
+          <label class="mdl-textfield__label" for="bedrooms">bedrooms</label><span class="mdl-textfield__error">Input is not a number!</span> </div>
       </fieldset>
+
     </div>
       <div class="mdl-cell mdl-cell--4-col">
         <fieldset>
@@ -72,8 +76,8 @@
             <input type="checkbox" id="parking" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">parking</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="furnished">
             <input type="checkbox" id="furnished" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">furnished</span> </label>
-          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="new">
-            <input type="checkbox" id="new" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">new</span> </label>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="isnew">
+            <input type="checkbox" id="isnew" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">isnew</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="view">
             <input type="checkbox" id="view" class="mdl-checkbox__input" > <span class="mdl-checkbox__label">view</span> </label>
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="heating">
