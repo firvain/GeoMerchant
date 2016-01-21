@@ -246,6 +246,47 @@ $('#insertProperty').click(function () {
     dust.render('estateInsert.dust', obj, function (err, out) {
       $('.modal-content').html(out);
       componentHandler.upgradeDom();
+      $("#cancelInsert").on('click', function (event) {
+        event.preventDefault();
+        handleForm.clear();
+        $('.modal-dialog').addClass('visuallyhidden');
+      });
+      $("#insert").on('click', function (event) {
+        event.preventDefault();
+        var data, c;
+        handleForm.set('insertProperty');
+        data = handleForm.get();
+        handleCoords.setLayer('drawnProperties');
+        c = handleCoords.coords();
+        data.x = c[0];
+        data.y = c[1];
+        data.adminId = id;
+        $.ajax({
+          url: 'http://127.0.0.1:3000/db/insert',
+          type: 'POST',
+          data: data
+        }).done(function (data, textStatus, jqXHR) {
+          toastr.options = {
+            'positionClass': 'toast-bottom-full-width',
+            'preventDuplicates': true,
+            'timeOut': 30
+          };
+          if (jqXHR.status === 201) {
+            toastr.success('Estate Recorded In Database');
+          } else {
+            toastr.error('Ops Something went wrong!!!');
+          }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+          console.log("error");
+        }).always(function () {
+          event.preventDefault();
+          console.log("complete");
+          drawnProperties.getSource().clear();
+          propertySource.clear();
+          handleForm.clear();
+          $('.modal-dialog').addClass('visuallyhidden');
+        });
+      });
     });
   });
 });

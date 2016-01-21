@@ -7,7 +7,6 @@ var pg = require('pg');
 var conString = 'postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus';
 // var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@localhost/cyprus";
 var dbgeo = require('dbgeo');
-// var client = new pg.Client(conString);
 pg.defaults.poolSize = 25;
 var parking, furnished, heating, cooling, view, leaseType, qprice, startPrice, endPrice;
 // Connect to postgres
@@ -18,6 +17,16 @@ var parking, furnished, heating, cooling, view, leaseType, qprice, startPrice, e
 //     console.log("Connected");
 //   }
 // });
+var rollback = function (client, done) {
+  client.query('ROLLBACK', function (error) {
+    //if there was a problem rolling back the query
+    //something is seriously messed up.  Return the error
+    //to the done function to close & remove this client from
+    //the pool.  If you leave a client in the pool with an unaborted
+    //transaction weird, hard to diagnose problems might happen.
+    return done(error);
+  });
+};
 // ROUTES
 // ==============================================
 // create routes
@@ -33,7 +42,6 @@ router.get('/property', function (req, res, next) {
       var qstring = 'public.property.estatetype,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.h_num_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.h_num_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,' + 'public.listing.type_el,public.listing.type_en,public.owner.phone2';
       var qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
       var query = client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom + 'WHERE public.property.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)', function (error, result) {
-        done();
         if (result) {
           dbgeo.parse({
             'data': result.rows,
@@ -50,6 +58,7 @@ router.get('/property', function (req, res, next) {
         }
       });
     }
+    done();
   });
 });
 router.get('/filteredproperty', function (req, res, next) {
@@ -224,28 +233,26 @@ router.post('/insert', function (req, res, next) {
       console.log('Could not connect to postgres');
     } else {
       console.log('Connected');
-      var columns = '(estatetype,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,h_num_el,ps_code,floor,street_en,h_num_en,isnew,view,heating,cooling,the_geom) ';
-      var values = estatetype + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcel_num + ',' + plan_num + ',' + area_name + ',' + street_el + ',' + h_num_el + ',' + ps_code + ',' + floor + ',' + street_en + ',' + h_num_en + ',' + isnew + ',' + view + ',' + heating + ',' + cooling
-      var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
-      var query = client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function (error, result) {
-        if (error) {
-          console.log(error);
-        } else {
-          var propertygid = result.rows[0].gid;
-          var query2 = client.query('INSERT INTO public.owner_property (owner_id,property_gid) VALUES (' + adminId + ',' + propertygid + ')', function (error, result) {
-            console.log(query2.text);
+      client.query('BEGIN', function (err) {
+        if (err) return rollback(client, done);
+        process.nextTick(function () {
+          var columns = '(estatetype,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,h_num_el,ps_code,floor,street_en,h_num_en,isnew,view,heating,cooling,the_geom) ';
+          var values = estatetype + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcel_num + ',' + plan_num + ',' + area_name + ',' + street_el + ',' + h_num_el + ',' + ps_code + ',' + floor + ',' + street_en + ',' + h_num_en + ',' + isnew + ',' + view + ',' + heating + ',' + cooling
+          var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
+          client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function (error, result) {
             if (error) throw error;
-            else {
-              console.log(result);
-            }
+            if (error) return rollback(client, done);
+            var propertygid = result.rows[0].gid;
+            client.query('INSERT INTO public.owner_property (owner_id,property_gid) VALUES (' + adminId + ',' + propertygid + ')', function (error, result) {
+              if (error) throw error;
+              if (err) return rollback(client, done);
+              client.query('COMMIT', done);
+              res.sendStatus(201);
+            });
           });
-        }
+        });
       });
     }
-    done();
-  });
-  res.send({
-    message: 'hey'
   });
 });
 module.exports = router;
