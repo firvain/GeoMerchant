@@ -204,6 +204,7 @@ router.post('/admin', ensureLoggedIn, function (req, res, next) {
 });
 router.post('/insert', function (req, res, next) {
   var estatetype = req.body.estatetype;
+  console.log(typeof(estatetype));
   var estatearea = req.body.estatearea;
   var plotarea = req.body.plotarea;
   var bedrooms = req.body.bedrooms;
@@ -237,9 +238,13 @@ router.post('/insert', function (req, res, next) {
         if (err) return rollback(client, done);
         process.nextTick(function () {
           var columns = '(estatetype,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,h_num_el,ps_code,floor,street_en,h_num_en,isnew,view,heating,cooling,the_geom) ';
+          console.log(columns);
+          console.log('==================================');
           var values = estatetype + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcel_num + ',' + plan_num + ',' + area_name + ',' + street_el + ',' + h_num_el + ',' + ps_code + ',' + floor + ',' + street_en + ',' + h_num_en + ',' + isnew + ',' + view + ',' + heating + ',' + cooling
+          console.log(values);
           var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
           client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function (error, result) {
+            console.log(this.text);
             if (error) throw error;
             if (error) return rollback(client, done);
             var propertygid = result.rows[0].gid;

@@ -3,68 +3,89 @@
     <div class="mdl-cell mdl-cell--4-col">
       <fieldset>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="area_name">
+          <input class="mdl-textfield__input" type="text" id="area_name" data-parsley-required data-parsley-errors-container="#error-msg-area_name">
           <label class="mdl-textfield__label" for="area_name">Estate Area Name</label>
+          <div class="error-msg" id="error-msg-area_name"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="estatetype">
+          <input class="mdl-textfield__input" type="text" id="estatetype" data-parsley-required data-parsley-errors-container="#error-msg-estatetype">
           <label class="mdl-textfield__label" for="estatetype">Estate Type</label>
+          <div class="error-msg" id="error-msg-estatetype"> </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="estatearea">
-          <label class="mdl-textfield__label" for="estatearea">Estate Area (m2)</label> <span class="mdl-textfield__error">Input is not a number!</span> </div>
+          <input class="mdl-textfield__input" id="estatearea" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-estatearea">
+          <label class="mdl-textfield__label" for="estatearea">Estate Area (m2)</label>
+          <div class="error-msg" id="error-msg-estatearea"></div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="parcel_num">
+          <input class="mdl-textfield__input" type="text" id="parcel_num" data-parsley-required data-parsley-maxlength="10" data-parsley-errors-container="#error-msg-parcel_num">
           <label class="mdl-textfield__label" for="parcel_num">Parcel Number</label>
+          <div class="error-msg" id="error-msg-parcel_num"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="title">
+          <input class="mdl-textfield__input" type="text" id="title" data-parsley-required data-parsley-maxlength="20" data-parsley-errors-container="#error-msg-title">
           <label class="mdl-textfield__label" for="title">Estate Tilte</label>
+          <div class="error-msg" id="error-msg-title"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="plotarea">
-          <label class="mdl-textfield__label" for="plotarea">Plot Area</label> <span class="mdl-textfield__error">Input is not a number!</span> </div>
+          <input class="mdl-textfield__input" id="plotarea" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-plotarea">
+          <label class="mdl-textfield__label" for="plotarea">Plot Area</label>
+          <div class="error-msg" id="error-msg-plotarea"></div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="year">
-          <label class="mdl-textfield__label" for="year">Year Of Construction</label> <span class="mdl-textfield__error">Input is not a number!</span> </div>
+          <input class="mdl-textfield__input" id="year" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-year">
+          <label class="mdl-textfield__label" for="year">Year Of Construction</label>
+          <div class="error-msg" id="error-msg-year"></div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="plan_num">
+          <input class="mdl-textfield__input" type="text" id="plan_num" data-parsley-required data-parsley-maxlength="15" data-parsley-errors-container="#error-msg-plan_num">
           <label class="mdl-textfield__label" for="plan_num">Plan Number</label>
+          <div class="error-msg" id="error-msg-plan_num"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="other">
+          <input class="mdl-textfield__input" type="text" id="other" data-parsley-required data-parsley-maxlength="256" data-parsley-errors-container="#error-msg-other">
           <label class="mdl-textfield__label" for="other">Other Info</label>
+          <div class="error-msg" id="error-msg-other"></div>
         </div>
       </fieldset>
     </div>
     <div class="mdl-cell mdl-cell--4-col">
       <fieldset>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="street_el">
+          <input class="mdl-textfield__input" type="text" id="street_el" data-parsley-required data-parsley-maxlength="256" data-parsley-errors-container="#error-msg-street_el">
           <label class="mdl-textfield__label" for="street_el">Street Name (Greek)</label>
+          <div class="error-msg" id="error-msg-street_el"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="h_num_el">
+          <input class="mdl-textfield__input" type="text" id="h_num_el" data-parsley-required data-parsley-maxlength="8" data-parsley-errors-container="#error-msg-h_num_el">
           <label class="mdl-textfield__label" for="h_num_el">Street Number (Greek)</label>
+          <div class="error-msg" id="error-msg-h_num_el"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="street_en">
+          <input class="mdl-textfield__input" type="text" id="street_en" data-parsley-required data-parsley-maxlength="256" data-parsley-errors-container="#error-msg-street_en">
           <label class="mdl-textfield__label" for="street_en">Street Name (English)</label>
+          <div class="error-msg" id="error-msg-street_en"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="ps_code">
+          <input class="mdl-textfield__input" type="text" id="ps_code" data-parsley-required data-parsley-maxlength="10" data-parsley-errors-container="#error-msg-ps_code">
           <label class="mdl-textfield__label" for="ps_code">PS Code</label>
+          <div class="error-msg" id="error-msg-ps_code"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="h_num_en">
+          <input class="mdl-textfield__input" type="text" id="h_num_en" data-parsley-required data-parsley-maxlength="8" data-parsley-errors-container="#error-msg-h_num_en">
           <label class="mdl-textfield__label" for="h_num_en">Street Number (English)</label>
+          <div class="error-msg" id="error-msg-h_num_en"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="bedrooms">
-          <label class="mdl-textfield__label" for="bedrooms">Number of Bedrooms</label><span class="mdl-textfield__error">Input is not a number!</span> </div>
+          <input class="mdl-textfield__input" id="bedrooms" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-bedrooms">
+          <label class="mdl-textfield__label" for="bedrooms">Number of Bedrooms</label>
+          <div class="error-msg" id="error-msg-bedrooms"></div>
+        </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="floor">
-          <label class="mdl-textfield__label" for="floor">Floor Number</label><span class="mdl-textfield__error">Input is not a number!</span> </div>
+          <input class="mdl-textfield__input" id="floor" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-floor">
+          <label class="mdl-textfield__label" for="floor">Floor Number</label>
+          <div class="error-msg" id="error-msg-floor"></div>
+        </div>
       </fieldset>
     </div>
     <div class="mdl-cell mdl-cell--4-col">

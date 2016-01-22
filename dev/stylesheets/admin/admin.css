@@ -1,186 +1,183 @@
-body
-{
-    font-family: Ubuntu, 'times new roman', times, roman, serif;
+body {
+  font-family: Ubuntu, 'times new roman', times, roman, serif;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
-.adminMap
-{
-    position: absolute;
+.adminMap {
+  position: absolute;
 
-    width: inherit;
-    height: inherit;
+  width: inherit;
+  height: inherit;
 }
 
 .ol-custom-overviewmap,
-.ol-custom-overviewmap.ol-uncollapsible
-{
-    top: 7em;
-    right: .5em;
-    bottom: auto;
-    left: auto;
+.ol-custom-overviewmap.ol-uncollapsible {
+  top: 7em;
+  right: .5em;
+  bottom: auto;
+  left: auto;
 }
 
-.ol-custom-overviewmap:not(.ol-collapsed)
-{
-    border: .071em solid #2b3643;
+.ol-custom-overviewmap:not(.ol-collapsed) {
+  border: .071em solid #2b3643;
 }
 
-.ol-custom-overviewmap .ol-overviewmap-map
-{
-    width: 21.429em;
+.ol-custom-overviewmap .ol-overviewmap-map {
+  width: 21.429em;
 
-    border: none;
+  border: none;
 }
 
-.ol-custom-overviewmap .ol-overviewmap-box
-{
-    border: 2px solid red;
+.ol-custom-overviewmap .ol-overviewmap-box {
+  border: 2px solid red;
 }
 
-.ol-custom-overviewmap:not(.ol-collapsed) button
-{
-    top: .071em;
-    right: .071em;
-    bottom: auto;
-    left: auto;
+.ol-custom-overviewmap:not(.ol-collapsed) button {
+  top: .071em;
+  right: .071em;
+  bottom: auto;
+  left: auto;
 }
 
-.ol-zoom
-{
-    top: .5em;
-    right: .5em;
-    bottom: auto;
-    left: auto;
+.ol-zoom {
+  top: .5em;
+  right: .5em;
+  bottom: auto;
+  left: auto;
 }
 
-.ol-zoom-extent
-{
-    top: 4.643em;
-    right: .5em;
-    bottom: auto;
-    left: auto;
+.ol-zoom-extent {
+  top: 4.643em;
+  right: .5em;
+  bottom: auto;
+  left: auto;
 }
 
-.infobox
-{
-    position: absolute;
-    z-index: 15;
-    top: .5em;
-    left: .5em;
+.infobox {
+  position: absolute;
+  z-index: 15;
+  top: .5em;
+  left: .5em;
 
-    width: 28.5714em;
-    height: auto;
-    padding: .357em;
+  width: 28.5714em;
+  height: auto;
+  padding: .357em;
 
-    border-radius: .429em;
-    background: white;
+  border-radius: .429em;
+  background: white;
 }
 
-.actions
-{
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
+.actions {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-            justify-content: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+          justify-content: space-around;
 }
 
-.property-info
-{
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
+.property-info {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 
-    margin-top: .5em;
-    padding: .357em;
-    /*border: 0.07142em solid #536DFE;*/
+  margin-top: .5em;
+  padding: .357em;
+  /*border: 0.07142em solid #536DFE;*/
 
-    border-radius: .5em;
+  border-radius: .5em;
 }
 
-.property-info > li
-{
-    margin-top: .07142em;
+.property-info > li {
+  margin-top: .07142em;
 }
 
-.toast-message
-{
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
-            flex-direction: column;
+.toast-message {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+          flex-direction: column;
 
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-            align-items: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+          align-items: center;
 }
 
-.toast-message > p
-{
-    font-size: 16px;
+.toast-message > p {
+  font-size: 16px;
 
-    margin: 0;
+  margin: 0;
 }
 
-.toastr-btns
-{
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
+.toastr-btns {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
 
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-            justify-content: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+          justify-content: space-around;
 }
 
-.toastr-btns > button
-{
-    color: white;
+.toastr-btns > button {
+  color: white;
 }
 
-.userinfo
-{
-    float: none;
+.userinfo {
+  float: none;
 
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
-.userinfo p
-{
-    font-size: 1.2em;
+.userinfo p {
+  font-size: 1.2em;
 
-    text-align: center;
+  text-align: center;
 }
 
-.modal-dialog
-{
-    position: absolute;
-    z-index: 9999;
-    top: 50%;
-    left: 50%;
+.modal-dialog {
+  position: absolute;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
 
-    -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 
-    border-radius: 1em;
-    background: #fff;
+  border-radius: 1em;
+  background: #fff;
 }
 
-.modal-content
-{
-    position: relative;
+.modal-content {
+  position: relative;
 }
 
-.modal-content .mdl-textfield
-{
-    width: auto;
+.modal-content .mdl-textfield {
+  width: auto;
+}
+
+.error-msg  {
+  font-size: 12px;
+
+  position: absolute;
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #de3226;
+}
+
+.error-msg ul {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
 }

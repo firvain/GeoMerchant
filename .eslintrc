@@ -6,7 +6,7 @@
       {"VariableDeclarator": 2}
     ],
     "quotes": [
-      1, "single"
+      1, "double"
     ],
     "semi": [
       2, "always"
