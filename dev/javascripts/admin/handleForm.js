@@ -1,6 +1,7 @@
 var handleForm = (function ($, parsley) {
   'use strict';
   var formName, submitBtnId, p;
+
   function setOptions(options) {
     formName = options.name;
     submitBtnId = options.submitBtnId;
@@ -15,7 +16,9 @@ var handleForm = (function ($, parsley) {
   }
 
   function destroyValidator() {
-    p.destroy();
+    if (p instanceof parsley) {
+      p.destroy();
+    }
   }
 
   function validateForm() {
@@ -26,11 +29,9 @@ var handleForm = (function ($, parsley) {
     p.on('form:success', function () {});
   }
 
-
   function getAttributes() {
     var obj = {};
     createValidator();
-    
     if (validateForm() === true) {
       alert('ok');
       $('form[name="' + formName + '"').find('.mdl-textfield__input').each(function (index, element) {
@@ -62,11 +63,11 @@ var handleForm = (function ($, parsley) {
     set: setOptions,
     get: getAttributes,
     clear: resetForm
-    // createValidator: createValidator,
-    // destroyValidator: destroyValidator,
-    // validateForm: validateForm,
-    // onValidateFormSuccess: onValidateFormSuccess,
-    // disableSubmitBtn: disableSubmitBtn
+      // createValidator: createValidator,
+      // destroyValidator: destroyValidator,
+      // validateForm: validateForm,
+      // onValidateFormSuccess: onValidateFormSuccess,
+      // disableSubmitBtn: disableSubmitBtn
   };
 }(jQuery, parsley));
 

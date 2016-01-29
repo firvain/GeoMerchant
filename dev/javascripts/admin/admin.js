@@ -192,9 +192,9 @@ var select = new ol.interaction.Select({
 map.addInteraction(select);
 select.setActive(false);
 //translate(move)
-var translate = new ol.interaction.Translate({
-  features: select.getFeatures()
-});
+// var translate = new ol.interaction.Translate({
+//   features: select.getFeatures()
+// });
 //====== info ======
 map.on("click", clickInfo);
 
@@ -211,21 +211,19 @@ function clickInfo(evt) {
       return true;
     }
   }, this);
-  console.log(clickedFeature);
   if (clickedFeature) {
     obj.feature = {};
     clickedFeature.feature.getKeys().forEach(function (key) {
       obj.feature[key] = clickedFeature.feature.get(key);
     });
-    console.log(obj);
-    dust.render("adminEstateInfo.dust", obj, function (err, out) {
-      console.log(out);
+    dust.render("adminPropertyInfo.dust", obj, function (err, out) {
       $(".property-info").html(out);
       $(".property-info").removeClass("visuallyhidden");
     });
   }
   else {
     $(".property-info").addClass("visuallyhidden");
+    toastr.error("Cant Find Any Property There...");
   }
 }
 //====== insert ======
@@ -236,7 +234,7 @@ $("#insertProperty").click(function () {
     "preventDuplicates": true,
     "timeOut": 20
   };
-  toastr.info("Add New Property");
+  // toastr.info("Add New Property");
   map.un("click", clickInfo);
   select.setActive(false);
   draw.setActive(true);
@@ -245,7 +243,7 @@ $("#insertProperty").click(function () {
     draw.setActive(false);
     var obj = {};
     $(".modal-dialog").removeClass("visuallyhidden");
-    dust.render("estateInsert.dust", obj, function (err, out) {
+    dust.render("propertyInsert.dust", obj, function (err, out) {
       $(".modal-content").html(out);
       componentHandler.upgradeDom();
       handleForm.set({
@@ -256,6 +254,7 @@ $("#insertProperty").click(function () {
         event.preventDefault();
         handleForm.clear();
         $(".modal-dialog").addClass("visuallyhidden");
+        map.on("click", clickInfo);
       });
       $("#insert").on("click", function (event) {
         event.preventDefault();
@@ -279,20 +278,20 @@ $("#insertProperty").click(function () {
               "timeOut": 30
             };
             if (jqXHR.status === 201) {
-              toastr.success("Estate Recorded In Database");
+              toastr.success("Property Recorded In Database");
             }
             else {
-              toastr.error("Ops Something went wrong!!!");
+              toastr.error("Oops Something Went Wrong!!!");
             }
           }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log("error");
+            toastr.error("Oops Something Went Wrong!!!");
           }).always(function () {
             event.preventDefault();
-            console.log("complete");
             drawnProperties.getSource().clear();
             propertySource.clear();
             handleForm.clear();
             $(".modal-dialog").addClass("visuallyhidden");
+            map.on("click", clickInfo);
           });
         }
       });

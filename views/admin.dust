@@ -29,7 +29,7 @@
         <button id="updateProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.move} </button>
         <button id="logout" class="mdl-button mdl-js-button mdl-button--raised "> {btns.logout} </button>
       </div>
-      <div class="property-info visuallyhidden mdl-shadow--4dp"> </div>
+      <div class="property-info visuallyhidden default-primary-color text-primary-color"> </div>
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" crossorigin="anonymous"></script>
@@ -38,8 +38,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js" crossorigin="anonymous"></script>
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" crossorigin="anonymous"></script>
-    <script src="/js/tpl/adminEstateInfo.js" crossorigin="anonymous"></script>
-    <script src="/js/tpl/estateinsert.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/adminPropertyInfo.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/propertyInsert.js" crossorigin="anonymous"></script>
     <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
     var id = parseInt('{id}');

@@ -13,7 +13,7 @@
           <div class="error-msg" id="error-msg-estatetype"> </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" id="estatearea" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-estatearea">
+          <input class="mdl-textfield__input" id="estatearea" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-estatearea">
           <label class="mdl-textfield__label" for="estatearea">Estate Area (m2)</label>
           <div class="error-msg" id="error-msg-estatearea"></div>
         </div>
@@ -28,12 +28,12 @@
           <div class="error-msg" id="error-msg-title"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" id="plotarea" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-plotarea">
+          <input class="mdl-textfield__input" id="plotarea" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-plotarea">
           <label class="mdl-textfield__label" for="plotarea">Plot Area</label>
           <div class="error-msg" id="error-msg-plotarea"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" id="year" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-year">
+          <input class="mdl-textfield__input" id="year" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-year">
           <label class="mdl-textfield__label" for="year">Year Of Construction</label>
           <div class="error-msg" id="error-msg-year"></div>
         </div>
@@ -77,12 +77,12 @@
           <div class="error-msg" id="error-msg-h_num_en"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" id="bedrooms" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-bedrooms">
+          <input class="mdl-textfield__input" id="bedrooms" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-bedrooms">
           <label class="mdl-textfield__label" for="bedrooms">Number of Bedrooms</label>
           <div class="error-msg" id="error-msg-bedrooms"></div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" id="floor" data-parsley-required data-parsley-type="integer" data-parsley-errors-container="#error-msg-floor">
+          <input class="mdl-textfield__input" id="floor" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-floor">
           <label class="mdl-textfield__label" for="floor">Floor Number</label>
           <div class="error-msg" id="error-msg-floor"></div>
         </div>
