@@ -11,6 +11,7 @@ var path = require('path')
 ,changed = require('gulp-changed')
 ,autoprefixer = require('gulp-autoprefixer')
 ,mainBowerFiles = require('main-bower-files')
+,stripDebug = require('gulp-strip-debug')
 ,exists = require('path-exists').sync;
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
@@ -20,6 +21,7 @@ gulp.task('scripts-map',  function() {
         .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.js'))
+        // .pipe(stripDebug())
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
@@ -30,6 +32,7 @@ gulp.task('scripts-admin', function() {
         .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.js'))
+        // .pipe(stripDebug())
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))

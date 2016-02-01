@@ -44,14 +44,14 @@ function PropertyStyle() {
 }
 var propertySource = new ol.source.Vector({
   format: geoJSONFormat,
-  loader: function (extent, resolution, projection) {
+  loader: function(extent, resolution, projection) {
     var url = "http://127.0.0.1:3000/db/admin";
     var self = this;
     self.clear();
     $.ajax({
       url: url,
       type: "POST",
-      "beforeSend": function (xhr) {
+      "beforeSend": function(xhr) {
         if (localStorage.getItem("userToken")) {
           xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("userToken"));
         }
@@ -60,12 +60,12 @@ var propertySource = new ol.source.Vector({
       data: {
         id: id
       }
-    }).done(function (response) {
+    }).done(function(response) {
       var features = geoJSONFormat.readFeatures(response, {
         featureProjection: "EPSG:3857"
       });
       self.addFeatures(features);
-    }).fail(function () {
+    }).fail(function() {
       console.log("error");
     });
   },
@@ -118,8 +118,7 @@ if (lang === "el") {
   bing.set("name", "Δορυφορική εικόνα");
   mapbox.set("name", "Χάρτης");
   property.set("name", "Ακίνητα");
-}
-else {
+} else {
   bing.set("name", "Sattelite Image");
   mapbox.set("name", "Map");
   property.set("name", "Properties");
@@ -201,62 +200,63 @@ map.on("click", clickInfo);
 function clickInfo(evt) {
   evt.preventDefault();
   var obj = {};
-  var clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+  var clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
     return {
       feature: feature,
       layer: layer
     };
-  }, this, function (layer) {
+  }, this, function(layer) {
     if (layer.get("id") === "property") {
       return true;
     }
   }, this);
   if (clickedFeature) {
     obj.feature = {};
-    clickedFeature.feature.getKeys().forEach(function (key) {
+    clickedFeature.feature.getKeys().forEach(function(key) {
       obj.feature[key] = clickedFeature.feature.get(key);
     });
-    dust.render("adminPropertyInfo.dust", obj, function (err, out) {
+    dust.render("adminPropertyInfo.dust", obj, function(err, out) {
       $(".property-info").html(out);
       $(".property-info").removeClass("visuallyhidden");
     });
-  }
-  else {
+  } else {
     $(".property-info").addClass("visuallyhidden");
     toastr.error("Cant Find Any Property There...");
   }
 }
 //====== insert ======
-$("#insertProperty").click(function () {
+$("#insertProperty").click(function() {
   $(".property-info").addClass("visuallyhidden");
   toastr.options = {
     "positionClass": "toast-top-center",
     "preventDuplicates": true,
-    "timeOut": 20
+    "timeOut": 30
   };
   // toastr.info("Add New Property");
   map.un("click", clickInfo);
   select.setActive(false);
   draw.setActive(true);
-  draw.on("drawend", function (evt) {
+  draw.on("drawend", function(evt) {
     evt.preventDefault();
     draw.setActive(false);
     var obj = {};
     $(".modal-dialog").removeClass("visuallyhidden");
-    dust.render("propertyInsert.dust", obj, function (err, out) {
+    dust.render("propertyInsert.dust", obj, function(err, out) {
       $(".modal-content").html(out);
       componentHandler.upgradeDom();
       handleForm.set({
         name: "insertProperty",
         submitBtnId: "insert"
       });
-      $("#cancelInsert").on("click", function (event) {
+      $("#cancelInsert").on("click", function(event) {
         event.preventDefault();
         handleForm.clear();
+        drawnProperties.getSource().clear();
+
         $(".modal-dialog").addClass("visuallyhidden");
         map.on("click", clickInfo);
       });
-      $("#insert").on("click", function (event) {
+      $("#insert").on("click", function(event) {
         event.preventDefault();
         var data, c;
         data = handleForm.get();
@@ -271,7 +271,7 @@ $("#insertProperty").click(function () {
             url: "http://127.0.0.1:3000/db/insert",
             type: "POST",
             data: data
-          }).done(function (data, textStatus, jqXHR) {
+          }).done(function(data, textStatus, jqXHR) {
             toastr.options = {
               "positionClass": "toast-bottom-full-width",
               "preventDuplicates": true,
@@ -279,13 +279,12 @@ $("#insertProperty").click(function () {
             };
             if (jqXHR.status === 201) {
               toastr.success("Property Recorded In Database");
-            }
-            else {
+            } else {
               toastr.error("Oops Something Went Wrong!!!");
             }
-          }).fail(function (jqXHR, textStatus, errorThrown) {
+          }).fail(function(jqXHR, textStatus, errorThrown) {
             toastr.error("Oops Something Went Wrong!!!");
-          }).always(function () {
+          }).always(function() {
             event.preventDefault();
             drawnProperties.getSource().clear();
             propertySource.clear();
@@ -299,7 +298,7 @@ $("#insertProperty").click(function () {
   });
 });
 //====== delete ======
-$("#deleteProperty").click(function (event) {
+$("#deleteProperty").click(function(event) {
   event.preventDefault();
   $(".property-info").addClass("visuallyhidden");
   toastr.options = {
@@ -312,7 +311,7 @@ $("#deleteProperty").click(function (event) {
   draw.setActive(false);
   features.clear();
   select.setActive(true);
-  select.on("select", function (e) {
+  select.on("select", function(e) {
     if (e.target.getFeatures().getLength() === 1) {
       toastr.options.newestOnTop = true;
       toastr.options.preventDuplicates = true;
@@ -320,21 +319,53 @@ $("#deleteProperty").click(function (event) {
       toastr.options.timeOut = 0;
       toastr.options.closeButton = true;
       var $toast = toastr.warning("<p>Are you sure?</p><div class=\"toastr-btns\"><button id=\"yesDelete\" class=\"mdl-button mdl-js-button \">Yes</button><button id=\"noDelete\" class=\"mdl-button mdl-js-button\">No</button></div>");
-      if ($toast.find("#yesDelete").length) {
-        $toast.on("click", "#yesDelete", function () {
-          alert("you clicked ok");
-          $toast.remove();
-        });
-      }
-      if ($toast.find("#noDelete").length) {
-        $toast.on("click", "#noDelete", function () {
-          alert("Surprise! you clicked me.");
-        });
-      }
+      $toast.on("click", "#yesDelete", function() {
+        var gid;
+        gid = select.getFeatures().item(0).get("gid");
+        $.ajax({
+          url: "http://127.0.0.1:3000/db/delete",
+          type: "POST",
+          dataType: "text",
+          data: {
+            gid: gid
+          }
+        })
+          .done(function(data, textStatus, jqXHR) {
+
+            // console.log(jqXHR.status);
+            toastr.options = {
+              "positionClass": "toast-bottom-full-width",
+              "preventDuplicates": true,
+              "timeOut": 30
+            };
+            toastr.success("Property Deleted From Database");
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            toastr.options = {
+              "positionClass": "toast-bottom-full-width",
+              "preventDuplicates": true,
+              "timeOut": 30
+            };
+            toastr.success("Oops Something Went Wrong!!!");
+          })
+          .always(function() {
+            propertySource.clear();
+            select.getFeatures().clear();
+            select.setActive(false);
+            map.on("click", clickInfo);
+          });
+
+        $toast.remove();
+      });
+      $toast.on("click", "#noDelete", function() {
+        $toast.remove();
+        select.getFeatures().clear();
+        select.setActive(false);
+      });
     }
   });
 });
-$("#logout").click(function () {
+$("#logout").click(function() {
   location.href = "/map/logout";
 });
 

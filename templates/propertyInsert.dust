@@ -9,7 +9,12 @@
         </div>
         <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" type="text" id="estatetype" data-parsley-required data-parsley-errors-container="#error-msg-estatetype">
-          <label class="mdl-textfield__label" for="estatetype">Estate Type</label>
+          <label class="mdl-textfield__label" for="estatetype">Estate Type (English)</label>
+          <div class="error-msg" id="error-msg-estatetype"> </div>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="estatetype_en" data-parsley-required data-parsley-errors-container="#error-msg-estatetype">
+          <label class="mdl-textfield__label" for="estatetype_en">Estate Type (Greek)</label>
           <div class="error-msg" id="error-msg-estatetype"> </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">

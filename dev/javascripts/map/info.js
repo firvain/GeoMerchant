@@ -60,6 +60,7 @@ function handleInfo(evt) {
   if (clickedFeature) {
     if (clickedFeature.layer.get("id") === "estates" && clickedFeature.feature.get("features").length === 1) {
       f = clickedFeature.feature.getProperties().features[0];
+      console.log(f);
       createPSAandCard(f, obj);
     } else if (clickedFeature.layer.get("id") === "filteredEstates") {
       f = clickedFeature.feature;
@@ -73,13 +74,15 @@ function handleInfo(evt) {
 function createPSAandCard(f, obj) {
   var feature = {};
   feature.gid = f.get("gid");
-  feature.type = f.get("estatetype");
   feature.area = f.get("estatearea");
   if (lang === "el") {
+    feature.type = f.get("estatetype");
     feature.address = f.get("street_el") + " " + f.get("h_num_el");
   } else {
+    feature.type = f.get("estatetype_en");
     feature.address = f.get("street_en") + " " + f.get("h_num_en");
   }
+  console.log(feature.type);
   feature.bedrooms = f.get("bedrooms");
   feature.price = f.get("price");
   feature.isnew = f.get("isnew");
@@ -135,7 +138,7 @@ function createPSAandCard(f, obj) {
   dust.render("estateCards.dust", obj, function(err, out) {
     $(".estate-cards").html(out);
     $(".estate-cards").addClass("estate-cards-active");
-    // $("#infobox").addClass("visuallyhidden");
+  // $("#infobox").addClass("visuallyhidden");
   });
   $("a[href=\"#openModal\"]").click(function() {
     dust.render("modalInfo.dust", obj, function(err, out) {
