@@ -1,5 +1,5 @@
 var handleForm = (function($, parsley) {
-  "use strict";
+  'use strict';
   var formName, submitBtnId, p;
 
   function setOptions(options) {
@@ -8,11 +8,11 @@ var handleForm = (function($, parsley) {
   }
 
   function disableSubmitBtn() {
-    $("#" + submitBtnId + "").prop("disabled", true);
+    $('#' + submitBtnId + '').prop('disabled', true);
   }
 
   function createValidator() {
-    p = $("form[name=\"" + formName + "\"").parsley();
+    p = $('form[name="' + formName + '"').parsley();
     return true;
   }
 
@@ -25,18 +25,18 @@ var handleForm = (function($, parsley) {
   }
 
   function onValidateFormSuccess() {
-    p.on("form:success", function() {});
+    p.on('form:success', function() {});
   }
 
   function getAttributes() {
     var obj = {};
     createValidator();
     if (validateForm() === true) {
-      $("form[name=\"" + formName + "\"").find(".mdl-textfield__input").each(function(index, element) {
-        obj[$(this).attr("id")] = $(this).val();
+      $('form[name="' + formName + '"').find('.mdl-textfield__input').each(function(index, element) {
+        obj[$(this).attr('id')] = $(this).val();
       });
-      $("form[name=\"" + formName + "\"").find(".mdl-checkbox__input").each(function(index, element) {
-        obj[$(this).attr("id")] = $(this).prop("checked");
+      $('form[name="' + formName + '"').find('.mdl-checkbox__input').each(function(index, element) {
+        obj[$(this).attr('id')] = $(this).prop('checked');
       });
       return obj;
     }
@@ -47,16 +47,16 @@ var handleForm = (function($, parsley) {
     if (createValidator() == true) {
       destroyValidator();
     }
-    $("form[name=\"" + formName + "\"").find(".mdl-textfield__input").each(function(index, element) {
-      $(this).val("");
-      $(this).parent().eq(0).removeClass("is-dirty");
-      $(this).parent().eq(0).removeClass("is-invalid");
+    $('form[name="' + formName + '"').find('.mdl-textfield__input').each(function(index, element) {
+      $(this).val('');
+      $(this).parent().eq(0).removeClass('is-dirty');
+      $(this).parent().eq(0).removeClass('is-invalid');
     });
-    $("form[name=\"" + formName + "\"").find(".mdl-checkbox__input").each(function(index, element) {
-      $(this).prop("checked", false);
+    $('form[name="' + formName + '"').find('.mdl-checkbox__input').each(function(index, element) {
+      $(this).prop('checked', false);
     });
-    $("form[name=\"" + formName + "\"").find(".mdl-checkbox").each(function(index, element) {
-      $(this).removeClass("is-checked");
+    $('form[name="' + formName + '"').find('.mdl-checkbox').each(function(index, element) {
+      $(this).removeClass('is-checked');
     });
   }
   return {

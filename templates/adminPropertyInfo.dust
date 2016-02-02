@@ -1,26 +1,23 @@
-<ul>
+<ul class='mdl-list'>
 {#feature}
-  <li>Κωδικός/Ιd : <b>{gid}</b></li>
-  <li>Τύπος/Type : <b>{estatetype}{~s}{estatetype_en}</b></li>
-  <li>Οδός : <b>{street_el}{~s}{h_num_el}</b></li>
-  <li>Street : <b>{street_en}{~s}{h_num_en}</b></li>
-  <li>Ταχ. Κωδικός/PS Code : <b>{ps_code}</b></li>
-  <li>Περιοχή/Area Name : <b>{area_name}</b></li>
-  <li>Εμβαδό Ακινήτου/Estate Area : <b>{estatearea}</b></li>
-  <li>Εβαδό Οικοπέδου/Plot Area : <b>{plotarea}</b></li>
-  <li>Αριθμός Οικοπέδου/Plot Number : <b>{plot_num}</b></li>
-  <li>Νεόδμητο/Newly Build : <b>{@eq key=isnew type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>Χρόνος Κατασκευής/Construction Year : <b>{year}</b></li>
-  <li>Estate Title/Τίτλος Ιδικτησίας : <b>{title}</b></li>
-  <li>Όροφος/Floor : <b>{floor}</b></li>
-  <li>Θέρμανση/Heating : <b>{@eq key=heating type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>Κλιματισμός/Air Condition : <b>{@eq key=cooling type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>View/Θέα : <b>{@eq key=view type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>Θέση Στάυμεσης/Parking : <b>{@eq key=parking type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>Επιπλωμένο/Furnished : <b>{@eq key=furnished type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></li>
-  <li>Αριθμός Υπνοδωματίων/Number of Bedrooms : <b>{bedrooms}</b></li>
-
-
-
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Κωδικός/Ιd : <b>{gid}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Τύπος/Type : <b>{estatetype}{~s}{estatetype_en}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Οδός : <b>{street_el}{~s}{h_num_el}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Street : <b>{street_en}{~s}{h_num_en}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Ταχ. Κωδικός/PS Code : <b>{ps_code}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Περιοχή/Area Name : <b>{area_name}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Εμβαδό Ακινήτου/Estate Area : <b>{estatearea}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Εβαδό Οικοπέδου/Plot Area : <b>{plotarea}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Αριθμός Οικοπέδου/Plot Number : <b>{plot_num}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Νεόδμητο/Newly Build : <b>{@eq key=isnew type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Χρόνος Κατασκευής/Construction Year : <b>{year}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Estate Title/Τίτλος Ιδικτησίας : <b>{title}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Όροφος/Floor : <b>{floor}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Θέρμανση/Heating : <b>{@eq key=heating type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Κλιματισμός/Air Condition : <b>{@eq key=cooling type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>View/Θέα : <b>{@eq key=view type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Θέση Στάυμεσης/Parking : <b>{@eq key=parking type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span>Επιπλωμένο/Furnished : <b>{@eq key=furnished type="boolean" value="true"}Ναι/Yes{:else}Όχι/No{/eq}</b></span></span></li>
+  <li class="mdl-list__item"><span class="mdl-list__item-primary-content"><i class="material-icons secondary-text-color">info</i><span></span>Αριθμός Υπνοδωματίων/Number of Bedrooms : <b>{bedrooms}</b></span></li>
 {/feature}
 </ul>

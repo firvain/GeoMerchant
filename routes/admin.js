@@ -43,7 +43,7 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
       btns: {
         'insert': 'insert',
         'delete': 'delete',
-        'move': 'move',
+        'update': 'update',
         'logout': 'logout'
       },
       id: id
@@ -83,9 +83,9 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
       email: 'Ηλεκτρονική Διεύθυνση',
       user: req.user,
       btns: {
-        'insert': 'εισαγωγή',
-        'delete': 'διαγραφή',
-        'move': 'μετακίνηση',
+        'insert': 'εισαγωγη',
+        'delete': 'διαγραφη',
+        'update': 'ενημερωση',
         'logout': 'αποσυνδεση'
       },
       id: id

@@ -85,12 +85,16 @@ body {
   display: -webkit-flex;
   display: -ms-flexbox;
   display:         flex;
+  overflow-y: scroll;
 
+  height: 30em;
   margin-top: .5em;
   padding: .357em;
   /*border: 0.07142em solid #536DFE;*/
 
   border-radius: .5em;
+
+  /*justify-content:center;*/
 }
 
 .property-info > li {
@@ -133,11 +137,11 @@ body {
 .userinfo {
   float: none;
 
-  margin: 0 auto;
+  margin: 0.5em auto;
 }
 
 .userinfo p {
-  font-size: 1.2em;
+  font-size: 1.5em;
 
   text-align: center;
 }
@@ -160,10 +164,10 @@ body {
 }
 
 .modal-content .mdl-textfield {
-  width: auto;
+  width: 100%;
 }
 
-.error-msg  {
+.error-msg {
   font-size: 12px;
 
   position: absolute;
@@ -180,4 +184,7 @@ body {
   padding: 0;
 
   list-style-type: none;
+}
+.mdl-list__item {
+  height: 24px;
 }

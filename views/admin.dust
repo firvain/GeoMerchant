@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic&subset=latin,cyrillic-ext,latin-ext,cyrillic,greek,greek-ext" rel="stylesheet" type="text/css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.purple-indigo.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.11.2/ol.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.0/material.purple-indigo.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/admin.min.css" crossorigin="anonymous"> </head>
 
@@ -24,22 +24,25 @@
         <p>Welcome {user.nickname}!</p>
       </div>
       <div class="actions">
-        <button id="insertProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.insert} </button>
-        <button id="deleteProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.delete} </button>
-        <button id="updateProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent"> {btns.move} </button>
-        <button id="logout" class="mdl-button mdl-js-button mdl-button--raised "> {btns.logout} </button>
+        <button id="insertProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"> {btns.insert} </button>
+        <button id="deleteProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"> {btns.delete} </button>
+        <button id="updateProperty" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"> {btns.update} </button>
+        <button id="logout" class="mdl-button mdl-js-button mdl-js-ripple-effect "> {btns.logout} </button>
       </div>
-      <div class="property-info visuallyhidden default-primary-color text-primary-color"> </div>
+      <div class="property-info visuallyhidden"> </div>
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.11.2/ol.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js" crossorigin="anonymous"></script>
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js" ></script>
+    <script defer src="https://code.getmdl.io/1.1.0/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.1.0/lodash.min.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/adminPropertyInfo.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/propertyInsert.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/propertyUpdate.js" crossorigin="anonymous"></script>
     <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
     var id = parseInt('{id}');

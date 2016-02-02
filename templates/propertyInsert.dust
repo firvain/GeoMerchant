@@ -13,9 +13,9 @@
           <div class="error-msg" id="error-msg-estatetype"> </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="estatetype_en" data-parsley-required data-parsley-errors-container="#error-msg-estatetype">
+          <input class="mdl-textfield__input" type="text" id="estatetype_en" data-parsley-required data-parsley-errors-container="#error-msg-estatetype_en">
           <label class="mdl-textfield__label" for="estatetype_en">Estate Type (Greek)</label>
-          <div class="error-msg" id="error-msg-estatetype"> </div>
+          <div class="error-msg" id="error-msg-estatetype_en"> </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
           <input class="mdl-textfield__input" id="estatearea" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-estatearea">

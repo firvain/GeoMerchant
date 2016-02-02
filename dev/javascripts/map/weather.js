@@ -38,7 +38,7 @@
             "pressure": val.main.pressure,
             "humidity": val.main.humidity
           };
-          dust.render("weatherPopup.dust", weatherData, function(err, out) {
+          dust.render("weatherPopup", weatherData, function(err, out) {
             $("#" + index).html(out);
           });
         });

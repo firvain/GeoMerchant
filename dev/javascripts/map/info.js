@@ -135,13 +135,13 @@ function createPSAandCard(f, obj) {
   map.getView().setCenter(feature.coordinate);
   map.getView().setResolution(1.2);
   obj.feature = feature;
-  dust.render("estateCards.dust", obj, function(err, out) {
+  dust.render("estateCards", obj, function(err, out) {
     $(".estate-cards").html(out);
     $(".estate-cards").addClass("estate-cards-active");
   // $("#infobox").addClass("visuallyhidden");
   });
   $("a[href=\"#openModal\"]").click(function() {
-    dust.render("modalInfo.dust", obj, function(err, out) {
+    dust.render("modalInfo", obj, function(err, out) {
       $(".modal-content").html(out);
     });
   });

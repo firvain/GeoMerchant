@@ -1,5 +1,5 @@
-var handleCoords = (function (ol) {
-  "use strict";
+var handleCoords = (function(ol) {
+  'use strict';
   var coords;
   var l;
 
@@ -7,7 +7,7 @@ var handleCoords = (function (ol) {
     var layers = map.getLayers();
     var length = layers.getLength();
     for (var i = 0; i < length; i++) {
-      if (id === layers.item(i).get("id")) {
+      if (id === layers.item(i).get('id')) {
         return layers.item(i);
       }
     }
@@ -18,7 +18,7 @@ var handleCoords = (function (ol) {
     var layers = map.getLayers();
     var length = layers.getLength();
     for (var i = 0; i < length; i++) {
-      if (name === layers.item(i).get("nameEn") || name === layers.item(i).get("nameEl")) {
+      if (name === layers.item(i).get('nameEn') || name === layers.item(i).get('nameEl')) {
         return layers.item(i);
       }
     }
@@ -30,10 +30,10 @@ var handleCoords = (function (ol) {
   }
 
   function getCoords() {
-    "use strict";
+    'use strict';
     var coordEPSG3857;
     coordEPSG3857 = l.getSource().getFeatures()[0].getGeometry().getCoordinates();
-    coords = ol.proj.transform(coordEPSG3857, "EPSG:3857", "EPSG:4326");
+    coords = ol.proj.transform(coordEPSG3857, 'EPSG:3857', 'EPSG:4326');
     return coords;
   }
   return {
