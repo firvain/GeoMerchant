@@ -1,9 +1,10 @@
 var center = [3677385, 4120949],
-  extent = [3590094, 4102833, 3855483, 4261211],
-  lang = document.documentElement.lang,
-  geoJSONFormat = new ol.format.GeoJSON({
-    defaultDataProjection: 'EPSG:4326'
-  });
+    extent = [3590094, 4102833, 3855483, 4261211],
+    lang = document.documentElement.lang,
+    geoJSONFormat = new ol.format.GeoJSON({
+      defaultDataProjection: 'EPSG:4326'
+    }),
+    propertySource, property, map, features, drawnProperties, draw, select, translate;
 var bing = new ol.layer.Tile({
   visible: true,
   source: new ol.source.BingMaps({
@@ -15,7 +16,6 @@ var bing = new ol.layer.Tile({
   preload: Infinity,
   id: 'bing'
 });
-
 var mapbox = new ol.layer.Tile({
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({
@@ -27,8 +27,7 @@ var mapbox = new ol.layer.Tile({
 });
 
 function PropertyStyle() {
-  var src;
-  src = '../images/map-icons/pins/48/pin1.png';
+  var src = '../images/map-icons/pins/48/pin1.png';
   return new ol.style.Style({
     image: new ol.style.Icon(({
       src: src,
@@ -39,7 +38,7 @@ function PropertyStyle() {
     }))
   });
 }
-var propertySource = new ol.source.Vector({
+propertySource = new ol.source.Vector({
   format: geoJSONFormat,
   loader: function(extent, resolution, projection) {
     var url = 'http://127.0.0.1:3000/db/admin';
@@ -68,14 +67,14 @@ var propertySource = new ol.source.Vector({
   },
   strategy: ol.loadingstrategy.all
 });
-var property = new ol.layer.Vector({
+property = new ol.layer.Vector({
   source: propertySource,
   id: 'property',
   visible: true,
   style: PropertyStyle()
 });
 property.setZIndex(2);
-var map = new ol.Map({
+map = new ol.Map({
   target: 'adminMap',
   layers: [
     mapbox, property
@@ -121,8 +120,8 @@ if (lang === 'el') {
   property.set('name', 'Properties');
 }
 //====== interactions ======
-var features = new ol.Collection();
-var drawnProperties = new ol.layer.Vector({
+features = new ol.Collection();
+drawnProperties = new ol.layer.Vector({
   source: new ol.source.Vector(),
   style: new ol.style.Style({
     fill: new ol.style.Fill({
@@ -143,7 +142,7 @@ var drawnProperties = new ol.layer.Vector({
 });
 map.addLayer(drawnProperties);
 //draw
-var draw = new ol.interaction.Draw({
+draw = new ol.interaction.Draw({
   // features: features,
   source: drawnProperties.getSource(),
   type: 'Point',
@@ -166,7 +165,7 @@ var draw = new ol.interaction.Draw({
 map.addInteraction(draw);
 draw.setActive(false);
 //select
-var select = new ol.interaction.Select({
+select = new ol.interaction.Select({
   layers: [property],
   features: features,
   style: new ol.style.Style({
@@ -187,7 +186,7 @@ var select = new ol.interaction.Select({
 });
 map.addInteraction(select);
 select.setActive(false);
-var translate = new ol.interaction.Translate({
+translate = new ol.interaction.Translate({
   features: select.getFeatures()
 });
 map.addInteraction(translate);
@@ -195,10 +194,26 @@ translate.setActive(false);
 //====== info ======
 map.on('click', clickInfo);
 
-function clickInfo(evt) {
-  evt.preventDefault();
+function clickInfo(event) {
   var obj = {};
-  var clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+  var clickedFeature , clickedFeatureStyle;
+  clickedFeatureStyle = new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 0, 0, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: '#FF00003',
+      width: 2
+    }),
+    image: new ol.style.Circle({
+      radius: 7,
+      fill: new ol.style.Fill({
+        color: '#FF0000'
+      })
+    })
+  })
+  event.preventDefault();
+  clickedFeature = map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
     return {
       feature: feature,
       layer: layer
@@ -210,14 +225,151 @@ function clickInfo(evt) {
   }, this);
   if (clickedFeature) {
     obj.feature = {};
+    clickedFeature.feature.setStyle(clickedFeatureStyle);
+    // clickedFeature.feature.setScale(1.2);
     clickedFeature.feature.getKeys().forEach(function(key) {
       obj.feature[key] = clickedFeature.feature.get(key);
     });
     dust.render('adminPropertyInfo', obj, function(err, out) {
       $('.property-info').html(out);
       $('.property-info').removeClass('visuallyhidden');
+      componentHandler.upgradeDom();
+      $('#listing').on('click', function(event) {
+        var gid;
+        event.preventDefault();
+        gid = $(this).data('gid');
+        $.ajax({
+          url: 'http://127.0.0.1:3000/db/listing',
+          type: 'GET',
+          dataType: 'json',
+          data: {
+            gid: gid
+          }
+        })
+          .done(function(data) {
+            console.log(data);
+            var listing_id = data.id;
+            $('.modal-dialog').removeClass('visuallyhidden');
+            dust.render('listingInsert', data, function(err, out) {
+              $('.modal-content').html(out);
+              componentHandler.upgradeDom();
+              handleForm.set({
+                name: 'insert-update-listing',
+                submitBtnId: 'ok'
+              });
+              $('#sent-listing').on('click', function(event) {
+                var data;
+                event.preventDefault();
+                data = handleForm.get();
+                if (data !== null) {
+                  data.property_gid = gid;
+                  data.listing_id = listing_id;
+                  $.ajax({
+                    url: 'http://127.0.0.1:3000/db/listing/update',
+                    type: 'POST',
+                    data: data,
+                    dataType: 'text'
+                  })
+                    .done(function(data, textStatus, jqXHR) {
+                      if (jqXHR.status === 201) {
+                        toastr.success('Property Updated In Database');
+                      } else {
+                        toastr.error('Oops Something Went Wrong!!!');
+                      }
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                      toastr.error('Oops Something Went Wrong!!!');
+                    })
+                    .always(function() {
+                      handleForm.clear();
+                      $('#openModal').addClass('visuallyhidden');
+                      propertySource.clear();
+                      clickedFeature.feature.setStyle(null);
+                    });
+                }
+              });
+              $('#cancel-listing').on('click', function(event) {
+                event.preventDefault();
+                handleForm.clear();
+                $('#openModal').addClass('visuallyhidden');
+              });
+            });
+          })
+          .fail(function() {
+            var obj = {};
+            if (lang === 'el') {
+              obj.msg = 'Δεν Βρέθηκε Αγγελία',
+              obj.text = 'Δημιουργία Καινούργιας;',
+              obj.yes = 'ΝΑΙ'
+              obj.no = 'ΟΧΙ'
+            } else {
+              obj.msg = 'No Listing Found',
+              obj.text = 'Create New Listing?',
+              obj.yes = 'YES'
+              obj.no = 'NO'
+            }
+            dust.render('dialog', obj, function(error, out) {
+              $('#openModal').removeClass('visuallyhidden');
+              $('.modal-content').html(out);
+              componentHandler.upgradeDom();
+              $('#yes').on('click', function(event) {
+                event.preventDefault();
+                dust.render('listingInsert', {}, function(err, out) {
+                  $('.modal-content').html(out);
+                  componentHandler.upgradeDom();
+                  handleForm.set({
+                    name: 'insert-update-listing',
+                    submitBtnId: 'ok'
+                  });
+                  $('#sent-listing').on('click', function(event) {
+                    var data;
+                    event.preventDefault();
+                    data = handleForm.get();
+                    if (data !== null) {
+                      data.property_gid = gid;
+                      $.ajax({
+                        url: 'http://127.0.0.1:3000/db/listing/insert',
+                        type: 'POST',
+                        data: data,
+                        dataType: 'text'
+                      })
+                        .done(function(data, textStatus, jqXHR) {
+                          if (jqXHR.status === 201) {
+                            toastr.success('Property Updated In Database');
+                          } else {
+                            toastr.error('Oops Something Went Wrong!!!');
+                          }
+                        })
+                        .fail(function(jqXHR, textStatus, errorThrown) {
+                          toastr.error('Oops Something Went Wrong!!!');
+                        })
+                        .always(function() {
+                          handleForm.clear();
+                          $('#openModal').addClass('visuallyhidden');
+                          clickedFeature.feature.setStyle(null);
+                        });
+                    }
+                  });
+                  $('#cancel-listing').on('click', function(event) {
+                    event.preventDefault();
+                    handleForm.clear();
+                    clickedFeature.feature.setStyle(null);
+                    $('#openModal').addClass('visuallyhidden');
+                  });
+                })
+              });
+              $('#no').on('click', function(event) {
+                event.preventDefault();
+                $('#openModal').addClass('visuallyhidden');
+              });
+            });
+          })
+      });
     });
   } else {
+    propertySource.forEachFeature(function(f) {
+      f.setStyle(null)
+    });
     $('.property-info').addClass('visuallyhidden');
     toastr.options = {
       'positionClass': 'toast-bottom-full-width',
@@ -239,10 +391,10 @@ $('#insertProperty').click(function() {
   map.un('click', clickInfo);
   select.setActive(false);
   draw.setActive(true);
-  draw.on('drawend', function(evt) {
-    evt.preventDefault();
-    draw.setActive(false);
+  draw.on('drawend', function(event) {
     var obj = {};
+    event.preventDefault();
+    draw.setActive(false);
     $('.modal-dialog').removeClass('visuallyhidden');
     dust.render('propertyInsert', obj, function(err, out) {
       $('.modal-content').html(out);
@@ -260,8 +412,8 @@ $('#insertProperty').click(function() {
         map.on('click', clickInfo);
       });
       $('#insert').on('click', function(event) {
-        event.preventDefault();
         var data, c;
+        event.preventDefault();
         data = handleForm.get();
         console.log(data);
         if (data !== null) {
@@ -315,13 +467,14 @@ $('#deleteProperty').click(function(event) {
   features.clear();
   select.setActive(true);
   select.on('select', function(e) {
+    var $toast;
     if (e.target.getFeatures().getLength() === 1) {
       toastr.options.newestOnTop = true;
       toastr.options.preventDuplicates = true;
       toastr.options.extendedTimeOut = 0;
       toastr.options.timeOut = 0;
       toastr.options.closeButton = true;
-      var $toast = toastr.warning('<p>Are you sure?</p><div class="toastr-btns"><button id="yesDelete" class="mdl-button mdl-js-button ">Yes</button><button id="noDelete" class="mdl-button mdl-js-button">No</button></div>');
+      $toast = toastr.warning('<p>Are you sure?</p><div class="toastr-btns"><button id="yesDelete" class="mdl-button mdl-js-button ">Yes</button><button id="noDelete" class="mdl-button mdl-js-button">No</button></div>');
       $toast.on('click', '#yesDelete', function() {
         var gid;
         console.log(select.getFeatures());
@@ -375,14 +528,13 @@ $('#logout').click(function() {
 //====== update ======
 
 $('#updateProperty').on('click', function(event) {
+  var gid, obj;
   event.preventDefault();
   map.un('click', clickInfo);
   draw.setActive(false);
   select.setActive(true);
   translate.setActive(true);
-  var gid;
   $('.property-info').addClass('visuallyhidden');
-  var obj;
   select.on('select', function(e) {
     if (select.getFeatures().getLength() === 1) {
       gid = select.getFeatures().item(0).get('gid');
@@ -397,7 +549,6 @@ $('#updateProperty').on('click', function(event) {
         .done(function(data) {
           obj = _.head(data.features).properties;
 
-
         })
         .fail(function() {
           toastr.error('Oops Something Went Wrong!!!');
@@ -406,8 +557,6 @@ $('#updateProperty').on('click', function(event) {
           console.log('complete');
         });
     }
-
-
   });
   translate.on('translateend', function(e) {
     var coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -422,8 +571,9 @@ $('#updateProperty').on('click', function(event) {
         submitBtnId: 'update'
       });
       $('#update').on('click', function(event) {
+        var data;
         event.preventDefault();
-        var data = handleForm.get();
+        data = handleForm.get();
         if (!_.isNil(data)) {
           data.x = coords[0];
           data.y = coords[1];
@@ -473,3 +623,55 @@ $('#updateProperty').on('click', function(event) {
     });
   });
 });
+$(document).ready(function() {
+  window.Parsley.on('field:error', function() {
+    // This global callback will be called for any field that fails validation.
+    console.log('Validation failed for: ', this.$element);
+  });
+  window.Parsley
+    .addValidator('date', {
+      requirementType: 'string',
+      validateString: function(value, requirement) {
+        if (moment(value, 'DD-MM-YYYY', true).isValid() === true) {
+          return true
+        } else {
+          return false
+        }
+      },
+      messages: {
+        en: 'Wrong Date',
+        el: 'Λάθος Ημερομηνία'
+      }
+    });
+  window.Parsley
+    .addValidator('salerenten', {
+      requirementType: 'string',
+      validateString: function(value, requirement) {
+        if (value === 'Sale' || value === 'Rent') {
+          return true
+        } else {
+          return false
+        }
+      },
+      messages: {
+        en: 'Please Type Sale or Rent',
+        el: 'Παρακαλώ πληκρολογήστε Sale ή Rent'
+      }
+    });
+  window.Parsley
+    .addValidator('salerentel', {
+      requirementType: 'string',
+      validateString: function(value, requirement) {
+        if (value === 'Πώληση' || value === 'Ενοικίαση') {
+          return true
+        } else {
+          return false
+        }
+      },
+      messages: {
+        en: 'Please Type Πώληση or Ενοικίαση',
+        el: 'Παρακαλώ πληκρολογήστε Πώληση ή Ενοικίαση'
+      }
+    });
+});
+

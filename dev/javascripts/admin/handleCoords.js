@@ -15,9 +15,10 @@ var handleCoords = (function(ol) {
   }
 
   function findByName(name) {
+    var i;
     var layers = map.getLayers();
     var length = layers.getLength();
-    for (var i = 0; i < length; i++) {
+    for (i = 0; i < length; i++) {
       if (name === layers.item(i).get('nameEn') || name === layers.item(i).get('nameEl')) {
         return layers.item(i);
       }

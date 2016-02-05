@@ -368,5 +368,102 @@ router.post('/update', function(req, res, next) {
     }
   });
 });
+router.get('/listing', function(req, res, next) {
+  var gid = req.query.gid;
+  var text;
+  pg.connect(conString, function(err, client, done) {
+    if (err) {
+      console.log('Could not connect to postgres');
+    } else {
+      text = 'SELECT id,type_el,type_en,to_char(date_end,\'DD-MM-YYYY\') as date_end,to_char(date_start,\'DD-MM-YYYY\') as date_start,price,isactive,pets,prefered_customer FROM public.listing WHERE public.listing.isactive = true AND  public.listing.property_gid=$1;';
+      client.query(text, [gid], function(error, result) {
+        console.log(this.text)
+        done();
+        if (result) {
+          if (result.rows.length === 0) {
+            res.sendStatus(404);
+          } else {
+            res.json(result.rows[0]);
+          }
+        } else {
+          res.sendStatus(404);
+        }
+      })
+    }
+  // body...
+  })
+});
+router.post('/listing/insert', function(req, res, next) {
+  var property_gid = '\'' + req.body.property_gid + '\'';
+  var date_start = '\'' + req.body.date_start + '\'';
+  var date_end = '\'' + req.body.date_end + '\'';
+  var isactive = true;
+  var pets = '\'' + req.body.pets + '\'';
+  var prefered_customer = '\'' + req.body.prefered_customer + '\'';
+  var price = '\'' + req.body.price + '\'';
+  var type_en = '\'' + req.body.type_en + '\'';
+  var type_el = '\'' + req.body.type_el + '\'';
+  pg.connect(conString, function(err, client, done) {
+    if (err) {
+      console.log('Could not connect to postgres');
+    } else {
+      client.query('BEGIN', function(err) {
+        if (err) return rollback(client, done);
+        process.nextTick(function() {
+          var columns = '(type_en,type_el,property_gid,date_start,date_end,price,pets,prefered_customer,isactive) ';
+          var values = type_en + ',' + type_el + ',' + property_gid + ',' + 'to_date(' + date_start + ',\'DD-MM-YYYY\')' + ',' + 'to_date(' + date_end + ',\'DD-MM-YYYY\')' + ',' + price + ',' + pets + ',' + prefered_customer + ',' + isactive;
+          client.query('INSERT INTO public.listing ' + columns + 'VALUES (' + values + ');', function(error, result) {
+            console.log(this.text);
+            if (error)
+              throw error;
+            if (error) return rollback(client, done);
+            if (error) {
+              res.sendStatus(404);
+            }
+            client.query('COMMIT', done);
+            res.sendStatus(201);
+          });
+        });
+      });
+    }
+  // body...
+  })
+});
+router.post('/listing/update', function(req, res, next) {
+  var listing_id = req.body.listing_id ;
+  var property_gid = '\'' + req.body.property_gid + '\'';
+  var date_start = '\'' + req.body.date_start + '\'';
+  var date_end = '\'' + req.body.date_end + '\'';
+  var isactive = true;
+  var pets = '\'' + req.body.pets + '\'';
+  var prefered_customer = '\'' + req.body.prefered_customer + '\'';
+  var price = '\'' + req.body.price + '\'';
+  var type_en = '\'' + req.body.type_en + '\'';
+  var type_el = '\'' + req.body.type_el + '\'';
+  pg.connect(conString, function(err, client, done) {
+    if (err) {
+      console.log('Could not connect to postgres');
+    } else {
+      client.query('BEGIN', function(err) {
+        if (err) return rollback(client, done);
+        process.nextTick(function() {
+          var columns = '(type_en,type_el,property_gid,date_start,date_end,price,pets,prefered_customer,isactive) ';
+          var values = type_en + ',' + type_el + ',' + property_gid + ',' + 'to_date(' + date_start + ',\'DD-MM-YYYY\')' + ',' + 'to_date(' + date_end + ',\'DD-MM-YYYY\')' + ',' + price + ',' + pets + ',' + prefered_customer + ',' + isactive;
+          client.query('UPDATE public.listing SET ' + columns + ' = (' + values + ') WHERE id=$1;', [listing_id], function(error, result) {
+            console.log(this.text);
+            if (error)
+              throw error;
+            if (error) return rollback(client, done);
+            if (error) {
+              res.sendStatus(404);
+            }
+            client.query('COMMIT', done);
+            res.sendStatus(201);
+          });
+        });
+      });
+    }
+  // body...
+  })
+});
 module.exports = router;
-
