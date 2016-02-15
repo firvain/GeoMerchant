@@ -260,7 +260,7 @@ router.post('/insert', function(req, res, next) {
 });
 router.post('/delete', function(req, res, next) {
   var gid = req.body.gid;
-  console.log(gid);
+  console.log('asdasdd' + gid);
   pg.connect(conString, function(err, client, done) {
     if (err)
       throw err;
@@ -276,6 +276,7 @@ router.post('/delete', function(req, res, next) {
       process.nextTick(function() {
         var text = 'DELETE FROM public.property WHERE gid= $1';
         client.query(text, [gid], function(err) {
+          console.log(this.text);
           if (err) return rollback(client, done);
           client.query('COMMIT', done);
           res.sendStatus(200);
@@ -287,9 +288,9 @@ router.post('/delete', function(req, res, next) {
 router.post('/fetch', function(req, res, next) {
   var gid = req.body.gid;
   pg.connect(conString, function(err, client, done) {
+    var text = 'SELECT *,ST_AsGeoJSON(public.property.the_geom) as geom FROM public.property where gid=$1';
     if (err)
       throw err;
-    var text = 'SELECT *,ST_AsGeoJSON(public.property.the_geom) as geom FROM public.property where gid=$1';
     client.query(text, [gid], function(error, result) {
       done();
       if (result) {

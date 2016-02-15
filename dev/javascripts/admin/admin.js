@@ -291,6 +291,7 @@ function clickInfo(event) {
               $('#cancel-listing').on('click', function(event) {
                 event.preventDefault();
                 handleForm.clear();
+                clickedFeature.feature.setStyle(null);
                 $('#openModal').addClass('visuallyhidden');
               });
             });
@@ -361,6 +362,7 @@ function clickInfo(event) {
               $('#no').on('click', function(event) {
                 event.preventDefault();
                 $('#openModal').addClass('visuallyhidden');
+                clickedFeature.feature.setStyle(null);
               });
             });
           })
@@ -379,6 +381,10 @@ function clickInfo(event) {
     toastr.error('Cant Find Any Property There...');
   }
 }
+//====== logout ======
+$('#logout').click(function() {
+  location.href = '/map/logout';
+});
 //====== insert ======
 $('#insertProperty').click(function() {
   $('.property-info').addClass('visuallyhidden');
@@ -387,7 +393,6 @@ $('#insertProperty').click(function() {
     'preventDuplicates': true,
     'timeOut': 60
   };
-  // toastr.info("Add New Property");
   map.un('click', clickInfo);
   select.setActive(false);
   draw.setActive(true);
@@ -461,12 +466,12 @@ $('#deleteProperty').click(function(event) {
     'preventDuplicates': true,
     'timeOut': 20
   };
-  toastr.info('Delete Property');
   map.un('click', clickInfo);
   draw.setActive(false);
   features.clear();
+  propertySource.clear();
   select.setActive(true);
-  select.on('select', function(e) {
+  select.once('select', function(e) {
     var $toast;
     if (e.target.getFeatures().getLength() === 1) {
       toastr.options.newestOnTop = true;
@@ -476,9 +481,7 @@ $('#deleteProperty').click(function(event) {
       toastr.options.closeButton = true;
       $toast = toastr.warning('<p>Are you sure?</p><div class="toastr-btns"><button id="yesDelete" class="mdl-button mdl-js-button ">Yes</button><button id="noDelete" class="mdl-button mdl-js-button">No</button></div>');
       $toast.on('click', '#yesDelete', function() {
-        var gid;
-        console.log(select.getFeatures());
-        gid = select.getFeatures().item(0).get('gid');
+        var gid = select.getFeatures().item(0).get('gid');
         $.ajax({
           url: 'http://127.0.0.1:3000/db/delete',
           type: 'POST',
@@ -522,9 +525,7 @@ $('#deleteProperty').click(function(event) {
     }
   });
 });
-$('#logout').click(function() {
-  location.href = '/map/logout';
-});
+
 //====== update ======
 
 $('#updateProperty').on('click', function(event) {
@@ -532,10 +533,12 @@ $('#updateProperty').on('click', function(event) {
   event.preventDefault();
   map.un('click', clickInfo);
   draw.setActive(false);
+  features.clear();
+  propertySource.clear();
   select.setActive(true);
   translate.setActive(true);
   $('.property-info').addClass('visuallyhidden');
-  select.on('select', function(e) {
+  select.once('select', function(e) {
     if (select.getFeatures().getLength() === 1) {
       gid = select.getFeatures().item(0).get('gid');
       $.ajax({
@@ -560,7 +563,6 @@ $('#updateProperty').on('click', function(event) {
   });
   translate.on('translateend', function(e) {
     var coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
-    console.log(coords);
     $('.modal-dialog').removeClass('visuallyhidden');
     dust.render('propertyUpdate', obj, function(err, out) {
 
@@ -621,6 +623,7 @@ $('#updateProperty').on('click', function(event) {
         map.on('click', clickInfo);
       });
     });
+    $('#adminMap').removeAttr('style');
   });
 });
 $(document).ready(function() {
@@ -674,4 +677,3 @@ $(document).ready(function() {
       }
     });
 });
-
