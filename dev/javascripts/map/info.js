@@ -14,7 +14,7 @@ function handleInfo(evt) {
     title.address = 'Διευθυνση';
     title.bedrooms = 'Υπνοδωμάτια';
     title.price = 'Τιμή';
-    title.new = 'Νεόδμητο';
+    title.isnew = 'Νεόδμητο';
     title.parking = 'Στάθμεση';
     title.furnished = 'Επιπλωμένο';
     title.pets = 'Κατοικίδια';
@@ -33,7 +33,7 @@ function handleInfo(evt) {
     title.address = 'Address';
     title.bedrooms = 'Bedrooms';
     title.price = 'Price';
-    title.new = 'Newly Build';
+    title.isnew = 'Newly Build';
     title.parking = 'Parking';
     title.furnished = 'Furnished';
     title.pets = 'Pets Allowed';
@@ -60,6 +60,7 @@ function handleInfo(evt) {
   if (clickedFeature) {
     if (clickedFeature.layer.get('id') === 'estates' && clickedFeature.feature.get('features').length === 1) {
       f = clickedFeature.feature.getProperties().features[0];
+      console.log(f);
       createPSAandCard(f, obj);
     } else if (clickedFeature.layer.get('id') === 'filteredEstates') {
       f = clickedFeature.feature;
@@ -73,16 +74,18 @@ function handleInfo(evt) {
 function createPSAandCard(f, obj) {
   var feature = {};
   feature.gid = f.get('gid');
-  feature.type = f.get('estatetype');
   feature.area = f.get('estatearea');
   if (lang === 'el') {
+    feature.type = f.get('estatetype');
     feature.address = f.get('street_el') + ' ' + f.get('h_num_el');
   } else {
+    feature.type = f.get('estatetype_en');
     feature.address = f.get('street_en') + ' ' + f.get('h_num_en');
   }
+  console.log(feature.type);
   feature.bedrooms = f.get('bedrooms');
   feature.price = f.get('price');
-  feature.new = f.get('new');
+  feature.isnew = f.get('isnew');
   feature.parking = f.get('parking');
   feature.furnished = f.get('furnished');
   feature.pets = f.get('pets');
@@ -106,11 +109,11 @@ function createPSAandCard(f, obj) {
     format: geoJSONFormat,
     loader: function(extent, resolution, projection) {
       var url = 'http://localhost:3000/db/uses/' + feature.gid;
-      var that = this;
+      var self = this;
       $.ajax({
         url: url,
         type: 'GET',
-        dataType: 'json',
+        dataType: 'json'
       }).done(function(response) {
         var features = geoJSONFormat.readFeatures(response.property_services_analysis, {
           featureProjection: 'EPSG:3857'
@@ -121,9 +124,9 @@ function createPSAandCard(f, obj) {
           })
         });
         features[0].setStyle(area);
-        that.addFeatures(features);
+        self.addFeatures(features);
       }).fail(function() {
-        console.log("error");
+        console.log('error');
       });
     },
     strategy: ol.loadingstrategy.all
@@ -132,20 +135,23 @@ function createPSAandCard(f, obj) {
   map.getView().setCenter(feature.coordinate);
   map.getView().setResolution(1.2);
   obj.feature = feature;
-  dust.render('estateCards.dust', obj, function(err, out) {
+  dust.render('estateCards', obj, function(err, out) {
     $('.estate-cards').html(out);
-    $('.estate-cards').removeClass('visuallyhidden');
+    $('.estate-cards').addClass('estate-cards-active');
+  // $("#infobox").addClass("visuallyhidden");
   });
   $('a[href="#openModal"]').click(function() {
-    dust.render('modalInfo.dust', obj, function(err, out) {
+    dust.render('modalInfo', obj, function(err, out) {
       $('.modal-content').html(out);
     });
+  });
+  $('a[href="#closeEstateCard"]').click(function() {
+    $('.estate-cards').removeClass('estate-cards-active');
   });
 }
 $('.info').on('change', function(e) {
   e.preventDefault();
   PSA.setSource(null);
-    
   if ($(this).prop('checked') === true) {
     map.on('click', handleInfo);
   } else {

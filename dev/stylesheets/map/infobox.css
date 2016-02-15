@@ -1,31 +1,30 @@
 .infobox {
-  top: 6.000em;
-  left: 0.5em;
-  height: auto;
-  width: 22.857em;
-  padding: 0.357em;
   position: absolute;
-  background: white;
   z-index: 15;
-  border-radius: 0.429em;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content:center;
-      -ms-flex-pack:center;
-          justify-content:center;
+  top: 6.000em;
+  left: .5em;
+  width: 27em;
+  min-width: 27em;
+  height: 27em;
+  max-height: 27em;
+  border-radius: .429em;
+  background: white;
 }
 
-.infobox-item {
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  margin:auto;
-  width: 300px;
+.input-align-center {
+  display: block;
+  margin: 0 auto;
+}
+
+.infobox-content {
+  position: relative;
+  height: auto;
+}
+
+.filters {
+  position: absolute;
+padding-left: 0.5em;
+padding-right: 0.5em;
+  z-index: 16;
+  height: 27em;
 }

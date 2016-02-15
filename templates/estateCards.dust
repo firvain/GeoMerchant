@@ -8,7 +8,7 @@
    <div>{title.area} : {area}</div>
     <div>{title.bedrooms} :{~s}{bedrooms}</div>
     <div>{title.price} : {price} &euro;</i></div>
-    {@eq key=new type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.new}" ><i class="fa fa-star"></i></a>{/eq}{~s}
+    {@eq key=isnew type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.isnew}" ><i class="fa fa-star"></i></a>{/eq}{~s}
     {@eq key=furnished type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.furnished}" ><i class="fa fa-bed"></i></a>{/eq}{~s}
     {@eq key=pets type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.pets}" ><i class="fa fa-paw"></i></a>{/eq}
   </div>
@@ -16,7 +16,9 @@
     <a href="#openModal" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent">
      info
     </a>
-    
+    <a href="#closeEstateCard" class="mdl-button mdl-js-button ">
+     close
+    </a>
+
   </div>
 </div>{/feature}
-

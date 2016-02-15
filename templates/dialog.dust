@@ -1,0 +1,12 @@
+<div class="mdl-grid dialog">
+  <div class="mdl-cell mdl-cell--12-col">
+    <p>{msg}</p>
+    <p>{text}</p>
+  </div>
+</div>
+<div id='yes-no-btns' class="mdl-grid dialog">
+  <div class="mdl-cell mdl-cell--12-col">
+    <button id="yes" class="mdl-button mdl-js-button mdl-button--primary mdl-js-ripple-effect"> {yes} </button>
+    <button id="no" class="mdl-button mdl-js-button mdl-js-ripple-effect"> {no} </button>
+  </div>
+</div>
