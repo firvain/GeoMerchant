@@ -8,7 +8,7 @@
       <li>{title.area}</li>
       <li>{title.bedrooms}</li>
       <li>{title.price}</li>
-      <li>{title.new}</li>
+      <li>{title.isnew}</li>
       <li>{title.parking}</li>
       <li>{title.furnished}</li>
       <li>{title.pets}</li>
@@ -24,7 +24,7 @@
       <li>{area}</li>
       <li>{bedrooms}</li>
       <li>{price}</li>
-      <li>{@eq key=new type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
+      <li>{@eq key=isnew type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
       <li>{@eq key=parking type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
       <li>{@eq key=furnished type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
       <li>{@eq key=pets type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
@@ -38,10 +38,10 @@
 <h6>{title.contactInfo}</h6>
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <address> {title.name} : {name}<br> 
-      {title.lastname} : {lastname}<br> 
-      {title.phone} : {phone}<br> 
-      {title.email} : <a href="mailto:{email}">{email}</a><br> 
+    <address> {title.name} : {name}<br>
+      {title.lastname} : {lastname}<br>
+      {title.phone} : {phone}<br>
+      {title.email} : <a href="mailto:{email}">{email}</a><br>
     </address>
   </div>
 </div> {/feature}

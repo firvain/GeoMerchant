@@ -1,15 +1,18 @@
-var path = require('path');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var cssnano = require('gulp-cssnano');
-var dust = require('gulp-dust');
-var sourcemaps = require('gulp-sourcemaps');
-var del = require('del');
-var watch = require('gulp-watch');
-var changed = require('gulp-changed');
-var autoprefixer = require('gulp-autoprefixer');
+var path = require('path')
+,gulp = require('gulp')
+,gutil = require('gulp-util')
+,concat = require('gulp-concat')
+,uglify = require('gulp-uglify')
+,cssnano = require('gulp-cssnano')
+,dust = require('gulp-dust')
+,sourcemaps = require('gulp-sourcemaps')
+,del = require('del')
+,watch = require('gulp-watch')
+,changed = require('gulp-changed')
+,autoprefixer = require('gulp-autoprefixer')
+,mainBowerFiles = require('main-bower-files')
+,stripDebug = require('gulp-strip-debug')
+,exists = require('path-exists').sync;
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
 });
@@ -18,6 +21,7 @@ gulp.task('scripts-map',  function() {
         .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.js'))
+        // .pipe(stripDebug())
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
@@ -28,6 +32,7 @@ gulp.task('scripts-admin', function() {
         .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.js'))
+        // .pipe(stripDebug())
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
@@ -45,7 +50,7 @@ gulp.task('minify-css-map', function() {
           browsers: ['last 4 versions'],
           cascade: false
         }))
-        .pipe(cssnano())
+        .pipe(cssnano({autoprefixer:false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
@@ -55,7 +60,11 @@ gulp.task('minify-css-admin', function() {
         .pipe(changed('public/css/admin'))
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.css'))
-        .pipe(cssnano())
+        .pipe(autoprefixer({
+          browsers: ['last 4 versions'],
+          cascade: false
+        }))
+        .pipe(cssnano({autoprefixer:false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
@@ -65,7 +74,6 @@ gulp.task('dust-compile', function() {
         .pipe(dust())
         .pipe(gulp.dest('public/js/tpl'));
 });
-
 gulp.task('watch', function() {
     gulp.watch('dev/javascripts/**/*.js', ['clean-scripts','scripts-map','scripts-admin']).on('error', gutil.log);
     gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);

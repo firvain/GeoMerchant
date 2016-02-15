@@ -5,7 +5,7 @@ var flash = require('connect-flash');
 var env = {
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-  AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+  AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL || 'http://127.0.0.1:3000/callback'
 };
 var lang;
 /* GET map page. */
@@ -83,6 +83,7 @@ router.get('/', function(req, res, next) {
     res.render('map', data);
   }
 });
+console.log(env);
 router.get('/login', function(req, res) {
   res.render('login', {
     env: env

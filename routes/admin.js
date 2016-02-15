@@ -4,11 +4,10 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login'
 var flash = require('connect-flash');
 var router = express.Router();
 /* GET users listing. */
-router.get('/', ensureLoggedIn, function(req, res, next) {
+router.get('/', ensureLoggedIn, function (req, res, next) {
   var data = {};
   var lang = String(req.flash('lang'));
   var id = String(req.flash('id'));
-
   if (lang === 'en') {
     data = {
       lang: 'en',
@@ -44,7 +43,7 @@ router.get('/', ensureLoggedIn, function(req, res, next) {
       btns: {
         'insert': 'insert',
         'delete': 'delete',
-        'move': 'move',
+        'update': 'update',
         'logout': 'logout'
       },
       id: id
@@ -84,9 +83,9 @@ router.get('/', ensureLoggedIn, function(req, res, next) {
       email: 'Ηλεκτρονική Διεύθυνση',
       user: req.user,
       btns: {
-        'insert': 'εισαγωγή',
-        'delete': 'διαγραφή',
-        'move': 'μετακίνηση',
+        'insert': 'εισαγωγη',
+        'delete': 'διαγραφη',
+        'update': 'ενημερωση',
         'logout': 'αποσυνδεση'
       },
       id: id
