@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.0/material.purple-indigo.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.1/ol.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/vendor/getmdl-select/getmdl-select.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/admin.min.css" crossorigin="anonymous"> </head>
 
   <body>
@@ -51,6 +52,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.1.0/lodash.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js" crossorigin="anonymous"></script>
     <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
+    {! <script src="/vendor/getmdl-select/getmdl-select.min.js" crossorigin="anonymous"></script> !}
+     
+    {! ======= Templates ======= !}
     <script src="/js/tpl/adminPropertyInfo.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/propertyInsert.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/propertyUpdate.js" crossorigin="anonymous"></script>

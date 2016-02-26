@@ -8,8 +8,9 @@ function handleInfo(evt) {
   var features = [];
   obj.title = title;
   if (lang === 'el') {
-    title.estateCode = 'Κωδικός Ιδιοκτησίας';
-    title.type = 'Τύπος';
+    title.gid = 'Κωδικός Ιδιοκτησίας';
+    title.type = 'Είδος Ιδιοκτησίας';
+    title.listing_type = 'Τύπος Αγγελίας';
     title.area = 'Εμβαδό';
     title.address = 'Διευθυνση';
     title.bedrooms = 'Υπνοδωμάτια';
@@ -27,8 +28,9 @@ function handleInfo(evt) {
     title.phone = 'Τηλέφωνο';
     title.email = 'Ηλεκτρονική Διεύθυνση';
   } else {
-    title.estateCode = 'Estate Code';
-    title.type = 'Type';
+    title.gid = 'Estate Code';
+    title.type = 'Property Type';
+    title.listing_type = 'Listing Type';
     title.area = 'Size';
     title.address = 'Address';
     title.bedrooms = 'Bedrooms';
@@ -77,12 +79,33 @@ function createPSAandCard(f, obj) {
   feature.area = f.get('estatearea');
   if (lang === 'el') {
     feature.type = f.get('estatetype');
-    feature.address = f.get('street_el') + ' ' + f.get('h_num_el');
+    feature.address = f.get('street_el') + ' ' + f.get('street_number');
+    feature.name = f.get('name_el');
+    feature.lastname = f.get('lastname_el');
+    if (f.get('sale') === true) {
+      feature.listing_type = 'Πώληση'
+    } else {
+      feature.listing_type = 'Ενοικίαση'
+    }
+    feature.btns = {
+      info: 'πληροφοριες',
+      close: 'κλεισιμο'
+    }
   } else {
     feature.type = f.get('estatetype_en');
-    feature.address = f.get('street_en') + ' ' + f.get('h_num_en');
+    feature.address = f.get('street_en') + ' ' + f.get('street_number');
+    feature.name = f.get('name_en');
+    feature.lastname = f.get('lastname_en');
+    if (f.get('sale') === true) {
+      feature.listing_type = 'Sale'
+    } else {
+      feature.listing_type = 'Rent'
+    }
+    feature.btns = {
+      info: 'info',
+      close: 'close'
+    }
   }
-  console.log(feature.type);
   feature.bedrooms = f.get('bedrooms');
   feature.price = f.get('price');
   feature.isnew = f.get('isnew');
@@ -92,16 +115,10 @@ function createPSAandCard(f, obj) {
   feature.view = f.get('view');
   feature.heating = f.get('heating');
   feature.cooling = f.get('cooling');
-  if (lang === 'el') {
-    feature.name = f.get('name_el');
-    feature.lastname = f.get('lastname_el');
-  } else {
-    feature.name = f.get('name_en');
-    feature.lastname = f.get('lastname_en');
-  }
   feature.phone = f.get('phone1');
   feature.email = f.get('email');
   feature.coordinate = f.get('geometry').getCoordinates();
+
   var PSASource = new ol.source.Vector({
     attributions: [new ol.Attribution({
       html: 'POI by ' + '<a href="http://www.terracognita.gr/">Terra Cognita</a>'
@@ -135,6 +152,7 @@ function createPSAandCard(f, obj) {
   map.getView().setCenter(feature.coordinate);
   map.getView().setResolution(1.2);
   obj.feature = feature;
+
   dust.render('estateCards', obj, function(err, out) {
     $('.estate-cards').html(out);
     $('.estate-cards').addClass('estate-cards-active');

@@ -192,3 +192,9 @@ body {
 .dialog {
   text-align: center;
 }
+.insert-update-listing {
+  max-width: 20em;
+}
+.options {
+  text-align: center;
+}

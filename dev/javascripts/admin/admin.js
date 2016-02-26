@@ -247,7 +247,7 @@ function clickInfo(event) {
           }
         })
           .done(function(data) {
-            console.log(data);
+            // console.log(data);
             var listing_id = data.id;
             $('.modal-dialog').removeClass('visuallyhidden');
             dust.render('listingInsert', data, function(err, out) {
@@ -257,10 +257,24 @@ function clickInfo(event) {
                 name: 'insert-update-listing',
                 submitBtnId: 'ok'
               });
+              $('input[name=options]').on('change', function(event) {
+                if ($(this).val() === 'Sale') {
+                  $('#pets').prop('disabled', true);
+                  $('#pets').prop('checked', false);
+                  $('label[for=pets]').removeClass('is-checked');
+                  $('#prefered_customer').val('');
+                  $('#prefered_customer').parent().eq(0).removeClass('is-dirty');
+                  $('#prefered_customer').prop('disabled', true);
+                } else {
+                  $('#pets').prop('disabled', false);
+                  $('#prefered_customer').prop('disabled', false);
+                }
+              });
               $('#sent-listing').on('click', function(event) {
                 var data;
                 event.preventDefault();
                 data = handleForm.get();
+                console.log(data);
                 if (data !== null) {
                   data.property_gid = gid;
                   data.listing_id = listing_id;
@@ -315,12 +329,27 @@ function clickInfo(event) {
               componentHandler.upgradeDom();
               $('#yes').on('click', function(event) {
                 event.preventDefault();
-                dust.render('listingInsert', {}, function(err, out) {
+                dust.render('listingInsert', {
+                  rent: 'true'
+                }, function(err, out) {
                   $('.modal-content').html(out);
                   componentHandler.upgradeDom();
                   handleForm.set({
                     name: 'insert-update-listing',
                     submitBtnId: 'ok'
+                  });
+                  $('input[name=options]').on('change', function(event) {
+                    if ($(this).val() === 'Sale') {
+                      $('#pets').prop('disabled', true);
+                      $('#pets').prop('checked', false);
+                      $('label[for=pets]').removeClass('is-checked');
+                      $('#prefered_customer').val('');
+                      $('#prefered_customer').parent().eq(0).removeClass('is-dirty');
+                      $('#prefered_customer').prop('disabled', true);
+                    } else {
+                      $('#pets').prop('disabled', false);
+                      $('#prefered_customer').prop('disabled', false);
+                    }
                   });
                   $('#sent-listing').on('click', function(event) {
                     var data;
@@ -646,34 +675,34 @@ $(document).ready(function() {
         el: 'Λάθος Ημερομηνία'
       }
     });
-  window.Parsley
-    .addValidator('salerenten', {
-      requirementType: 'string',
-      validateString: function(value, requirement) {
-        if (value === 'Sale' || value === 'Rent') {
-          return true
-        } else {
-          return false
-        }
-      },
-      messages: {
-        en: 'Please Type Sale or Rent',
-        el: 'Παρακαλώ πληκρολογήστε Sale ή Rent'
-      }
-    });
-  window.Parsley
-    .addValidator('salerentel', {
-      requirementType: 'string',
-      validateString: function(value, requirement) {
-        if (value === 'Πώληση' || value === 'Ενοικίαση') {
-          return true
-        } else {
-          return false
-        }
-      },
-      messages: {
-        en: 'Please Type Πώληση or Ενοικίαση',
-        el: 'Παρακαλώ πληκρολογήστε Πώληση ή Ενοικίαση'
-      }
-    });
+// window.Parsley
+//   .addValidator('salerenten', {
+//     requirementType: 'string',
+//     validateString: function(value, requirement) {
+//       if (value === 'Sale' || value === 'Rent') {
+//         return true
+//       } else {
+//         return false
+//       }
+//     },
+//     messages: {
+//       en: 'Please Type Sale or Rent',
+//       el: 'Παρακαλώ πληκρολογήστε Sale ή Rent'
+//     }
+//   });
+// window.Parsley
+//   .addValidator('salerentel', {
+//     requirementType: 'string',
+//     validateString: function(value, requirement) {
+//       if (value === 'Πώληση' || value === 'Ενοικίαση') {
+//         return true
+//       } else {
+//         return false
+//       }
+//     },
+//     messages: {
+//       en: 'Please Type Πώληση or Ενοικίαση',
+//       el: 'Παρακαλώ πληκρολογήστε Πώληση ή Ενοικίαση'
+//     }
+//   });
 });

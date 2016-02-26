@@ -1,31 +1,20 @@
 window.app || (window.app = {});
 var app = window.app;
 app.filters = function(options) {
-  this.leaseType = options.leaseType !== undefined
-    ? options.leaseType
-    : 'Rent';
-  this.startPrice = options.startPrice !== undefined
-    ? options.startPrice
-    : 0;
-  this.endPrice = options.endPrice !== undefined
-    ? options.endPrice
-    : 10000000000;
-  this.parking = options.parking !== undefined
-    ? options.parking
-    : false;
-  this.furnsished = options.furnished !== undefined
-    ? options.pakring
-    : false;
-  this.heating = options.heating !== undefined
-    ? options.heating
-    : false;
-  this.cooling = options.cooling !== undefined
-    ? options.cooling
-    : false;
-  this.view = options.view !== undefined
-    ? options.view
-    : false;
+  this.estateType = options.estateType;
+  this.leaseType = options.leaseType !== undefined ? options.leaseType : 'Rent';
+  this.startPrice = options.startPrice !== undefined ? options.startPrice : 0;
+  this.endPrice = options.endPrice !== undefined ? options.endPrice : 2147483647;
+  this.parking = options.parking !== undefined ? options.parking : false;
+  this.furnished = options.furnished !== undefined ? options.furnished : false;
+  this.heating = options.heating !== undefined ? options.heating : false;
+  this.cooling = options.cooling !== undefined ? options.cooling : false;
+  this.view = options.view !== undefined ? options.view : false;
 };
+app.filters.prototype.createValidator = function() {
+  var p = $('form[name=filters]').parsley();
+  return p;
+}
 app.filters.prototype.setDefaults = function() {
   var epsg4326Extent;
   PSA.setSource(null);
@@ -52,53 +41,65 @@ app.filters.prototype.setDefaults = function() {
     epsg4326Extent = ol.proj.transformExtent(selectSource.getFeatures()[0].getGeometry().getExtent(), 'EPSG:3857', 'EPSG:4326');
   }
   this.extent = epsg4326Extent;
+  this.p = this.createValidator();
 };
+
 app.filters.prototype.ajaxCall = function() {
-  $.ajax({
-    url: 'http://localhost:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
-    type: 'GET',
-    dataType: 'json',
-    data: {
-      leaseType: this.leaseType,
-      furnished: this.furnished,
-      heating: this.heating,
-      parking: this.parking,
-      cooling: this.cooling,
-      view: this.view,
-      startPrice: this.startPrice,
-      endPrice: this.endPrice
-    }
-  }).done(function(response) {
-    var features = geoJSONFormat.readFeatures(response, {featureProjection: 'EPSG:3857'});
-    if (features.length > 0) {
-      toastr.clear();
-      filteredEstates.getSource().clear();
-      filteredEstates.getSource().addFeatures(features);
-      filteredEstates.setVisible(true);
-      property.setVisible(false);
-      var extent = filteredEstates.getSource().getExtent();
-      var center = [];
-    } else {
-      toastr.error('No Info Found!');
-      filteredEstates.setVisible(false);
-      property.setVisible(true);
-    }
-  });
+  console.log(this.estateType);
+  if (this.p.validate() === true) {
+    $.ajax({
+      url: 'http://localhost:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
+      type: 'GET',
+      dataType: 'json',
+      data: {
+        estateType: this.estateType,
+        leaseType: this.leaseType,
+        furnished: this.furnished,
+        heating: this.heating,
+        parking: this.parking,
+        cooling: this.cooling,
+        view: this.view,
+        startPrice: this.startPrice,
+        endPrice: this.endPrice
+      }
+    }).done(function(response) {
+      var features = geoJSONFormat.readFeatures(response, {
+        featureProjection: 'EPSG:3857'
+      });
+      if (features.length > 0) {
+        toastr.clear();
+        filteredEstates.getSource().clear();
+        filteredEstates.getSource().addFeatures(features);
+        filteredEstates.setVisible(true);
+        property.setVisible(false);
+        var extent = filteredEstates.getSource().getExtent();
+        var center = [];
+      } else {
+        toastr.error('No Info Found!');
+        filteredEstates.setVisible(false);
+        property.setVisible(true);
+      }
+    });
+  }
+
 };
 $('#invokeFilters').click(function() {
-  window.options || (window.options = {});
-  var filters;
-  window.options.leaseType = $('input[name=options]:checked').val();
-  window.options.startPrice = $('#startPrice').val();
-  window.options.endPrice = $('#endPrice').val();
-  window.options.parking = $('#checkbox-1').prop('checked');
-  window.options.furnished = $('#checkbox-2').prop('checked');
-  window.options.heating = $('#checkbox-3').prop('checked');
-  window.options.cooling = $('#checkbox-4').prop('checked');
-  window.options.view = $('#checkbox-5').prop('checked');
-  filters = new app.filters(window.options);
+  var filters ;
+  var options = {};
+  options.estateType = $('#estateType').val();
+  options.leaseType = $('input[name=options]:checked').val();
+  options.startPrice = $('#startPrice').val();
+  options.endPrice = $('#endPrice').val();
+  options.parking = $('#checkbox-1').prop('checked');
+  options.furnished = $('#checkbox-2').prop('checked');
+  options.heating = $('#checkbox-3').prop('checked');
+  options.cooling = $('#checkbox-4').prop('checked');
+  options.view = $('#checkbox-5').prop('checked');
+  filters = new app.filters(options);
   filters.setDefaults();
+
   filters.ajaxCall();
+
 });
 $('#clearFilters').click(function() {
   $('label[for=option-1]').addClass('is-checked');
@@ -118,7 +119,12 @@ $('#clearFilters').click(function() {
 var draw;
 function addInteraction() {
   selectSource.clear();
-  draw = new ol.interaction.Draw({source: selectSource, type: 'LineString', geometryFunction: geometryFunction, maxPoints: 2});
+  draw = new ol.interaction.Draw({
+    source: selectSource,
+    type: 'LineString',
+    geometryFunction: geometryFunction,
+    maxPoints: 2
+  });
   draw.on('drawstart', function() {
     selectSource.clear();
   });
