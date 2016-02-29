@@ -437,6 +437,42 @@ $('#insertProperty').click(function() {
         name: 'insertProperty',
         submitBtnId: 'insert'
       });
+      $('#estateType').change(function() {
+        if ($(this).val() === 'Μονοκατοικία') {
+          $('#estateType_en').val('Detached House');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Διαμέρισμα') {
+          $('#estateType_en').val('Apartment');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType_en').val('Store');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
+      });
+      $('#estateType_en').change(function() {
+        if ($(this).val() === 'Detached House') {
+          $('#estateType').val('Μονοκατοικία');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Apartment') {
+          $('#estateType').val('Διαμέρισμα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType').val('Κατάστημα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
+      });
       $('#cancelInsert').on('click', function(event) {
         event.preventDefault();
         handleForm.clear();
@@ -594,12 +630,49 @@ $('#updateProperty').on('click', function(event) {
     var coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
     $('.modal-dialog').removeClass('visuallyhidden');
     dust.render('propertyUpdate', obj, function(err, out) {
-
+      var oldValues = {};
       $('.modal-content').html(out);
+      oldValues.bedrooms = $('#bedrooms').val();
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'updateProperty',
         submitBtnId: 'update'
+      });
+      $('#estateType').change(function() {
+        if ($(this).val() === 'Μονοκατοικία') {
+          $('#estateType_en').val('Detached House');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Διαμέρισμα') {
+          $('#estateType_en').val('Apartment');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType_en').val('Store');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
+      });
+      $('#estateType_en').change(function() {
+        if ($(this).val() === 'Detached House') {
+          $('#estateType').val('Μονοκατοικία');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Apartment') {
+          $('#estateType').val('Διαμέρισμα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType').val('Κατάστημα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
       });
       $('#update').on('click', function(event) {
         var data;

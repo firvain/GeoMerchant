@@ -251,4 +251,5 @@ if (lang === 'el') {
 jQuery(document).ready(function($) {
   $('.spinner').addClass('visuallyhidden');
   $('.mdl-spinner').removeClass('is-active');
+  handleSelect();
 });

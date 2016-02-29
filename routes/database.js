@@ -214,8 +214,8 @@ router.post('/admin', ensureLoggedIn, function(req, res, next) {
   });
 });
 router.post('/insert', function(req, res, next) {
-  var estatetype = '\'' + req.body.estatetype + '\'';
-  var estatetype_en = '\'' + req.body.estatetype_en + '\'';
+  var estatetype = '\'' + req.body.estateType + '\'';
+  var estatetype_en = '\'' + req.body.estateType_en + '\'';
   var estatearea = '\'' + req.body.estatearea + '\'';
   var plotarea = '\'' + req.body.plotarea + '\'';
   var bedrooms = '\'' + req.body.bedrooms + '\'';
@@ -325,8 +325,8 @@ router.post('/fetch', function(req, res, next) {
   });
 });
 router.post('/update', function(req, res, next) {
-  var estatetype = '\'' + req.body.estatetype + '\'';
-  var estatetype_en = '\'' + req.body.estatetype_en + '\'';
+  var estatetype = '\'' + req.body.estateType + '\'';
+  var estatetype_en = '\'' + req.body.estateType_en + '\'';
   var estatearea = '\'' + req.body.estatearea + '\'';
   var plotarea = '\'' + req.body.plotarea + '\'';
   var bedrooms = '\'' + req.body.bedrooms + '\'';

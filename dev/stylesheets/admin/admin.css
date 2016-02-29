@@ -1,11 +1,11 @@
-body {
-  font-family: Ubuntu, 'times new roman', times, roman, serif;
+/*body {
+
 
   overflow: hidden;
 
   width: 100%;
   height: 100vh;
-}
+}*/
 
 .adminMap {
   position: absolute;
@@ -167,7 +167,9 @@ body {
 .modal-content .mdl-textfield {
   width: 100%;
 }
-
+.modal-content .mdl-selectfield {
+  width: 100%;
+}
 .error-msg {
   font-size: 12px;
 
@@ -196,5 +198,19 @@ body {
   max-width: 20em;
 }
 .options {
+  text-align: center;
+}
+label.mdl-checkbox {
+  width: 50%;
+  margin: 0 auto;
+}
+.checkboxes {
+  display: flex;
+}
+.checkboxes span {
+  white-space: pre;
+}
+.buttons{
+  width: 50%;
   text-align: center;
 }

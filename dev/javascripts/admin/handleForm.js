@@ -64,6 +64,10 @@ var handleForm = (function($, parsley) {
         function(index, element) {
           obj[$(this).attr('id')] = $(this).prop('checked');
         });
+      $('form[name="' + formName + '"').find('.mdl-selectfield__select').each(
+        function(index, element) {
+          obj[$(this).attr('id')] = $(this).val();
+        });
       return obj;
     }
     else return null;
