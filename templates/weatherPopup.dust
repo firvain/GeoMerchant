@@ -1,5 +1,5 @@
 {! <div class="weather-popup-title text-primary-color ">{name}</div> !}
-<div class="weather-popup-content text-primary-color">
+<div class="weather-popup-content ">
   <ul>
    <li class="icon-basecloud"></li>
       <li class="icon-showers icon-sunny"></li>

@@ -102,6 +102,7 @@ $('#invokeFilters').click(function() {
 
 });
 $('#clearFilters').click(function() {
+  var orignalValue = $('#estateType option').val();
   $('label[for=option-1]').addClass('is-checked');
   $('label[for=option-2]').removeClass('is-checked');
   $('label[for=checkbox-1]').removeClass('is-checked');
@@ -110,6 +111,7 @@ $('#clearFilters').click(function() {
   $('label[for=checkbox-4]').removeClass('is-checked');
   $('label[for=checkbox-5]').removeClass('is-checked');
   $('label[for=checkbox-6]').removeClass('is-checked');
+  $('.mdl-selectfield__box-value').html(orignalValue);
   filteredEstates.getSource().clear();
   property.setVisible(true);
   PSA.setSource(null);

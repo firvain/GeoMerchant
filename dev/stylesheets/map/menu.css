@@ -255,13 +255,13 @@ input[type=checkbox].with-font:checked ~ label:hover
             transform: translate3d(350px, 0, 0);
 }
 
-.menu-open:checked ~ .menu-item:nth-child(12)
+.menu-open:checked ~ .menu-item:nth-child(13)
 {
     transition-duration: 690ms;
     -webkit-transform: translate3d(420px, 0, 0);
             transform: translate3d(420px, 0, 0);
 }
-.menu-open:checked ~ .menu-item:nth-child(14)
+.menu-open:checked ~ .menu-item:nth-child(15)
 {
     transition-duration: 790ms;
     -webkit-transform: translate3d(490px, 0, 0);
