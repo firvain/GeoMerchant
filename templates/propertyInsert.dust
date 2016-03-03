@@ -111,7 +111,7 @@
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="heating">
           <input type="checkbox" id="heating" class="mdl-checkbox__input" {@eq key=heating type="boolean" value="true" }checked{/eq}> <span class="mdl-checkbox__label">Heating</span> </label>
         <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="cooling">
-          <input type="checkbox" id="cooling" class="mdl-checkbox__input" {@eq key=cooling type="boolean" value="true" }checked{/eq}> <span class="mdl-checkbox__label"> Cooling</span> </label>
+          <input type="checkbox" id="cooling" class="mdl-checkbox__input" {@eq key=cooling type="boolean" value="true" }checked{/eq}> <span class="mdl-checkbox__label">Air Condition</span> </label>
       </fieldset>
     </div>
     </div>

@@ -6,9 +6,25 @@
   width: 100%;
   height: 100vh;
 }*/
-
-.adminMap {
+.appwrapper {
+  position: relative;
+}
+.spiner-wrapper {
   position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.mdl-spinner-big {
+  width: 80px;
+  height: 80px;
+}
+.adminMap {
+  position: relative;
+  z-index: 1;
 
   width: inherit;
   height: inherit;
@@ -59,7 +75,7 @@
 
 .infobox {
   position: absolute;
-  z-index: 15;
+  z-index: 2;
   top: .5em;
   left: .5em;
 
@@ -96,11 +112,18 @@
   height: 20em;
 }
 .estate-atributes-list .mdl-list__item {
+  min-height: 28px;
   padding: 0;
 }
 .estate-atributes-list .mdl-list__item .mdl-list__item-primary-content .material-icons {
-  font-size: 24px;
+  font-size: 14px;
+
+  margin-right: 5px;
 }
+.estate-atributes-list span {
+  font-size: 14px;
+}
+
 /*.property-info > li {
   margin-top: .07142em;
 }*/
@@ -150,7 +173,7 @@
 
 .modal-dialog {
   position: absolute;
-  z-index: 9999;
+  z-index: 3;
   top: 50%;
   left: 50%;
 
@@ -210,7 +233,8 @@ label.mdl-checkbox {
 .checkboxes span {
   white-space: pre;
 }
-.buttons{
+.buttons {
   width: 50%;
+
   text-align: center;
 }

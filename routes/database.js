@@ -184,16 +184,17 @@ router.get('/uses/:propertygid', function(req, res, next) {
     }
   });
 });
-router.post('/admin', ensureLoggedIn, function(req, res, next) {
+router.post('/admin', function(req, res, next) {
   var gid = req.body.id;
   pg.connect(conString, function(err, client, done) {
+    var whatTofetch,fromWhat,query;
     if (err) {
       console.log('Could not connect to postgres');
     } else {
       console.log('Connected');
-      var whatTofetch = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,public.property.title,public.property.year,public.property.other,public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.ps_code,public.property.floor,public.property.street_en,public.property.street_number,public.property."isnew"';
-      var from = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id)' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid)';
-      var query = client.query('select ' + whatTofetch + ',ST_AsGeoJSON(public.property.the_geom) as geom ' + 'FROM ' + from + ' where public.owner.id=$1 ', [gid], function(error, result) {
+      whatTofetch = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,public.property.title,public.property.year,public.property.other,public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.ps_code,public.property.floor,public.property.street_en,public.property.street_number,public.property."isnew"';
+      fromWhat = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id)' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid)';
+      query = client.query('select ' + whatTofetch + ',ST_AsGeoJSON(public.property.the_geom) as geom ' + 'FROM ' + fromWhat + ' where public.owner.id=$1 ', [gid], function(error, result) {
         done();
         if (result) {
           dbgeo.parse({
@@ -324,7 +325,7 @@ router.post('/fetch', function(req, res, next) {
     });
   });
 });
-router.post('/update', function(req, res, next) {
+router.post('/update', ensureLoggedIn, function(req, res, next) {
   var estatetype = '\'' + req.body.estateType + '\'';
   var estatetype_en = '\'' + req.body.estateType_en + '\'';
   var estatearea = '\'' + req.body.estatearea + '\'';
