@@ -1,14 +1,30 @@
-body {
-  font-family: Ubuntu, 'times new roman', times, roman, serif;
+/*body {
+
 
   overflow: hidden;
 
   width: 100%;
   height: 100vh;
+}*/
+.appwrapper {
+  position: relative;
 }
-
-.adminMap {
+.spiner-wrapper {
   position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.mdl-spinner-big {
+  width: 80px;
+  height: 80px;
+}
+.adminMap {
+  position: relative;
+  z-index: 1;
 
   width: inherit;
   height: inherit;
@@ -59,7 +75,7 @@ body {
 
 .infobox {
   position: absolute;
-  z-index: 15;
+  z-index: 2;
   top: .5em;
   left: .5em;
 
@@ -96,11 +112,18 @@ body {
   height: 20em;
 }
 .estate-atributes-list .mdl-list__item {
+  min-height: 28px;
   padding: 0;
 }
 .estate-atributes-list .mdl-list__item .mdl-list__item-primary-content .material-icons {
-  font-size: 24px;
+  font-size: 14px;
+
+  margin-right: 5px;
 }
+.estate-atributes-list span {
+  font-size: 14px;
+}
+
 /*.property-info > li {
   margin-top: .07142em;
 }*/
@@ -150,7 +173,7 @@ body {
 
 .modal-dialog {
   position: absolute;
-  z-index: 9999;
+  z-index: 3;
   top: 50%;
   left: 50%;
 
@@ -167,7 +190,9 @@ body {
 .modal-content .mdl-textfield {
   width: 100%;
 }
-
+.modal-content .mdl-selectfield {
+  width: 100%;
+}
 .error-msg {
   font-size: 12px;
 
@@ -190,5 +215,26 @@ body {
   height: 24px;
 }
 .dialog {
+  text-align: center;
+}
+.insert-update-listing {
+  max-width: 20em;
+}
+.options {
+  text-align: center;
+}
+label.mdl-checkbox {
+  width: 50%;
+  margin: 0 auto;
+}
+.checkboxes {
+  display: flex;
+}
+.checkboxes span {
+  white-space: pre;
+}
+.buttons {
+  width: 50%;
+
   text-align: center;
 }

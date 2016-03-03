@@ -1,38 +1,65 @@
-@font-face
-{
-    font-family: 'MeteoconsRegular';
-    font-weight: normal;
-    font-style: normal;
+@font-face {
+  font-family: 'MeteoconsRegular';
+  font-weight: normal;
+  font-style: normal;
 
-    src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eotmeteocons-webfont.eot');
-    src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.woff') format('woff'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.ttf') format('truetype'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.svg#MeteoconsRegular') format('svg');
+  src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eotmeteocons-webfont.eot');
+  src: url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.woff') format('woff'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.ttf') format('truetype'), url('/fonts/meteocons-font/FONT/Font-face/meteocons-webfont.svg#MeteoconsRegular') format('svg');
 }
 
-@font-face
-{
-    font-family: 'iconvault';
-    font-weight: normal;
-    font-style: normal;
+@font-face {
+  font-family: 'iconvault';
+  font-weight: normal;
+  font-style: normal;
 
-    src: url('fonts/ForecastFontDownload/iconvault_forecastfont.eot');
-    src: url('/fonts/ForecastFontDownload/iconvault_forecastfont.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/ForecastFontDownload/iconvault_forecastfont.woff') format('woff'),
-    url('/fonts/ForecastFontDownload/iconvault_forecastfont.ttf') format('truetype'),
-    url('/fonts/ForecastFontDownload/iconvault_forecastfont.svg#iconvault') format('svg');
+  src: url('fonts/ForecastFontDownload/iconvault_forecastfont.eot');
+  src: url('/fonts/ForecastFontDownload/iconvault_forecastfont.eot?#iefix') format('embedded-opentype'),
+  url('/fonts/ForecastFontDownload/iconvault_forecastfont.woff') format('woff'),
+  url('/fonts/ForecastFontDownload/iconvault_forecastfont.ttf') format('truetype'),
+  url('/fonts/ForecastFontDownload/iconvault_forecastfont.svg#iconvault') format('svg');
 }
 /* -----BaseCloud----- */
 
-.basecloud
-{
-    font-family: 'iconvault';
-    font-size: 6em;
+/*.basecloud {
+  font-family: 'iconvault';
+  font-size: 6em;
 
-    position: absolute;
+  position: relative;
 
-    content: '\f105';
+  content: '\f105';
 
-    color: rgb(204, 204, 204);
+}*/
+.icon-basecloud {
+  color: #9c27b0;
 }
+.icon-night,
+.icon-sunny,
+.icon-frosty,
+.icon-windysnow,
+.icon-showers,
+.icon-cloud,
+.icon-rainy,
+.icon-mist,
+.icon-windysnowcloud,
+.icon-drizzle,
+.icon-snowy,
+.icon-sleet,
+.icon-moon,
+.icon-windyrain,
+.icon-hail,
+.icon-sunset,
+.icon-windyraincloud,
+.icon-sunrise,
+.icon-sun,
+.icon-thunder,
+.icon-windy {
+  position: absolute;
+  top: .5em;
+  left: 1em;
+
+  color: #9c27b0;
+}
+
 .icon-night:before,
 .icon-sunny:before,
 .icon-frosty:before,
@@ -54,169 +81,141 @@
 .icon-sunrise:before,
 .icon-sun:before,
 .icon-thunder:before,
-.icon-windy:before
-{
-    font-family: 'iconvault';
-    font-size: 6em;
-    font-weight: normal;
-    font-style: normal;
-    font-variant: normal;
-    line-height: 1;
+.icon-windy:before {
+  font-family: 'iconvault';
+  font-size: 6em;
+  font-weight: normal;
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
 
-    display: inline-block;
+  display: inline-block;
 
-    text-decoration: inherit;
-    text-transform: none;
+  text-decoration: inherit;
+  text-transform: none;
 
-    -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
-.icon-night:before
-{
-    content: '\f100';
+.icon-night:before {
+  content: '\f100';
 }
-.icon-sunny:before
-{
-    content: '\f101';
+.icon-sunny:before {
+  content: '\f101';
 }
-.icon-frosty:before
-{
-    content: '\f102';
+.icon-frosty:before {
+  content: '\f102';
 }
-.icon-windysnow:before
-{
-    content: '\f103';
+.icon-windysnow:before {
+  content: '\f103';
 }
-.icon-showers:before
-{
-    content: '\f104';
+.icon-showers:before {
+  content: '\f104';
 }
-.icon-basecloud:before
-{
-    content: '\f105';
+.icon-basecloud:before {
+  content: '\f105';
 }
-.icon-cloud:before
-{
-    content: '\f106';
+.icon-cloud:before {
+  content: '\f106';
 }
-.icon-rainy:before
-{
-    content: '\f107';
+.icon-rainy:before {
+  content: '\f107';
 }
-.icon-mist:before
-{
-    content: '\f108';
+.icon-mist:before {
+  content: '\f108';
 }
-.icon-windysnowcloud:before
-{
-    content: '\f109';
+.icon-windysnowcloud:before {
+  content: '\f109';
 }
-.icon-drizzle:before
-{
-    content: '\f10a';
+.icon-drizzle:before {
+  content: '\f10a';
 }
-.icon-snowy:before
-{
-    content: '\f10b';
+.icon-snowy:before {
+  content: '\f10b';
 }
-.icon-sleet:before
-{
-    content: '\f10c';
+.icon-sleet:before {
+  content: '\f10c';
 }
-.icon-moon:before
-{
-    content: '\f10d';
+.icon-moon:before {
+  content: '\f10d';
 }
-.icon-windyrain:before
-{
-    content: '\f10e';
+.icon-windyrain:before {
+  content: '\f10e';
 }
-.icon-hail:before
-{
-    content: '\f10f';
+.icon-hail:before {
+  content: '\f10f';
 }
-.icon-sunset:before
-{
-    content: '\f110';
+.icon-sunset:before {
+  content: '\f110';
 }
-.icon-windyraincloud:before
-{
-    content: '\f111';
+.icon-windyraincloud:before {
+  content: '\f111';
 }
-.icon-sunrise:before
-{
-    content: '\f112';
+.icon-sunrise:before {
+  content: '\f112';
 }
-.icon-sun:before
-{
-    content: '\f113';
+.icon-sun:before {
+  content: '\f113';
 }
-.icon-thunder:before
-{
-    content: '\f114';
+.icon-thunder:before {
+  content: '\f114';
 }
-.icon-windy:before
-{
-    content: '\f115';
+.icon-windy:before {
+  content: '\f115';
 }
-.weather-popup
-{
-    font-size: .714rem;
+.weather-popup {
+  font-size: .714rem;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    margin: 0;
-    padding: 5px;
+  margin: 0;
+  padding: 5px;
 
-    border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 1.0);
 }
 
-.weather-popup-title
-{
-    font-size: 1.143rem;
+.weather-popup-title {
+  font-size: 1.143rem;
 
-    text-align: center;
+  text-align: center;
 
-    color: #fff;
+  color: #fff;
 }
 
-.weather-popup-content
-{
-    margin: 0;
-    padding: 0;
+.weather-popup-content {
+  margin: 0;
+  padding: 0;
 
-    text-align: center;
+  text-align: center;
 }
 
-.weather-popup-content > ul
-{
-    min-width: 7.143em;
-    margin: 0;
-    padding: 0;
+.weather-popup-content > ul {
+  min-width: 7.143em;
+  margin: 0;
+  padding: 0;
 }
 
-.weather-popup-content > ul > li
-{
-    margin: 0;
-    padding: 0;
+.weather-popup-content > ul > li {
+  margin: 0;
+  padding: 0;
 
-    list-style: none;
-    /*display: inline-block;*/
+  list-style: none;
+
+  color: #9c27b0;
+  /*display: inline-block;*/
 }
-.weather-popup-content > ul > li  a
-{
-    color: #fff;
+.weather-popup-content > ul > li  a {
+  color: #9c27b0;
 }
 .weather-popup-content ul,
-.weather-popup-content ol
-{
-    font-size: 10px;
-    font-weight: inherit;
+.weather-popup-content ol {
+  font-size: 10px;
+  font-weight: inherit;
 }
-.weather-icon:before
-{
-    font-family: 'MeteoconsRegular';
-    font-size: 1.5em;
+.weather-icon:before {
+  font-family: 'MeteoconsRegular';
+  font-size: 1.5em;
 
-    content: attr(data-icon);
+  content: attr(data-icon);
 }

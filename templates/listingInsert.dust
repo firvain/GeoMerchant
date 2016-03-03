@@ -1,9 +1,9 @@
 <form class="insert-update-listing" action="#" method="post" autocomplete="off" name="insert-update-listing">
   <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--6-col">
-      <fieldset>
+    <div class="mdl-cell mdl-cell--12-col">
+      <fieldset> {!
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="type_en" data-parsley-required data-parsley-salerenten data-parsley-errors-container="#error-msg-type_en" value="{type_en}" >
+          <input class="mdl-textfield__input" type="text" id="type_en" data-parsley-required data-parsley-salerenten data-parsley-errors-container="#error-msg-type_en" value="{type_en}">
           <label class="mdl-textfield__label" for="{type_en}">Rent or Sale</label>
           <div class="error-msg" id="error-msg-type_en"></div>
         </div>
@@ -11,9 +11,17 @@
           <input class="mdl-textfield__input" type="text" id="type_el" data-parsley-required data-parsley-salerentel data-parsley-errors-container="#error-msg-type_el" value="{type_el}">
           <label class="mdl-textfield__label" for="type_el">Πώληση ή Ενοικίαση</label>
           <div class="error-msg" id="error-msg-type_el"> </div>
+        </div> !}
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col options">
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="rent">
+              <input type="radio" id="rent" class="mdl-radio__button" name="options" value="Rent" {@eq key=rent type="boolean" value="true" }checked{/eq}/> <span class="mdl-radio__label">Ενοικίαση / Rent</span> </label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="sale">
+              <input type="radio" id="sale" class="mdl-radio__button" name="options" value="Sale" {@eq key=sale type="boolean" value="true" }checked{/eq}/> <span class="mdl-radio__label">Πώληση / Sale</span> </label>
+          </div>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="price" data-parsley-required data-parsley-errors-container="#error-msg-price" value="{price}">
+          <input class="mdl-textfield__input" type="text" id="price" data-parsley-required data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price" value="{price}">
           <label class="mdl-textfield__label" for="price">Price</label>
           <div class="error-msg" id="error-msg-price"> </div>
         </div>
@@ -22,22 +30,19 @@
           <label class="mdl-textfield__label" for="date_start">Starting Date (DD-MM-YYYY)</label>
           <div class="error-msg" id="error-msg-date_start"></div>
         </div>
-        
-      </fieldset>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col">
+         <div class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="date_end" data-parsley-required data-parsley-date data-parsley-errors-container="#error-msg-date_end" value="{date_end}">
+        <label class="mdl-textfield__label" for="date_end">Eding Date (DD-MM-YYYY)</label>
+        <div class="error-msg" id="error-msg-date_end"></div>
+      </div>
       <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="date_end" data-parsley-required data-parsley-date data-parsley-errors-container="#error-msg-date_end" value="{date_end}">
-          <label class="mdl-textfield__label" for="date_end">Eding Date (DD-MM-YYYY)</label>
-          <div class="error-msg" id="error-msg-date_end"></div>
-        </div>
-        <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" id="prefered_customer" data-parsley-errors-container="#error-msg-prefered_customer" value="{prefered_customer}">
-          <label class="mdl-textfield__label" for="prefered_customer">Prefered Customer</label>
-          <div class="error-msg" id="error-msg-prefered_customer"></div>
-        </div>
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="pets">
-          <input type="checkbox" id="pets" class="mdl-checkbox__input" {@eq key=pets type="boolean" value="true"}checked{/eq}> <span class="mdl-checkbox__label" >Pets Allowed</span> </label>
+        <input class="mdl-textfield__input" type="text" id="prefered_customer" data-parsley-errors-container="#error-msg-prefered_customer" value="{prefered_customer}" {@eq key=sale type="boolean" value="true" }disabled{/eq}>
+        <label class="mdl-textfield__label" for="prefered_customer">Prefered Customer</label>
+        <div class="error-msg" id="error-msg-prefered_customer"></div>
+      </div>
+      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="pets">
+        <input type="checkbox" id="pets" class="mdl-checkbox__input" {@eq key=pets type="boolean" value="true" }checked{/eq} {@eq key=sale type="boolean" value="true" }disabled{/eq}> <span class="mdl-checkbox__label">Pets Allowed</span> </label>
+      </fieldset>
     </div>
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--6-col">

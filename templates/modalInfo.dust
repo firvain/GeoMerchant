@@ -1,47 +1,32 @@
 {#feature}
-<h4>{type}</h4>
+<div class="text-centered text-bold text-big text-primary-color default-primary-color div-centered-50">
+  <p >{type}</p>
+</div>
 <div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--2-col">
-    <ul>
-      <li>{title.estateCode}</li>
-      <li>{title.address}</li>
-      <li>{title.area}</li>
-      <li>{title.bedrooms}</li>
-      <li>{title.price}</li>
-      <li>{title.isnew}</li>
-      <li>{title.parking}</li>
-      <li>{title.furnished}</li>
-      <li>{title.pets}</li>
-      <li>{title.view}</li>
-      <li>{title.heating}</li>
-      <li>{title.cooling}</li>
-    </ul>
-  </div>
-  <div class="mdl-cell mdl-cell--2-col">
-    <ul>
-      <li>{gid}</li>
-      <li>{address}</li>
-      <li>{area}</li>
-      <li>{bedrooms}</li>
-      <li>{price}</li>
-      <li>{@eq key=isnew type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=parking type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=furnished type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=pets type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=view type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=heating type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-      <li>{@eq key=cooling type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons">clear</i>{/eq}</li>
-    </ul>
+  <div class="mdl-cell mdl-cell--4-col">
+    <div>{title.gid} : <b class="text-bold">{gid}</b></div>
+    <div>{title.listing_type} : <b class="text-bold">{listing_type}</b></div>
+    <div>{title.address} : <b class="text-bold">{address}</b></div>
+    <div>{title.area} : <b class="text-bold">{area}</b></div>
+    <div>{title.bedrooms} : <b class="text-bold">{bedrooms}</b></div>
+    <div>{title.price} : <b class="text-bold">{price}</b></div>
+    <div>{title.isnew} : <b class="text-bold">{@eq key=isnew type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.parking} : <b class="text-bold">{@eq key=parking type="boolean" value="true"}<i class="material-icons">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.furnished} : <b class="text-bold">{@eq key=furnished type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.pets} : <b class="text-bold">{@eq key=pets type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.view} : <b class="text-bold">{@eq key=view type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.heating} : <b class="text-bold">{@eq key=heating type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
+    <div>{title.cooling} : <b class="text-bold">{@eq key=cooling type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
   </div>
   <div class="mdl-cell mdl-cell--8-col"><img style="max-width: 100%;" src="../images/properties/placeholder-big.png" alt="Big Property Image"></div>
 </div>
-<h6>{title.contactInfo}</h6>
+<h6 class="text-bold">{title.contactInfo}</h6>
 <div class="mdl-grid">
   <div class="mdl-cell mdl-cell--12-col">
-    <address> {title.name} : {name}<br>
-      {title.lastname} : {lastname}<br>
-      {title.phone} : {phone}<br>
-      {title.email} : <a href="mailto:{email}">{email}</a><br>
-    </address>
+    <address> {title.name} : {name}
+      <br> {title.lastname} : {lastname}
+      <br> {title.phone} : {phone}
+      <br> {title.email} : <a href="mailto:{email}">{email}</a>
+      <br> </address>
   </div>
 </div> {/feature}
