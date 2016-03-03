@@ -4,6 +4,7 @@
     "script": "bin/www",
     "watch": true,
     "cwd": "./",
+    "ignore_watch": "./logs",
     "log_date_format": "YYYY-MM-DD HH:mm Z",
     "merge_logs": true,
     "error_file": "logs/geomerchant.stderr.log",
