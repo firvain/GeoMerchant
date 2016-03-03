@@ -28,7 +28,7 @@ var mapbox = new ol.layer.Tile({
 
 function createPropertyStyle(feature) {
   var src;
-  if (feature.get('type_en') === 'Sale') {
+  if (feature.get('sale') === true) {
     src = '../images/map-icons/pins/48/pin2.png';
   } else {
     src = '../images/map-icons/pins/48/pin5.png';
@@ -251,4 +251,5 @@ if (lang === 'el') {
 jQuery(document).ready(function($) {
   $('.spinner').addClass('visuallyhidden');
   $('.mdl-spinner').removeClass('is-active');
+  handleSelect();
 });

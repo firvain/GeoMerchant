@@ -5,8 +5,24 @@ var handleForm = (function($, parsley) {
   function setOptions(options) {
     formName = options.name;
     submitBtnId = options.submitBtnId;
+    enableSelect();
   }
-
+  function enableSelect() {
+    var e = $('.getmdl-select');
+    e.each(function() {
+      addEventListeners(this);
+    })
+  }
+  function addEventListeners(e) {
+    var t = e.querySelector('input'),
+        n = e.querySelectorAll('li');
+    e.querySelector('i');
+    [].forEach.call(n, function(e) {
+      e.onclick = function() {
+        t.value = e.textContent
+      }
+    })
+  }
   function disableSubmitBtn() {
     $('#' + submitBtnId + '').prop('disabled', true);
   }
@@ -43,6 +59,14 @@ var handleForm = (function($, parsley) {
 
         function(index, element) {
           obj[$(this).attr('id')] = $(this).prop('checked');
+        });
+      $('form[name="' + formName + '"').find('.mdl-radio__button').each(
+        function(index, element) {
+          obj[$(this).attr('id')] = $(this).prop('checked');
+        });
+      $('form[name="' + formName + '"').find('.mdl-selectfield__select').each(
+        function(index, element) {
+          obj[$(this).attr('id')] = $(this).val();
         });
       return obj;
     }

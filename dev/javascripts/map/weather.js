@@ -17,7 +17,7 @@
       }).done(function(data) {
         function createWeatherOverlay(position, index) {
           var elem = document.createElement('div');
-          elem.setAttribute('class', 'weather-popup default-primary-color mdl-shadow--6dp');
+          elem.setAttribute('class', 'weather-popup  mdl-shadow--6dp');
           elem.setAttribute('id', index);
           elem.setAttribute('data-name', 'weather');
           return new ol.Overlay({element: elem, position: position});

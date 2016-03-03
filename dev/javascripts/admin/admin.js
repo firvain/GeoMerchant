@@ -1,3 +1,11 @@
+var $loading = $('.mdl-spinner');
+$(document)
+  .ajaxStart(function() {
+    $loading.addClass('is-active');
+  })
+  .ajaxStop(function() {
+    $loading.removeClass('is-active');
+  });
 var center = [3677385, 4120949],
     extent = [3590094, 4102833, 3855483, 4261211],
     lang = document.documentElement.lang,
@@ -168,18 +176,12 @@ draw.setActive(false);
 select = new ol.interaction.Select({
   layers: [property],
   features: features,
+  multi: false,
   style: new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: 'rgba(255, 0, 0, 0.2)'
-    }),
-    stroke: new ol.style.Stroke({
-      color: '#FF00003',
-      width: 2
-    }),
     image: new ol.style.Circle({
-      radius: 7,
+      radius: 10,
       fill: new ol.style.Fill({
-        color: '#FF0000'
+        color: '#448aff'
       })
     })
   })
@@ -196,190 +198,204 @@ map.on('click', clickInfo);
 
 function clickInfo(event) {
   var obj = {};
-  var clickedFeature , clickedFeatureStyle;
-  clickedFeatureStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: 'rgba(255, 0, 0, 0.2)'
-    }),
-    stroke: new ol.style.Stroke({
-      color: '#FF00003',
-      width: 2
-    }),
-    image: new ol.style.Circle({
-      radius: 7,
-      fill: new ol.style.Fill({
-        color: '#FF0000'
-      })
-    })
-  })
+
   event.preventDefault();
-  clickedFeature = map.forEachFeatureAtPixel(event.pixel, function(feature, layer) {
-    return {
-      feature: feature,
-      layer: layer
-    };
-  }, this, function(layer) {
-    if (layer.get('id') === 'property') {
-      return true;
-    }
-  }, this);
-  if (clickedFeature) {
-    obj.feature = {};
-    clickedFeature.feature.setStyle(clickedFeatureStyle);
-    // clickedFeature.feature.setScale(1.2);
-    clickedFeature.feature.getKeys().forEach(function(key) {
-      obj.feature[key] = clickedFeature.feature.get(key);
-    });
-    dust.render('adminPropertyInfo', obj, function(err, out) {
-      $('.property-info').html(out);
-      $('.property-info').removeClass('visuallyhidden');
-      componentHandler.upgradeDom();
-      $('#listing').on('click', function(event) {
-        var gid;
-        event.preventDefault();
-        gid = $(this).data('gid');
-        $.ajax({
-          url: 'http://127.0.0.1:3000/db/listing',
-          type: 'GET',
-          dataType: 'json',
-          data: {
-            gid: gid
-          }
-        })
-          .done(function(data) {
-            console.log(data);
-            var listing_id = data.id;
-            $('.modal-dialog').removeClass('visuallyhidden');
-            dust.render('listingInsert', data, function(err, out) {
-              $('.modal-content').html(out);
-              componentHandler.upgradeDom();
-              handleForm.set({
-                name: 'insert-update-listing',
-                submitBtnId: 'ok'
-              });
-              $('#sent-listing').on('click', function(event) {
-                var data;
-                event.preventDefault();
-                data = handleForm.get();
-                if (data !== null) {
-                  data.property_gid = gid;
-                  data.listing_id = listing_id;
-                  $.ajax({
-                    url: 'http://127.0.0.1:3000/db/listing/update',
-                    type: 'POST',
-                    data: data,
-                    dataType: 'text'
-                  })
-                    .done(function(data, textStatus, jqXHR) {
-                      if (jqXHR.status === 201) {
-                        toastr.success('Property Updated In Database');
-                      } else {
-                        toastr.error('Oops Something Went Wrong!!!');
-                      }
-                    })
-                    .fail(function(jqXHR, textStatus, errorThrown) {
-                      toastr.error('Oops Something Went Wrong!!!');
-                    })
-                    .always(function() {
-                      handleForm.clear();
-                      $('#openModal').addClass('visuallyhidden');
-                      propertySource.clear();
-                      clickedFeature.feature.setStyle(null);
-                    });
-                }
-              });
-              $('#cancel-listing').on('click', function(event) {
-                event.preventDefault();
-                handleForm.clear();
-                clickedFeature.feature.setStyle(null);
-                $('#openModal').addClass('visuallyhidden');
-              });
-            });
-          })
-          .fail(function() {
-            var obj = {};
-            if (lang === 'el') {
-              obj.msg = 'Δεν Βρέθηκε Αγγελία',
-              obj.text = 'Δημιουργία Καινούργιας;',
-              obj.yes = 'ΝΑΙ'
-              obj.no = 'ΟΧΙ'
-            } else {
-              obj.msg = 'No Listing Found',
-              obj.text = 'Create New Listing?',
-              obj.yes = 'YES'
-              obj.no = 'NO'
-            }
-            dust.render('dialog', obj, function(error, out) {
-              $('#openModal').removeClass('visuallyhidden');
-              $('.modal-content').html(out);
-              componentHandler.upgradeDom();
-              $('#yes').on('click', function(event) {
-                event.preventDefault();
-                dust.render('listingInsert', {}, function(err, out) {
-                  $('.modal-content').html(out);
-                  componentHandler.upgradeDom();
-                  handleForm.set({
-                    name: 'insert-update-listing',
-                    submitBtnId: 'ok'
-                  });
-                  $('#sent-listing').on('click', function(event) {
-                    var data;
-                    event.preventDefault();
-                    data = handleForm.get();
-                    if (data !== null) {
-                      data.property_gid = gid;
-                      $.ajax({
-                        url: 'http://127.0.0.1:3000/db/listing/insert',
-                        type: 'POST',
-                        data: data,
-                        dataType: 'text'
-                      })
-                        .done(function(data, textStatus, jqXHR) {
-                          if (jqXHR.status === 201) {
-                            toastr.success('Property Updated In Database');
-                          } else {
-                            toastr.error('Oops Something Went Wrong!!!');
-                          }
-                        })
-                        .fail(function(jqXHR, textStatus, errorThrown) {
-                          toastr.error('Oops Something Went Wrong!!!');
-                        })
-                        .always(function() {
-                          handleForm.clear();
-                          $('#openModal').addClass('visuallyhidden');
-                          clickedFeature.feature.setStyle(null);
-                        });
-                    }
-                  });
-                  $('#cancel-listing').on('click', function(event) {
-                    event.preventDefault();
-                    handleForm.clear();
-                    clickedFeature.feature.setStyle(null);
-                    $('#openModal').addClass('visuallyhidden');
-                  });
-                })
-              });
-              $('#no').on('click', function(event) {
-                event.preventDefault();
-                $('#openModal').addClass('visuallyhidden');
-                clickedFeature.feature.setStyle(null);
-              });
-            });
-          })
+  select.setActive(true);
+  select.once('select', function(e) {
+    var selectedFeatures = e.selected;
+    var length = selectedFeatures.length;
+    var selectedFeature;
+    if (length === 1) {
+      obj.feature = {};
+      selectedFeature = _.head(e.selected);
+      // clickedFeature.feature.setScale(1.2);
+      selectedFeature.getKeys().forEach(function(key) {
+        obj.feature[key] = selectedFeature.get(key);
       });
-    });
-  } else {
-    propertySource.forEachFeature(function(f) {
-      f.setStyle(null)
-    });
-    $('.property-info').addClass('visuallyhidden');
-    toastr.options = {
-      'positionClass': 'toast-bottom-full-width',
-      'preventDuplicates': true,
-      'timeOut': 60
-    };
-    toastr.error('Cant Find Any Property There...');
-  }
+      dust.render('adminPropertyInfo', obj, function(err, out) {
+        $('.property-info').html(out);
+        $('.property-info').removeClass('visuallyhidden');
+        componentHandler.upgradeDom();
+        $('#listing').on('click', function(event) {
+          var gid;
+          event.preventDefault();
+          gid = $(this).data('gid');
+          $.ajax({
+            url: 'http://127.0.0.1:3000/db/listing',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+              gid: gid
+            }
+          })
+            .done(function(data) {
+              // console.log(data);
+              var listing_id = data.id;
+              $('.modal-dialog').removeClass('visuallyhidden');
+              dust.render('listingInsert', data, function(err, out) {
+                $('.modal-content').html(out);
+                componentHandler.upgradeDom();
+                handleForm.set({
+                  name: 'insert-update-listing',
+                  submitBtnId: 'ok'
+                });
+                $('input[name=options]').on('change', function(event) {
+                  if ($(this).val() === 'Sale') {
+                    $('#pets').prop('disabled', true);
+                    $('#pets').prop('checked', false);
+                    $('label[for=pets]').removeClass('is-checked');
+                    $('#prefered_customer').val('');
+                    $('#prefered_customer').parent().eq(0).removeClass('is-dirty');
+                    $('#prefered_customer').prop('disabled', true);
+                  } else {
+                    $('#pets').prop('disabled', false);
+                    $('#prefered_customer').prop('disabled', false);
+                  }
+                });
+                $('#sent-listing').on('click', function(event) {
+                  var data;
+                  event.preventDefault();
+                  data = handleForm.get();
+                  console.log(data);
+                  if (data !== null) {
+                    data.property_gid = gid;
+                    data.listing_id = listing_id;
+                    $.ajax({
+                      url: 'http://127.0.0.1:3000/db/listing/update',
+                      type: 'POST',
+                      data: data,
+                      dataType: 'text'
+                    })
+                      .done(function(data, textStatus, jqXHR) {
+                        if (jqXHR.status === 201) {
+                          toastr.success('Property Updated In Database');
+                        } else {
+                          toastr.error('Oops Something Went Wrong!!!');
+                        }
+                      })
+                      .fail(function(jqXHR, textStatus, errorThrown) {
+                        toastr.error('Oops Something Went Wrong!!!');
+                      })
+                      .always(function() {
+                        handleForm.clear();
+                        $('#openModal').addClass('visuallyhidden');
+                        propertySource.clear();
+                        select.getFeatures().clear();
+                        select.setActive(false);
+                      });
+                  }
+                });
+                $('#cancel-listing').on('click', function(event) {
+                  event.preventDefault();
+                  handleForm.clear();
+                  select.getFeatures().clear();
+                  select.setActive(false);
+                  $('#openModal').addClass('visuallyhidden');
+                });
+              });
+            })
+            .fail(function() {
+              var obj = {};
+              if (lang === 'el') {
+                obj.msg = 'Δεν Βρέθηκε Αγγελία',
+                obj.text = 'Δημιουργία Καινούργιας;',
+                obj.yes = 'ΝΑΙ'
+                obj.no = 'ΟΧΙ'
+              } else {
+                obj.msg = 'No Listing Found',
+                obj.text = 'Create New Listing?',
+                obj.yes = 'YES'
+                obj.no = 'NO'
+              }
+              dust.render('dialog', obj, function(error, out) {
+                $('#openModal').removeClass('visuallyhidden');
+                $('.modal-content').html(out);
+                componentHandler.upgradeDom();
+                $('#yes').on('click', function(event) {
+                  event.preventDefault();
+                  dust.render('listingInsert', {
+                    rent: 'true'
+                  }, function(err, out) {
+                    $('.modal-content').html(out);
+                    componentHandler.upgradeDom();
+                    handleForm.set({
+                      name: 'insert-update-listing',
+                      submitBtnId: 'ok'
+                    });
+                    $('input[name=options]').on('change', function(event) {
+                      if ($(this).val() === 'Sale') {
+                        $('#pets').prop('disabled', true);
+                        $('#pets').prop('checked', false);
+                        $('label[for=pets]').removeClass('is-checked');
+                        $('#prefered_customer').val('');
+                        $('#prefered_customer').parent().eq(0).removeClass('is-dirty');
+                        $('#prefered_customer').prop('disabled', true);
+                      } else {
+                        $('#pets').prop('disabled', false);
+                        $('#prefered_customer').prop('disabled', false);
+                      }
+                    });
+                    $('#sent-listing').on('click', function(event) {
+                      var data;
+                      event.preventDefault();
+                      data = handleForm.get();
+                      if (data !== null) {
+                        data.property_gid = gid;
+                        $.ajax({
+                          url: 'http://127.0.0.1:3000/db/listing/insert',
+                          type: 'POST',
+                          data: data,
+                          dataType: 'text'
+                        })
+                          .done(function(data, textStatus, jqXHR) {
+                            if (jqXHR.status === 201) {
+                              toastr.success('Property Updated In Database');
+                            } else {
+                              toastr.error('Oops Something Went Wrong!!!');
+                            }
+                          })
+                          .fail(function(jqXHR, textStatus, errorThrown) {
+                            toastr.error('Oops Something Went Wrong!!!');
+                          })
+                          .always(function() {
+                            handleForm.clear();
+                            $('#openModal').addClass('visuallyhidden');
+                            select.getFeatures().clear();
+                            select.setActive(false);
+                          });
+                      }
+                    });
+                    $('#cancel-listing').on('click', function(event) {
+                      event.preventDefault();
+                      handleForm.clear();
+                      select.getFeatures().clear();
+                      select.setActive(false);
+                      $('#openModal').addClass('visuallyhidden');
+                    });
+                  })
+                });
+                $('#no').on('click', function(event) {
+                  event.preventDefault();
+                  $('#openModal').addClass('visuallyhidden');
+                  select.getFeatures().clear();
+                  select.setActive(false);
+                });
+              });
+            })
+        });
+      });
+    } else {
+      select.getFeatures().clear();
+      // select.setActive(false);
+      $('.property-info').addClass('visuallyhidden');
+      toastr.options = {
+        'positionClass': 'toast-bottom-full-width',
+        'preventDuplicates': true,
+        'timeOut': 60
+      };
+      toastr.error('Cant Find Any Property There...');
+    }
+  });
 }
 //====== logout ======
 $('#logout').click(function() {
@@ -387,6 +403,7 @@ $('#logout').click(function() {
 });
 //====== insert ======
 $('#insertProperty').click(function() {
+  toastr.clear();
   $('.property-info').addClass('visuallyhidden');
   toastr.options = {
     'positionClass': 'toast-top-center',
@@ -394,6 +411,7 @@ $('#insertProperty').click(function() {
     'timeOut': 60
   };
   map.un('click', clickInfo);
+  select.getFeatures().clear();
   select.setActive(false);
   draw.setActive(true);
   draw.on('drawend', function(event) {
@@ -407,6 +425,42 @@ $('#insertProperty').click(function() {
       handleForm.set({
         name: 'insertProperty',
         submitBtnId: 'insert'
+      });
+      $('#estateType').change(function() {
+        if ($(this).val() === 'Μονοκατοικία') {
+          $('#estateType_en').val('Detached House');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Διαμέρισμα') {
+          $('#estateType_en').val('Apartment');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType_en').val('Store');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
+      });
+      $('#estateType_en').change(function() {
+        if ($(this).val() === 'Detached House') {
+          $('#estateType').val('Μονοκατοικία');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Apartment') {
+          $('#estateType').val('Διαμέρισμα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
+          $('#bedrooms').val('');
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType').val('Κατάστημα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
       });
       $('#cancelInsert').on('click', function(event) {
         event.preventDefault();
@@ -460,6 +514,7 @@ $('#insertProperty').click(function() {
 //====== delete ======
 $('#deleteProperty').click(function(event) {
   event.preventDefault();
+  toastr.clear();
   $('.property-info').addClass('visuallyhidden');
   toastr.options = {
     'positionClass': 'toast-top-center',
@@ -470,6 +525,7 @@ $('#deleteProperty').click(function(event) {
   draw.setActive(false);
   features.clear();
   propertySource.clear();
+  select.getFeatures().clear();
   select.setActive(true);
   select.once('select', function(e) {
     var $toast;
@@ -529,18 +585,24 @@ $('#deleteProperty').click(function(event) {
 //====== update ======
 
 $('#updateProperty').on('click', function(event) {
-  var gid, obj;
+  var gid, obj, coords;
   event.preventDefault();
+  toastr.clear();
   map.un('click', clickInfo);
   draw.setActive(false);
   features.clear();
   propertySource.clear();
+  select.getFeatures().clear();
   select.setActive(true);
-  translate.setActive(true);
   $('.property-info').addClass('visuallyhidden');
   select.once('select', function(e) {
-    if (select.getFeatures().getLength() === 1) {
-      gid = select.getFeatures().item(0).get('gid');
+    var selectedFeatures = e.selected;
+    var length = selectedFeatures.length;
+    var selectedFeature;
+    if (length === 1) {
+      gid = _.head(e.selected).get('gid');
+      selectedFeature = _.head(e.selected);
+      coords = ol.proj.transform(selectedFeature.getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
       $.ajax({
         url: 'http://127.0.0.1:3000/db/fetch',
         type: 'POST',
@@ -550,27 +612,81 @@ $('#updateProperty').on('click', function(event) {
         }
       })
         .done(function(data) {
+          var $toast = {};
+          $toast.options = {};
           obj = _.head(data.features).properties;
 
+          toastr.options.newestOnTop = true;
+          toastr.options.preventDuplicates = true;
+          toastr.options.extendedTimeOut = 0;
+          toastr.options.timeOut = 0;
+          toastr.options.closeButton = false;
+          toastr.options.positionClass = 'toast-top-center';
+          $toast = toastr.warning('<p>Change Property Coordinates?</p><div class="toastr-btns"><button id="yesChangeXY" class="mdl-button mdl-js-button ">Yes</button><button id="noChangeXY" class="mdl-button mdl-js-button">No</button></div>');
+          $toast.on('click', '#yesChangeXY', function() {
+            translate.setActive(true);
+            translate.on('translateend', function(e) {
+              coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
+              dataForm(obj, coords);
+            })
+          })
+          $toast.on('click', '#noChangeXY', function() {
+            translate.setActive(false);
+            toastr.clear();
+            dataForm(obj, coords);
+          })
         })
         .fail(function() {
           toastr.error('Oops Something Went Wrong!!!');
         })
-        .always(function() {
-          console.log('complete');
-        });
     }
   });
-  translate.on('translateend', function(e) {
-    var coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
+  function dataForm(obj, coords) {
     $('.modal-dialog').removeClass('visuallyhidden');
     dust.render('propertyUpdate', obj, function(err, out) {
-
+      var oldValues = {};
       $('.modal-content').html(out);
+      oldValues.bedrooms = $('#bedrooms').val();
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'updateProperty',
         submitBtnId: 'update'
+      });
+      $('#estateType').change(function() {
+        if ($(this).val() === 'Μονοκατοικία') {
+          $('#estateType_en').val('Detached House');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Διαμέρισμα') {
+          $('#estateType_en').val('Apartment');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType_en').val('Store');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
+      });
+      $('#estateType_en').change(function() {
+        if ($(this).val() === 'Detached House') {
+          $('#estateType').val('Μονοκατοικία');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Apartment') {
+          $('#estateType').val('Διαμέρισμα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
+          $('#bedrooms').val(oldValues.bedrooms);
+          $('#bedrooms').prop('disabled', false);
+        } else {
+          $('#estateType').val('Κατάστημα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
+          $('#bedrooms').val(0);
+          $('#bedrooms').prop('disabled', true);
+        }
       });
       $('#update').on('click', function(event) {
         var data;
@@ -580,7 +696,6 @@ $('#updateProperty').on('click', function(event) {
           data.x = coords[0];
           data.y = coords[1];
           data.gid = gid;
-
           $.ajax({
             url: 'http://127.0.0.1:3000/db/update',
             type: 'POST',
@@ -623,8 +738,9 @@ $('#updateProperty').on('click', function(event) {
         map.on('click', clickInfo);
       });
     });
-    $('#adminMap').removeAttr('style');
-  });
+  }
+
+  $('#adminMap').removeAttr('style');
 });
 $(document).ready(function() {
   window.Parsley.on('field:error', function() {
@@ -644,36 +760,6 @@ $(document).ready(function() {
       messages: {
         en: 'Wrong Date',
         el: 'Λάθος Ημερομηνία'
-      }
-    });
-  window.Parsley
-    .addValidator('salerenten', {
-      requirementType: 'string',
-      validateString: function(value, requirement) {
-        if (value === 'Sale' || value === 'Rent') {
-          return true
-        } else {
-          return false
-        }
-      },
-      messages: {
-        en: 'Please Type Sale or Rent',
-        el: 'Παρακαλώ πληκρολογήστε Sale ή Rent'
-      }
-    });
-  window.Parsley
-    .addValidator('salerentel', {
-      requirementType: 'string',
-      validateString: function(value, requirement) {
-        if (value === 'Πώληση' || value === 'Ενοικίαση') {
-          return true
-        } else {
-          return false
-        }
-      },
-      messages: {
-        en: 'Please Type Πώληση or Ενοικίαση',
-        el: 'Παρακαλώ πληκρολογήστε Πώληση ή Ενοικίαση'
       }
     });
 });

@@ -5,8 +5,8 @@
   left: .5em;
   width: 27em;
   min-width: 27em;
-  height: 27em;
-  max-height: 27em;
+  height: 39em;
+  max-height: 39em;
   border-radius: .429em;
   background: white;
 }
@@ -26,5 +26,23 @@
 padding-left: 0.5em;
 padding-right: 0.5em;
   z-index: 16;
-  height: 27em;
+  height: 39em;
+}
+.infobox .error-msg {
+  font-size: 12px;
+
+  position: absolute;
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #de3226;
+}
+
+.infobox .error-msg ul {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
 }

@@ -17,9 +17,19 @@ router.get('/', function(req, res, next) {
       lang: 'en',
       title: 'Geomerchant',
       basemap: 'BaseMap',
-      search: 'Search',
-      sale: 'Buy',
-      rent: 'Rent',
+      btns: {
+        clear: 'Clear',
+        search: 'Search',
+        sale: 'Buy',
+        rent: 'Rent',
+        parking: 'Parking',
+        furnished: 'Furnished',
+        pets: 'Pets Allowed',
+        view: 'View',
+        heating: 'Heating',
+        cooling: 'Air Condition',
+        newbuild: 'Newly Build'
+      },
       price: 'Price',
       from: 'From',
       to: 'To',
@@ -27,17 +37,18 @@ router.get('/', function(req, res, next) {
       estateCode: 'Estate Code',
       estateProperties: 'Choose Estate Properites',
       chooseArea: 'Choose Area of Search',
-      type: 'Type',
+      listingType: 'Listing Type',
+       estate:{
+        title: 'Estate Type',
+        type:{
+          detached:'Detached House',
+          apartment:'Apartment',
+          store:'Store'
+        }
+      },
       area: 'Size',
       address: 'Address',
       bedrooms: 'Bedrooms',
-      newbuild: 'Newly Build',
-      parking: 'Parking',
-      furnished: 'Furnished',
-      pets: 'Pets Allowed',
-      view: 'View',
-      heating: 'Heating',
-      cooling: 'Air Condition',
       contactInfo: 'Contact Info',
       name: 'Name',
       lastname: 'Last Name',
@@ -51,10 +62,19 @@ router.get('/', function(req, res, next) {
       lang: 'el',
       title: 'Geomerchant',
       basemap: 'Υπόβαθρο',
-      search: 'Αναζήτηση',
-      // estateType:'Αγορά',
-      sale: 'Αγορά',
-      rent: 'Ενοικίαση',
+      btns: {
+        clear: 'Καθαρισμός',
+        search: 'Αναζήτηση',
+        sale: 'Αγορά',
+        rent: 'Ενοικίαση',
+        parking: 'Στάθμεση',
+        furnished: 'Επιπλωμένο',
+        pets: 'Κατοικίδια',
+        view: 'Θέα',
+        heating: 'Θέρμανση',
+        cooling: 'Κλιματισμός',
+        newbuild: 'Νεόδμητο'
+      },
       price: 'Τιμή',
       from: 'Από',
       to: 'Εως',
@@ -62,17 +82,18 @@ router.get('/', function(req, res, next) {
       estateCode: 'Κωδικός Ιδιοκτησίας',
       estateProperties: 'Επιλέξτε Χαρακτηριστικά Ακινήτου',
       chooseArea: 'Επιλογή Περιοχής για Αναζήτηση',
-      type: 'Τύπος',
+      listingType: 'Είδος Αγγελίας',
+      estate:{
+        title: 'Τύπος Ιδιοκτησίας',
+        type:{
+          detached:'Μονοκατοικία',
+          apartment:'Διαμέρισμα',
+          store:'Κατάστημα'
+        }
+      },
       area: 'Εμβαδό',
       address: 'Διευθυνση',
       bedrooms: 'Υπνοδωμάτια',
-      newbuild: 'Νεόδμητο',
-      parking: 'Στάθμεση',
-      furnished: 'Επιπλωμένο',
-      pets: 'Κατοικίδια',
-      view: 'Θέα',
-      heating: 'Θέρμανση',
-      cooling: 'Κλιματισμός',
       contactInfo: 'Στοιχεία Επικοινωνίας',
       name: 'Όνομα',
       lastname: 'Επίθετο',
@@ -83,7 +104,6 @@ router.get('/', function(req, res, next) {
     res.render('map', data);
   }
 });
-console.log(env);
 router.get('/login', function(req, res) {
   res.render('login', {
     env: env
