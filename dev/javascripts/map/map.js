@@ -1,3 +1,4 @@
+var $loading = $('.mdl-spinner');
 var center = [3677385, 4120949],
     extent = [3590094, 4102833, 3855483, 4261211],
     lang = document.documentElement.lang,
@@ -26,20 +27,43 @@ var mapbox = new ol.layer.Tile({
   id: 'mapbox'
 });
 
+function getIconType(estateType) {
+  var iconType = {
+    'Apartment': function() {
+      return 'apartment'
+    },
+    'Store': function() {
+      return 'store'
+    },
+    'Detached House': function() {
+      return 'detached'
+    }
+  };
+  return (iconType[estateType])();
+}
+
+function getIconPath(listingType) {
+  var iconPath = {
+    true: function() {
+      return './images/pins/sale/'
+    },
+    false: function() {
+      return './images/pins/rent/'
+    }
+  };
+  return (iconPath[listingType])();
+}
+
 function createPropertyStyle(feature) {
   var src;
-  if (feature.get('sale') === true) {
-    src = '../images/map-icons/pins/48/pin2.png';
-  } else {
-    src = '../images/map-icons/pins/48/pin5.png';
-  }
+  src = getIconPath(feature.get('sale')) + getIconType(feature.get('estatetype_en')) + '-48.png';
   return new ol.style.Style({
     geometry: feature.getGeometry(),
     image: new ol.style.Icon(({
       src: src,
       anchorOrigin: 'bottom-left',
-      anchor: [0, 0],
-      scale: 0.7
+      anchor: [0.5, 0],
+      scale: 1
     }))
   });
 }
@@ -160,12 +184,14 @@ var PSA = new ol.layer.Vector({
 PSA.setZIndex(1);
 
 function filteredEsateStyle(feature, resolution) {
+  var src;
+  src = getIconPath(feature.get('sale')) + getIconType(feature.get('estatetype_en')) + '-64.png';
   styleCache = [new ol.style.Style({
     image: new ol.style.Icon(({
-      src: '../images/map-icons/pins/48/pin4.png',
+      src: src,
       anchorOrigin: 'bottom-left',
-      anchor: [0.5, 0.5],
-      scale: 0.7
+      anchor: [0.5, 0],
+      scale: 1
     }))
   })];
   return styleCache;
@@ -253,3 +279,10 @@ jQuery(document).ready(function($) {
   $('.mdl-spinner').removeClass('is-active');
   handleSelect();
 });
+$(document)
+  .ajaxStart(function() {
+    $loading.addClass('is-active');
+  })
+  .ajaxStop(function() {
+    $loading.removeClass('is-active');
+  });

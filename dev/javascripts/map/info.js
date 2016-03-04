@@ -1,11 +1,13 @@
 function handleInfo(evt) {
-  evt.preventDefault();
-  map.removeInteraction(draw);
   var coordinate = evt.coordinate;
   var obj = {};
   var title = {};
   var owner = {};
   var features = [];
+  var clickedFeature;
+  var f;
+  map.removeInteraction(draw);
+  evt.preventDefault();
   obj.title = title;
   if (lang === 'el') {
     title.gid = 'Κωδικός Ιδιοκτησίας';
@@ -58,7 +60,6 @@ function handleInfo(evt) {
       return true;
     }
   }, this);
-  var f;
   if (clickedFeature) {
     if (clickedFeature.layer.get('id') === 'estates' && clickedFeature.feature.get('features').length === 1) {
       f = clickedFeature.feature.getProperties().features[0];
