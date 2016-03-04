@@ -18,8 +18,8 @@
 
   <body>
     <div class="appwrapper">
-      <div class="spinner">
-        <div class="mdl-spinner mdl-js-spinner is-active"></div>
+      <div class="spiner-wrapper">
+        <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner  mdl-spinner-big"></div>
       </div>
       <div id="openModal" class="modalDialog">
         <div class="modalwraper">

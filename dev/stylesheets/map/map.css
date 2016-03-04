@@ -1,34 +1,28 @@
 .appwrapper {
-  overflow: hidden;
+  position: relative;
+}
+.spiner-wrapper {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.mdl-spinner-big {
+  width: 80px;
+  height: 80px;
 }
 
 .map {
-  position: absolute;
-
-  width: 100vw;
-  height: 100vh;
-}
-.spinner {
-  position: absolute;
-  z-index: 800000;
-
-  display: flex;
-
-  width: 100vw;
-  height: 100vh;
-
-  background-color: rgba(255, 255, 255, 0.5);
-
-
-  justify-content: center;
-  align-items: center;
-}
-.mdl-spinner {
   position: relative;
+  z-index: 1;
 
-  width: 100px;
-  height: 100px;
+  width: 100vw;
+  height: 100vh;
 }
+
 .controls {
   position: absolute;
   z-index: 10;

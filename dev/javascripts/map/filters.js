@@ -72,8 +72,8 @@ app.filters.prototype.ajaxCall = function() {
         filteredEstates.getSource().addFeatures(features);
         filteredEstates.setVisible(true);
         property.setVisible(false);
-        var extent = filteredEstates.getSource().getExtent();
-        var center = [];
+        // var extent = filteredEstates.getSource().getExtent();
+        // var center = [];
       } else {
         toastr.error('No Info Found!');
         filteredEstates.setVisible(false);

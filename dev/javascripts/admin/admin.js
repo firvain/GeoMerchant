@@ -33,16 +33,46 @@ var mapbox = new ol.layer.Tile({
   }),
   id: 'mapbox'
 });
+function getIconType(estateType) {
+  var iconType = {
+    'Apartment': function() {
+      return 'apartment'
+    },
+    'Store': function() {
+      return 'store'
+    },
+    'Detached House': function() {
+      return 'detached'
+    }
+  };
+  return (iconType[estateType])();
+}
 
-function PropertyStyle() {
-  var src = '../images/map-icons/pins/48/pin1.png';
+function getIconPath(listingType) {
+  var iconPath = {
+    true: function() {
+      return './images/pins/sale/'
+    },
+    false: function() {
+      return './images/pins/rent/'
+    },
+    'none': function() {
+      return './images/pins/none/'
+    }
+  };
+  return (iconPath[listingType])();
+}
+function PropertyStyle(feature) {
+  var src;
+  src = getIconPath('none') + getIconType(feature.get('estatetype_en')) + '-48.png';
   return new ol.style.Style({
     image: new ol.style.Icon(({
       src: src,
+      anchorOrigin: 'bottom-left',
       anchor: [
-        0.5, 1
+        0.5, 0
       ],
-      scale: 0.7
+      scale: 1
     }))
   });
 }
@@ -79,7 +109,7 @@ property = new ol.layer.Vector({
   source: propertySource,
   id: 'property',
   visible: true,
-  style: PropertyStyle()
+  style: PropertyStyle
 });
 property.setZIndex(2);
 map = new ol.Map({
@@ -129,24 +159,39 @@ if (lang === 'el') {
 }
 //====== interactions ======
 features = new ol.Collection();
+function drawnPropertiesStyle(color) {
+  var src;
+  src = './images/pins/generic-48.png';
+  if (typeof color !== 'undefined') {
+    return new ol.style.Style({
+      image: new ol.style.Icon(({
+        src: src,
+        anchorOrigin: 'bottom-left',
+        anchor: [
+          0.5, 0
+        ],
+        scale: 1,
+        color: color
+      }))
+    });
+  } else {
+    return new ol.style.Style({
+      image: new ol.style.Icon(({
+        src: src,
+        anchorOrigin: 'bottom-left',
+        anchor: [
+          0.5, 0
+        ],
+        scale: 1
+      }))
+    });
+  }
+
+}
 drawnProperties = new ol.layer.Vector({
   source: new ol.source.Vector(),
-  style: new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: 'rgba(255, 255, 255, 0.2)'
-    }),
-    stroke: new ol.style.Stroke({
-      color: '#ffcc33',
-      width: 2
-    }),
-    image: new ol.style.Circle({
-      radius: 7,
-      fill: new ol.style.Fill({
-        color: '#ffcc33'
-      })
-    })
-  }),
-  id: 'drawnProperties'
+  id: 'drawnProperties',
+  style: drawnPropertiesStyle('#4caf50')
 });
 map.addLayer(drawnProperties);
 //draw
@@ -154,37 +199,29 @@ draw = new ol.interaction.Draw({
   // features: features,
   source: drawnProperties.getSource(),
   type: 'Point',
-  style: new ol.style.Style({
-    fill: new ol.style.Fill({
-      color: 'rgba(255, 255, 255, 0.2)'
-    }),
-    stroke: new ol.style.Stroke({
-      color: '#ffcc33',
-      width: 2
-    }),
-    image: new ol.style.Circle({
-      radius: 7,
-      fill: new ol.style.Fill({
-        color: '#ffcc33'
-      })
-    })
-  })
+  style: drawnPropertiesStyle('#4caf50')
 });
 map.addInteraction(draw);
 draw.setActive(false);
 //select
+function selectedStyle(feature) {
+  var src;
+  src = getIconPath('none') + getIconType(feature.get('estatetype_en')) + '-64.png';
+  return new ol.style.Style({
+    image: new ol.style.Icon(({
+      src: src,
+      anchorOrigin: 'bottom-left',
+      anchor: [0.5, 0],
+      scale: 1,
+      color: '#ffeb3b'
+    }))
+  });
+}
 select = new ol.interaction.Select({
   layers: [property],
   features: features,
   multi: false,
-  style: new ol.style.Style({
-    image: new ol.style.Circle({
-      radius: 10,
-      fill: new ol.style.Fill({
-        color: '#448aff'
-      })
-    })
-  })
+  style: selectedStyle
 });
 map.addInteraction(select);
 select.setActive(false);
