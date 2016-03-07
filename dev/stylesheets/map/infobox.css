@@ -3,30 +3,39 @@
   z-index: 15;
   top: 6.000em;
   left: .5em;
+
   width: 27em;
   min-width: 27em;
   height: 39em;
   max-height: 39em;
+
   border-radius: .429em;
   background: white;
 }
 
 .input-align-center {
   display: block;
+
   margin: 0 auto;
 }
 
 .infobox-content {
   position: relative;
+
   height: auto;
 }
 
 .filters {
   position: absolute;
-padding-left: 0.5em;
-padding-right: 0.5em;
   z-index: 16;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   height: 39em;
+  padding-right: .5em;
+  padding-left: .5em;
 }
 .infobox .error-msg {
   font-size: 12px;
