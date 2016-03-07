@@ -114,7 +114,7 @@ var propertySource = new ol.source.Vector({
   loader: function(extent, resolution, projection) {
     console.log(resolution);
     var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-    var url = 'http://localhost:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
+    var url = 'http://127.0.0.1:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
     var self = this;
     this.clear();
     console.log(extent);

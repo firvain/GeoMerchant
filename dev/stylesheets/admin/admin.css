@@ -17,6 +17,7 @@
 
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+
 }
 .mdl-spinner-big {
   width: 80px;
@@ -181,6 +182,7 @@
           transform: translate(-50%, -50%);
 
   background: #fff;
+  width: 50%;
 }
 
 .modal-content {
@@ -229,6 +231,7 @@ label.mdl-checkbox {
 }
 .checkboxes {
   display: flex;
+  flex-direction: column;
 }
 .checkboxes span {
   white-space: pre;
