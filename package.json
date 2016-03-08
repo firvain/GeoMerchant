@@ -1,6 +1,6 @@
 {
   "name": "geomerchant",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "scripts": {
     "start": "pm2 start processes.json",

@@ -126,7 +126,7 @@ function createPSAandCard(f, obj) {
     })],
     format: geoJSONFormat,
     loader: function(extent, resolution, projection) {
-      var url = 'http://localhost:3000/db/uses/' + feature.gid;
+      var url = 'http://127.0.0.1:3000/db/uses/' + feature.gid;
       var self = this;
       $.ajax({
         url: url,
@@ -156,14 +156,14 @@ function createPSAandCard(f, obj) {
 
   dust.render('estateCards', obj, function(err, out) {
     $('.estate-cards').html(out);
-    $('.mdl-card__title').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/w_432,c_scale/v1457348773/' + obj.feature.gid + '.jpg)');
+    $('.mdl-card__title').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/w_432,c_scale/' + obj.feature.gid + '.jpg)');
     $('.estate-cards').addClass('estate-cards-active');
   // $("#infobox").addClass("visuallyhidden");
   });
   $('a[href="#openModal"]').click(function() {
     dust.render('modalInfo', obj, function(err, out) {
       $('.modal-content').html(out);
-      $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/v1457348773/' + obj.feature.gid + '.jpg)');
+      $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + obj.feature.gid + '.jpg)');
     });
   });
   $('a[href="#closeEstateCard"]').click(function() {
