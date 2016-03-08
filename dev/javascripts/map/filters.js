@@ -48,7 +48,7 @@ app.filters.prototype.ajaxCall = function() {
   console.log(this.estateType);
   if (this.p.validate() === true) {
     $.ajax({
-      url: 'http://localhost:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
+      url: 'http://127.0.0.1:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
       type: 'GET',
       dataType: 'json',
       data: {
