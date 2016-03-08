@@ -1,5 +1,5 @@
 <form class="insertProperty" action="#" method="post" autocomplete="off" name="insertProperty">
-   <div class="mdl-grid">
+  <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--3-col">
       <fieldset>
         <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
@@ -114,15 +114,14 @@
           <input type="checkbox" id="cooling" class="mdl-checkbox__input" {@eq key=cooling type="boolean" value="true" }checked{/eq}> <span class="mdl-checkbox__label">Air Condition</span> </label>
       </fieldset>
     </div>
+  </div>
+
+  <div class="mdl-grid div-centered-50 text-centered">
+    <div class="mdl-cell mdl-cell--6-col">
+      <button id="insert" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"> Insert </button>
     </div>
- 
-    <div class="mdl-grid div-centered-50 text-centered">
-      <div class="mdl-cell mdl-cell--6-col">
-        <button id="insert" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"> Insert </button>
-      </div>
-      <div class="mdl-cell mdl-cell--6-col">
-        <button id="cancelInsert" class="mdl-button mdl-js-button mdl-js-ripple-effect"> Cancel </button>
-      </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <button id="cancelInsert" class="mdl-button mdl-js-button mdl-js-ripple-effect"> Cancel </button>
     </div>
- 
+  </div>
 </form>

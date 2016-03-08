@@ -18,7 +18,11 @@
     <div>{title.heating} : <b class="text-bold">{@eq key=heating type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
     <div>{title.cooling} : <b class="text-bold">{@eq key=cooling type="boolean" value="true"}<i class="material-icons text-centered text-bold">done</i>{:else}<i class="material-icons text-centered text-bold">clear</i>{/eq}</b></div>
   </div>
-  <div class="mdl-cell mdl-cell--8-col"><img style="max-width: 100%;" src="../images/properties/placeholder-big.png" alt="Big Property Image"></div>
+  <div class="mdl-cell mdl-cell--8-col big-image-cell">
+    <div class="estate-image big-image">
+     
+    </div>
+  </div>
 </div>
 <h6 class="text-bold">{title.contactInfo}</h6>
 <div class="mdl-grid">
