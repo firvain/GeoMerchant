@@ -3,15 +3,18 @@
   z-index: 17;
   top: 100%;
   left: 0;
+
   width: 100%;
   height: 0;
-  transition: height 0.3s ease;
 
+  transition: height .3s ease;
 }
 
 .estate-cards.estate-cards-active {
   top: 0;
+
   height: 39em;
+
   transition: all .3s ease;
 }
 
@@ -23,14 +26,30 @@
 
 .estate-card-square > .mdl-card__title {
   color: #fff;
-  background: red;
 }
-
+.mdl-card__title h2 {
+  width: 100%;
+  background-color: #9c27b0;
+}
+.estate-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: content-box;
+  background-size: contain;
+}
 .estate-card-square a:hover {
   text-decoration: none;
 }
+.big-image {
+  display: flex;
 
+  flex-grow: 1;
+}
+.big-image-cell {
+  display: flex;
+}
 .estate-card-square a {
   text-align: center;
+
   color: inherit;
 }

@@ -30,20 +30,27 @@
           <label class="mdl-textfield__label" for="date_start">Starting Date (DD-MM-YYYY)</label>
           <div class="error-msg" id="error-msg-date_start"></div>
         </div>
-         <div class="mdl-textfield mdl-js-textfield">
-        <input class="mdl-textfield__input" type="text" id="date_end" data-parsley-required data-parsley-date data-parsley-errors-container="#error-msg-date_end" value="{date_end}">
-        <label class="mdl-textfield__label" for="date_end">Eding Date (DD-MM-YYYY)</label>
-        <div class="error-msg" id="error-msg-date_end"></div>
-      </div>
-      <div class="mdl-textfield mdl-js-textfield">
-        <input class="mdl-textfield__input" type="text" id="prefered_customer" data-parsley-errors-container="#error-msg-prefered_customer" value="{prefered_customer}" {@eq key=sale type="boolean" value="true" }disabled{/eq}>
-        <label class="mdl-textfield__label" for="prefered_customer">Prefered Customer</label>
-        <div class="error-msg" id="error-msg-prefered_customer"></div>
-      </div>
-      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="pets">
-        <input type="checkbox" id="pets" class="mdl-checkbox__input" {@eq key=pets type="boolean" value="true" }checked{/eq} {@eq key=sale type="boolean" value="true" }disabled{/eq}> <span class="mdl-checkbox__label">Pets Allowed</span> </label>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="date_end" data-parsley-required data-parsley-date data-parsley-errors-container="#error-msg-date_end" value="{date_end}">
+          <label class="mdl-textfield__label" for="date_end">Eding Date (DD-MM-YYYY)</label>
+          <div class="error-msg" id="error-msg-date_end"></div>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <input class="mdl-textfield__input" type="text" id="prefered_customer" data-parsley-errors-container="#error-msg-prefered_customer" value="{prefered_customer}" {@eq key=sale type="boolean" value="true" }disabled{/eq}>
+          <label class="mdl-textfield__label" for="prefered_customer">Prefered Customer</label>
+          <div class="error-msg" id="error-msg-prefered_customer"></div>
+        </div>
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="pets">
+          <input type="checkbox" id="pets" class="mdl-checkbox__input" {@eq key=pets type="boolean" value="true" }checked{/eq} {@eq key=sale type="boolean" value="true" }disabled{/eq}> <span class="mdl-checkbox__label">Pets Allowed</span> </label>
       </fieldset>
     </div>
+    {@eq key=addImage type="boolean" value="true" }
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col">
+        <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data=""></input>
+      </div>
+    </div>
+    {/eq}
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--6-col">
         <button id="sent-listing" type="button" class="mdl-button mdl-js-button mdl-button--primary mdl-js-ripple-effect"> ok </button>

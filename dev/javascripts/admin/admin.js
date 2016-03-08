@@ -268,6 +268,7 @@ function clickInfo(event) {
             .done(function(data) {
               // console.log(data);
               var listing_id = data.id;
+              $('#openModal').css('width', 'auto');
               $('.modal-dialog').removeClass('visuallyhidden');
               dust.render('listingInsert', data, function(err, out) {
                 $('.modal-content').html(out);
@@ -276,24 +277,31 @@ function clickInfo(event) {
                   name: 'insert-update-listing',
                   submitBtnId: 'ok'
                 });
+                if ($('input[name=options]:checked').val() === 'Sale') {
+                  $('#pets').parent().hide();
+                  $('#prefered_customer').parent().hide();
+                }
                 $('input[name=options]').on('change', function(event) {
                   if ($(this).val() === 'Sale') {
                     $('#pets').prop('disabled', true);
                     $('#pets').prop('checked', false);
+                    $('#pets').parent().hide();
                     $('label[for=pets]').removeClass('is-checked');
                     $('#prefered_customer').val('');
                     $('#prefered_customer').parent().eq(0).removeClass('is-dirty');
                     $('#prefered_customer').prop('disabled', true);
+                    $('#prefered_customer').parent().hide();
                   } else {
                     $('#pets').prop('disabled', false);
+                    $('#pets').parent().show();
                     $('#prefered_customer').prop('disabled', false);
+                    $('#prefered_customer').parent().show();
                   }
                 });
                 $('#sent-listing').on('click', function(event) {
                   var data;
                   event.preventDefault();
                   data = handleForm.get();
-                  console.log(data);
                   if (data !== null) {
                     data.property_gid = gid;
                     data.listing_id = listing_id;
@@ -346,12 +354,14 @@ function clickInfo(event) {
               }
               dust.render('dialog', obj, function(error, out) {
                 $('#openModal').removeClass('visuallyhidden');
+                $('#openModal').css('width', 'auto');
                 $('.modal-content').html(out);
                 componentHandler.upgradeDom();
                 $('#yes').on('click', function(event) {
                   event.preventDefault();
                   dust.render('listingInsert', {
-                    rent: 'true'
+                    rent: 'true',
+                    addImage: 'true'
                   }, function(err, out) {
                     $('.modal-content').html(out);
                     componentHandler.upgradeDom();
@@ -359,6 +369,11 @@ function clickInfo(event) {
                       name: 'insert-update-listing',
                       submitBtnId: 'ok'
                     });
+                    $('input[name=file]').cloudinary_fileupload();
+                    $('input[name=file]').unsigned_cloudinary_upload('testupload', {
+                      cloud_name: 'firvain',
+                      'public_id': gid
+                    })
                     $('input[name=options]').on('change', function(event) {
                       if ($(this).val() === 'Sale') {
                         $('#pets').prop('disabled', true);
