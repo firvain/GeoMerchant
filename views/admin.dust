@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous"> {!
     <link rel="stylesheet" href="/vendor/getmdl-select/getmdl-select.min.css" crossorigin="anonymous"> !}
     <link rel="stylesheet" href="/vendor/mdl-selectfield-master/mdl-selectfield.min.css" crossorigin="anonymous">
+{!     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css" crossorigin="anonymous"> !}
     <link rel="stylesheet" href="/css/admin.min.css" crossorigin="anonymous"> </head>
 
   <body>
@@ -60,6 +61,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.1.0/lodash.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js" crossorigin="anonymous"></script>
+    <script src="/vendor/dropzone/dropzone.js" crossorigin="anonymous"></script>
     <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
     <script src="/vendor/mdl-selectfield-master/mdl-selectfield.min.js" crossorigin="anonymous"></script> {!
     <script src="/vendor/getmdl-select/getmdl-select.min.js" crossorigin="anonymous"></script> !} {! ======= Templates ======= !}
@@ -73,10 +75,10 @@
     <script src='/vendor/cloudinary/jquery.fileupload.js' type='text/javascript'></script>
     <script src='/vendor/cloudinary/jquery.cloudinary.js' type='text/javascript'></script>
     <script type="text/javascript">
-        $.cloudinary.config({
-        cloud_name: 'firvain',
-        api_key: '375138932689591'
-      });
+      //   $.cloudinary.config({
+      //   cloud_name: 'firvain',
+      //   api_key: '375138932689591'
+      // });
       
     </script>
     <script type="text/javascript">

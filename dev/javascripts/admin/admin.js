@@ -10,40 +10,40 @@ var center = [3677385, 4120949],
     extent = [3590094, 4102833, 3855483, 4261211],
     lang = document.documentElement.lang,
     geoJSONFormat = new ol.format.GeoJSON({
-      defaultDataProjection: 'EPSG:4326'
+      defaultDataProjection: 'EPSG:4326',
     }),
     propertySource, property, map, features, drawnProperties, draw, select, translate;
 var bing = new ol.layer.Tile({
   visible: true,
   source: new ol.source.BingMaps({
     key: 'Ak2Gq8VUfICsPpuf7LRANXmXt2sHWmSLPhohmVLFtFIEwYjs_5MCyAhAFwRSVpLj',
-    imagerySet: 'Aerial'
+    imagerySet: 'Aerial',
   }),
   maxZoom: 19,
   crossOrigin: 'anonymous',
   preload: Infinity,
-  id: 'bing'
+  id: 'bing',
 });
 var mapbox = new ol.layer.Tile({
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({
-      html: '<a href="https://www.mapbox.com/about/maps/" target="_blank">&copy; Mapbox &copy; OpenStreetMap</a>'
+      html: '<a href="https://www.mapbox.com/about/maps/" target="_blank">&copy; Mapbox &copy; OpenStreetMap</a>',
     })],
-    url: 'https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA'
+    url: 'https://api.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA',
   }),
-  id: 'mapbox'
+  id: 'mapbox',
 });
 function getIconType(estateType) {
   var iconType = {
     'Apartment': function() {
-      return 'apartment'
+      return 'apartment';
     },
     'Store': function() {
-      return 'store'
+      return 'store';
     },
     'Detached House': function() {
-      return 'detached'
-    }
+      return 'detached';
+    },
   };
   return (iconType[estateType])();
 }
@@ -51,14 +51,14 @@ function getIconType(estateType) {
 function getIconPath(listingType) {
   var iconPath = {
     true: function() {
-      return './images/pins/sale/'
+      return './images/pins/sale/';
     },
     false: function() {
-      return './images/pins/rent/'
+      return './images/pins/rent/';
     },
     'none': function() {
-      return './images/pins/none/'
-    }
+      return './images/pins/none/';
+    },
   };
   return (iconPath[listingType])();
 }
@@ -70,10 +70,10 @@ function PropertyStyle(feature) {
       src: src,
       anchorOrigin: 'bottom-left',
       anchor: [
-        0.5, 0
+        0.5, 0,
       ],
-      scale: 1
-    }))
+      scale: 1,
+    })),
   });
 }
 propertySource = new ol.source.Vector({
@@ -92,30 +92,30 @@ propertySource = new ol.source.Vector({
       },
       dataType: 'json',
       data: {
-        id: id
-      }
+        id: id,
+      },
     }).done(function(response) {
       var features = geoJSONFormat.readFeatures(response, {
-        featureProjection: 'EPSG:3857'
+        featureProjection: 'EPSG:3857',
       });
       self.addFeatures(features);
     }).fail(function() {
       console.log('error');
     });
   },
-  strategy: ol.loadingstrategy.all
+  strategy: ol.loadingstrategy.all,
 });
 property = new ol.layer.Vector({
   source: propertySource,
   id: 'property',
   visible: true,
-  style: PropertyStyle
+  style: PropertyStyle,
 });
 property.setZIndex(2);
 map = new ol.Map({
   target: 'adminMap',
   layers: [
-    mapbox, property
+    mapbox, property,
   ],
   loadTilesWhileAnimating: true,
   loadTilesWhileInteracting: true,
@@ -123,21 +123,21 @@ map = new ol.Map({
   controls: ol.control.defaults({
     attributionOptions: {
       collapsible: false,
-      collapsed: false
-    }
+      collapsed: false,
+    },
   }).extend([
     new ol.control.ScaleLine({
-      units: 'metric'
+      units: 'metric',
     }),
     new ol.control.OverviewMap({
       className: 'ol-overviewmap ol-custom-overviewmap',
       collapsible: true,
       collapsed: true,
-      layers: [bing]
+      layers: [bing],
     }),
     new ol.control.ZoomToExtent({
-      extent: extent
-    })
+      extent: extent,
+    }),
   ]),
   view: new ol.View({
     center: center,
@@ -145,8 +145,8 @@ map = new ol.Map({
     projection: 'EPSG:3857',
     zoom: 14,
     maxZoom: 19,
-    minZoom: 10
-  })
+    minZoom: 10,
+  }),
 });
 if (lang === 'el') {
   bing.set('name', 'Δορυφορική εικόνα');
@@ -168,11 +168,11 @@ function drawnPropertiesStyle(color) {
         src: src,
         anchorOrigin: 'bottom-left',
         anchor: [
-          0.5, 0
+          0.5, 0,
         ],
         scale: 1,
-        color: color
-      }))
+        color: color,
+      })),
     });
   } else {
     return new ol.style.Style({
@@ -180,10 +180,10 @@ function drawnPropertiesStyle(color) {
         src: src,
         anchorOrigin: 'bottom-left',
         anchor: [
-          0.5, 0
+          0.5, 0,
         ],
-        scale: 1
-      }))
+        scale: 1,
+      })),
     });
   }
 
@@ -191,7 +191,7 @@ function drawnPropertiesStyle(color) {
 drawnProperties = new ol.layer.Vector({
   source: new ol.source.Vector(),
   id: 'drawnProperties',
-  style: drawnPropertiesStyle('#4caf50')
+  style: drawnPropertiesStyle('#4caf50'),
 });
 map.addLayer(drawnProperties);
 //draw
@@ -199,7 +199,7 @@ draw = new ol.interaction.Draw({
   // features: features,
   source: drawnProperties.getSource(),
   type: 'Point',
-  style: drawnPropertiesStyle('#4caf50')
+  style: drawnPropertiesStyle('#4caf50'),
 });
 map.addInteraction(draw);
 draw.setActive(false);
@@ -213,20 +213,20 @@ function selectedStyle(feature) {
       anchorOrigin: 'bottom-left',
       anchor: [0.5, 0],
       scale: 1,
-      color: '#ffeb3b'
-    }))
+      color: '#ffeb3b',
+    })),
   });
 }
 select = new ol.interaction.Select({
   layers: [property],
   features: features,
   multi: false,
-  style: selectedStyle
+  style: selectedStyle,
 });
 map.addInteraction(select);
 select.setActive(false);
 translate = new ol.interaction.Translate({
-  features: select.getFeatures()
+  features: select.getFeatures(),
 });
 map.addInteraction(translate);
 translate.setActive(false);
@@ -262,8 +262,8 @@ function clickInfo(event) {
             type: 'GET',
             dataType: 'json',
             data: {
-              gid: gid
-            }
+              gid: gid,
+            },
           })
             .done(function(data) {
               // console.log(data);
@@ -275,7 +275,7 @@ function clickInfo(event) {
                 componentHandler.upgradeDom();
                 handleForm.set({
                   name: 'insert-update-listing',
-                  submitBtnId: 'ok'
+                  submitBtnId: 'ok',
                 });
                 if ($('input[name=options]:checked').val() === 'Sale') {
                   $('#pets').parent().hide();
@@ -309,7 +309,7 @@ function clickInfo(event) {
                       url: 'http://127.0.0.1:3000/db/listing/update',
                       type: 'POST',
                       data: data,
-                      dataType: 'text'
+                      dataType: 'text',
                     })
                       .done(function(data, textStatus, jqXHR) {
                         if (jqXHR.status === 201) {
@@ -344,13 +344,13 @@ function clickInfo(event) {
               if (lang === 'el') {
                 obj.msg = 'Δεν Βρέθηκε Αγγελία',
                 obj.text = 'Δημιουργία Καινούργιας;',
-                obj.yes = 'ΝΑΙ'
-                obj.no = 'ΟΧΙ'
+                obj.yes = 'ΝΑΙ';
+                obj.no = 'ΟΧΙ';
               } else {
                 obj.msg = 'No Listing Found',
                 obj.text = 'Create New Listing?',
-                obj.yes = 'YES'
-                obj.no = 'NO'
+                obj.yes = 'YES';
+                obj.no = 'NO';
               }
               dust.render('dialog', obj, function(error, out) {
                 $('#openModal').removeClass('visuallyhidden');
@@ -361,19 +361,36 @@ function clickInfo(event) {
                   event.preventDefault();
                   dust.render('listingInsert', {
                     rent: 'true',
-                    addImage: 'true'
+                    addImage: 'true',
                   }, function(err, out) {
+                    var myDropzone;
                     $('.modal-content').html(out);
                     componentHandler.upgradeDom();
+                    myDropzone = new Dropzone(document.getElementById('dropzone'), {
+                      uploadMultiple: false,
+                      acceptedFiles: '.jpg',
+                      parallelUploads: 6,
+                      // addRemoveLinks : true,
+                      url: 'https://api.cloudinary.com/v1_1/firvain/auto/upload',
+                    });
+                    myDropzone.on('sending', function(file, xhr, formData) {
+                      formData.append('api_key', 375138932689591);
+                      formData.append('callback', 'http://127.0.0.1:3000/public/cloudinary_cors.html');
+                      formData.append('upload_preset', 'testupload');
+                      formData.append('public_id', gid);
+                    });
+                    myDropzone.on('success', function() {
+                      this.element.style.display = "none";
+                    });
                     handleForm.set({
                       name: 'insert-update-listing',
-                      submitBtnId: 'ok'
+                      submitBtnId: 'ok',
                     });
-                    $('input[name=file]').cloudinary_fileupload();
-                    $('input[name=file]').unsigned_cloudinary_upload('testupload', {
-                      cloud_name: 'firvain',
-                      'public_id': gid
-                    })
+                    // $('input[name=file]').cloudinary_fileupload();
+                    // $('input[name=file]').unsigned_cloudinary_upload('testupload', {
+                    //   cloud_name: 'firvain',
+                    //   'public_id': gid,
+                    // });
                     $('input[name=options]').on('change', function(event) {
                       if ($(this).val() === 'Sale') {
                         $('#pets').prop('disabled', true);
@@ -397,7 +414,7 @@ function clickInfo(event) {
                           url: 'http://127.0.0.1:3000/db/listing/insert',
                           type: 'POST',
                           data: data,
-                          dataType: 'text'
+                          dataType: 'text',
                         })
                           .done(function(data, textStatus, jqXHR) {
                             if (jqXHR.status === 201) {
@@ -424,7 +441,7 @@ function clickInfo(event) {
                       select.setActive(false);
                       $('#openModal').addClass('visuallyhidden');
                     });
-                  })
+                  });
                 });
                 $('#no').on('click', function(event) {
                   event.preventDefault();
@@ -433,7 +450,7 @@ function clickInfo(event) {
                   select.setActive(false);
                 });
               });
-            })
+            });
         });
       });
     } else {
@@ -443,7 +460,7 @@ function clickInfo(event) {
       toastr.options = {
         'positionClass': 'toast-bottom-full-width',
         'preventDuplicates': true,
-        'timeOut': 60
+        'timeOut': 60,
       };
       toastr.error('Cant Find Any Property There...');
     }
@@ -460,7 +477,7 @@ $('#insertProperty').click(function() {
   toastr.options = {
     'positionClass': 'toast-top-center',
     'preventDuplicates': true,
-    'timeOut': 60
+    'timeOut': 60,
   };
   map.un('click', clickInfo);
   select.getFeatures().clear();
@@ -476,7 +493,7 @@ $('#insertProperty').click(function() {
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'insertProperty',
-        submitBtnId: 'insert'
+        submitBtnId: 'insert',
       });
       $('#estateType').change(function() {
         if ($(this).val() === 'Μονοκατοικία') {
@@ -536,12 +553,12 @@ $('#insertProperty').click(function() {
           $.ajax({
             url: 'http://127.0.0.1:3000/db/insert',
             type: 'POST',
-            data: data
+            data: data,
           }).done(function(data, textStatus, jqXHR) {
             toastr.options = {
               'positionClass': 'toast-bottom-full-width',
               'preventDuplicates': true,
-              'timeOut': 60
+              'timeOut': 60,
             };
             if (jqXHR.status === 201) {
               toastr.success('Property Recorded In Database');
@@ -571,7 +588,7 @@ $('#deleteProperty').click(function(event) {
   toastr.options = {
     'positionClass': 'toast-top-center',
     'preventDuplicates': true,
-    'timeOut': 20
+    'timeOut': 20,
   };
   map.un('click', clickInfo);
   draw.setActive(false);
@@ -595,8 +612,8 @@ $('#deleteProperty').click(function(event) {
           type: 'POST',
           dataType: 'text',
           data: {
-            gid: gid
-          }
+            gid: gid,
+          },
         })
           .done(function(data, textStatus, jqXHR) {
 
@@ -604,7 +621,7 @@ $('#deleteProperty').click(function(event) {
             toastr.options = {
               'positionClass': 'toast-bottom-full-width',
               'preventDuplicates': true,
-              'timeOut': 60
+              'timeOut': 60,
             };
             toastr.success('Property Deleted From Database');
           })
@@ -612,7 +629,7 @@ $('#deleteProperty').click(function(event) {
             toastr.options = {
               'positionClass': 'toast-bottom-full-width',
               'preventDuplicates': true,
-              'timeOut': 60
+              'timeOut': 60,
             };
             toastr.success('Oops Something Went Wrong!!!');
           })
@@ -660,8 +677,8 @@ $('#updateProperty').on('click', function(event) {
         type: 'POST',
         dataType: 'json',
         data: {
-          gid: gid
-        }
+          gid: gid,
+        },
       })
         .done(function(data) {
           var $toast = {};
@@ -680,17 +697,17 @@ $('#updateProperty').on('click', function(event) {
             translate.on('translateend', function(e) {
               coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
               dataForm(obj, coords);
-            })
-          })
+            });
+          });
           $toast.on('click', '#noChangeXY', function() {
             translate.setActive(false);
             toastr.clear();
             dataForm(obj, coords);
-          })
+          });
         })
         .fail(function() {
           toastr.error('Oops Something Went Wrong!!!');
-        })
+        });
     }
   });
   function dataForm(obj, coords) {
@@ -702,7 +719,7 @@ $('#updateProperty').on('click', function(event) {
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'updateProperty',
-        submitBtnId: 'update'
+        submitBtnId: 'update',
       });
       $('#estateType').change(function() {
         if ($(this).val() === 'Μονοκατοικία') {
@@ -751,13 +768,13 @@ $('#updateProperty').on('click', function(event) {
           $.ajax({
             url: 'http://127.0.0.1:3000/db/update',
             type: 'POST',
-            data: data
+            data: data,
           })
             .done(function(data, textStatus, jqXHR) {
               toastr.options = {
                 'positionClass': 'toast-bottom-full-width',
                 'preventDuplicates': true,
-                'timeOut': 60
+                'timeOut': 60,
               };
               if (jqXHR.status === 200) {
                 toastr.success('Property Updated In Database');
@@ -804,14 +821,14 @@ $(document).ready(function() {
       requirementType: 'string',
       validateString: function(value, requirement) {
         if (moment(value, 'DD-MM-YYYY', true).isValid() === true) {
-          return true
+          return true;
         } else {
-          return false
+          return false;
         }
       },
       messages: {
         en: 'Wrong Date',
-        el: 'Λάθος Ημερομηνία'
-      }
+        el: 'Λάθος Ημερομηνία',
+      },
     });
 });
