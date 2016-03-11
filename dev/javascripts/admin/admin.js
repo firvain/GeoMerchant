@@ -380,7 +380,7 @@ function clickInfo(event) {
                       formData.append('public_id', gid);
                     });
                     myDropzone.on('success', function() {
-                      this.element.style.display = "none";
+                      this.element.style.display = 'none';
                     });
                     handleForm.set({
                       name: 'insert-update-listing',
@@ -472,6 +472,7 @@ $('#logout').click(function() {
 });
 //====== insert ======
 $('#insertProperty').click(function() {
+  var onEndDraw;
   toastr.clear();
   $('.property-info').addClass('visuallyhidden');
   toastr.options = {
@@ -483,10 +484,37 @@ $('#insertProperty').click(function() {
   select.getFeatures().clear();
   select.setActive(false);
   draw.setActive(true);
-  draw.on('drawend', function(event) {
+  onEndDraw = draw.on('drawend', function(event) {
     var obj = {};
+    var coords;
+    var geocodeObj;
+    var latlng;
+    var geocodeName_el;
+    var geocodeName_en;
+    var geocodeAreaName;
     event.preventDefault();
     draw.setActive(false);
+    coords = ol.proj.transform(event.feature.getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
+    obj.coords = coords;
+    latlng = coords[1] + '\,' + coords[0];
+    geocodeObj = $.getJSON('https://maps.googleapis.com/maps/api/geocode/json', {
+      latlng: latlng,
+      key: 'AIzaSyCkH39_Ez21_RlC_pjXD09zpJ_ - eVhzCrQ',
+    }, function(json, textStatus) {
+      return json;
+    });
+    geocodeObj.then(function() {
+      geocodeName_el = _.head(_.head(geocodeObj.responseJSON.results).address_components).long_name;
+      geocodeName_en = string_el_to_url(geocodeName_el);
+      obj.street_el = geocodeName_el;
+      obj.street_en = geocodeName_en;
+      geocodeAreaName = _.first(_.drop(_.map(_.head(geocodeObj.responseJSON.results).address_components, 'long_name')));
+      obj.area_name = geocodeAreaName;
+      dataForm(obj);
+    });
+
+  });
+  function dataForm(obj) {
     $('.modal-dialog').removeClass('visuallyhidden');
     dust.render('propertyInsert', obj, function(err, out) {
       $('.modal-content').html(out);
@@ -535,20 +563,17 @@ $('#insertProperty').click(function() {
         event.preventDefault();
         handleForm.clear();
         drawnProperties.getSource().clear();
-
+        draw.unByKey(onEndDraw);
         $('.modal-dialog').addClass('visuallyhidden');
         map.on('click', clickInfo);
       });
       $('#insert').on('click', function(event) {
-        var data, c;
+        var data;
         event.preventDefault();
         data = handleForm.get();
-        console.log(data);
         if (data !== null) {
-          handleCoords.setLayer('drawnProperties');
-          c = handleCoords.coords();
-          data.x = c[0];
-          data.y = c[1];
+          data.x = obj.coords[0];
+          data.y = obj.coords[1];
           data.adminId = id;
           $.ajax({
             url: 'http://127.0.0.1:3000/db/insert',
@@ -572,13 +597,14 @@ $('#insertProperty').click(function() {
             drawnProperties.getSource().clear();
             propertySource.clear();
             handleForm.clear();
+            draw.unByKey(onEndDraw);
             $('.modal-dialog').addClass('visuallyhidden');
             map.on('click', clickInfo);
           });
         }
       });
     });
-  });
+  }
 });
 //====== delete ======
 $('#deleteProperty').click(function(event) {
@@ -655,6 +681,7 @@ $('#deleteProperty').click(function(event) {
 
 $('#updateProperty').on('click', function(event) {
   var gid, obj, coords;
+  var onEndTranslte;
   event.preventDefault();
   toastr.clear();
   map.un('click', clickInfo);
@@ -693,10 +720,31 @@ $('#updateProperty').on('click', function(event) {
           toastr.options.positionClass = 'toast-top-center';
           $toast = toastr.warning('<p>Change Property Coordinates?</p><div class="toastr-btns"><button id="yesChangeXY" class="mdl-button mdl-js-button ">Yes</button><button id="noChangeXY" class="mdl-button mdl-js-button">No</button></div>');
           $toast.on('click', '#yesChangeXY', function() {
+            var latlng;
+            var geocodeObj;
+            var geocodeName_el;
+            var geocodeName_en;
+            var geocodeAreaName;
             translate.setActive(true);
-            translate.on('translateend', function(e) {
-              coords = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
-              dataForm(obj, coords);
+            onEndTranslte = translate.on('translateend', function(e) {
+              // var geocodeObj;
+              coords = ol.proj.transform(e.features.item(0).getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
+              latlng = coords[1] + '\,' + coords[0];
+              geocodeObj = $.getJSON('https://maps.googleapis.com/maps/api/geocode/json', {
+                latlng: latlng,
+                key: 'AIzaSyCkH39_Ez21_RlC_pjXD09zpJ_ - eVhzCrQ',
+              }, function(json, textStatus) {
+                return json.results;
+              });
+              geocodeObj.then(function() {
+                geocodeName_el = _.head(_.head(geocodeObj.responseJSON.results).address_components).long_name;
+                geocodeName_en = string_el_to_url(geocodeName_el);
+                obj.street_el = geocodeName_el;
+                obj.street_en = geocodeName_en;
+                geocodeAreaName = _.first(_.drop(_.map(_.head(geocodeObj.responseJSON.results).address_components, 'long_name')));
+                obj.area_name = geocodeAreaName;
+                dataForm(obj, coords);
+              });
             });
           });
           $toast.on('click', '#noChangeXY', function() {
@@ -716,11 +764,16 @@ $('#updateProperty').on('click', function(event) {
       var oldValues = {};
       $('.modal-content').html(out);
       oldValues.bedrooms = $('#bedrooms').val();
+      oldValues.street_en = $('#street_en').val();
+      oldValues.street_el = $('#street_el').val();
+      oldValues.area_name = $('#area_name').val();
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'updateProperty',
         submitBtnId: 'update',
       });
+      // $('#street_el').val(obj.geocodeName_el);
+      // $('#street_en').val(obj.geocodeName_en);
       $('#estateType').change(function() {
         if ($(this).val() === 'Μονοκατοικία') {
           $('#estateType_en').val('Detached House');
@@ -789,6 +842,7 @@ $('#updateProperty').on('click', function(event) {
               propertySource.clear();
               select.getFeatures().clear();
               select.setActive(false);
+              translate.unByKey(onEndTranslte);
               translate.setActive(false);
               map.on('click', clickInfo);
               $('.modal-dialog').addClass('visuallyhidden');
@@ -800,6 +854,7 @@ $('#updateProperty').on('click', function(event) {
         handleForm.clear();
         propertySource.clear();
         select.getFeatures().clear();
+        translate.unByKey(onEndTranslte);
         select.setActive(false);
         translate.setActive(false);
         map.on('click', clickInfo);
@@ -832,3 +887,13 @@ $(document).ready(function() {
       },
     });
 });
+function string_el_to_url(string) {
+  var replace = new Array('α', 'ά', 'Ά', 'Α', 'β', 'Β', 'γ', 'Γ', 'δ', 'Δ', 'ε', 'έ', 'Ε', 'Έ', 'ζ', 'Ζ', 'η', 'ή', 'Η', 'θ', 'Θ', 'ι', 'ί', 'ϊ', 'ΐ', 'Ι', 'Ί', 'κ', 'Κ', 'λ', 'Λ', 'μ', 'Μ', 'ν', 'Ν', 'ξ', 'Ξ', 'ο', 'ό', 'Ο', 'Ό', 'π', 'Π', 'ρ', 'Ρ', 'σ', 'ς', 'Σ', 'τ', 'Τ', 'υ', 'ύ', 'Υ', 'Ύ', 'φ', 'Φ', 'χ', 'Χ', 'ψ', 'Ψ', 'ω', 'ώ', 'Ω', 'Ώ', ' ', '\'', '\'', ',');
+  var replace_n = new Array('a', 'a', 'A', 'A', 'v', 'V', 'g', 'G', 'd', 'D', 'e', 'e', 'E', 'E', 'z', 'Z', 'i', 'i', 'I', 'th', 'Th', 'i', 'i', 'i', 'i', 'I', 'I', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'x', 'X', 'o', 'o', 'O', 'O', 'p', 'P', 'r', 'R', 's', 's', 'S', 't', 'T', 'u', 'u', 'Y', 'Y', 'f', 'F', 'ch', 'Ch', 'ps', 'Ps', 'o', 'o', 'O', 'O', ' ', '_', '_', '_');
+
+  for (var i = 0; i < replace.length; i++) {
+    string = string.replace(new RegExp(replace[i], 'g'), replace_n[i]);
+  }
+
+  return string;
+}
