@@ -28,6 +28,7 @@ var handleCoords = (function(ol) {
 
   function setLayer(id) {
     l = findById(id);
+    console.log(l);
   }
 
   function getCoords() {

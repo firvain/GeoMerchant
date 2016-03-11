@@ -11,7 +11,7 @@ var handleForm = (function($, parsley) {
     var e = $('.getmdl-select');
     e.each(function() {
       addEventListeners(this);
-    })
+    });
   }
   function addEventListeners(e) {
     var t = e.querySelector('input'),
@@ -19,9 +19,9 @@ var handleForm = (function($, parsley) {
     e.querySelector('i');
     [].forEach.call(n, function(e) {
       e.onclick = function() {
-        t.value = e.textContent
-      }
-    })
+        t.value = e.textContent;
+      };
+    });
   }
   function disableSubmitBtn() {
     $('#' + submitBtnId + '').prop('disabled', true);
@@ -45,7 +45,10 @@ var handleForm = (function($, parsley) {
 
       function() {});
   }
-
+  function setAttributes(atr) {
+    $('#street_el').val(atr.street_el);
+    $('#street_en').val(atr.street_en);
+  }
   function getAttributes() {
     var obj = {};
     createValidator();
@@ -98,7 +101,8 @@ var handleForm = (function($, parsley) {
   return {
     set: setOptions,
     get: getAttributes,
-    clear: resetForm
+    clear: resetForm,
+    setAttributes: setAttributes,
   // createValidator: createValidator,
   // destroyValidator: destroyValidator,
   // validateForm: validateForm,
