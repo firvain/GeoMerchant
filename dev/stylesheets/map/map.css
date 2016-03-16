@@ -14,7 +14,12 @@
   width: 80px;
   height: 80px;
 }
-
+.wrapme{
+  display: flex;
+}
+.actions {
+   border-bottom: 1px solid #448aff;
+}
 .map {
   position: relative;
   z-index: 1;

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   var marker = new ol.Feature();
   var iconStyle = new ol.style.Style({
     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */
@@ -54,7 +54,7 @@
       featuresOverlay.getSource().clear();
     }
   }
-  geoJSONFormat = new ol.format.GeoJSON({defaultDataProjection: 'EPSG:4326', geometryName: 'geometry'});
+  geoJSONFormat = new ol.format.GeoJSON({ defaultDataProjection: 'EPSG:4326', geometryName: 'geometry' });
   function callRoute(routeCoords) {
     var first = ol.proj.transform([
       routeCoords[0], routeCoords[1]
@@ -70,7 +70,7 @@
       url: 'https://api.mapbox.com/v4/directions/mapbox.driving/' + x1 + ',' + y1 + ';' + x2 + ',' + y2 + '.json?alternatives=false&access_token=pk.eyJ1IjoiZmlydmFpbiIsImEiOiJlOWYyYTM0NThiNWM0YjJjODJjNDE4ODQzNzA2MGQyNiJ9.-NVDO27Hzt-w_nQosUPfLA',
       type: 'GET',
       dataType: 'json'
-    }).done(function(data) {
+    }).done(function (data) {
       var route = {};
       route.type = 'Feature';
       route.geometry = data.routes[0].geometry;
@@ -79,13 +79,13 @@
         featureProjection: 'EPSG:3857'
       }));
       map.getView().fit(featuresOverlay.getSource().getExtent(), map.getSize());
-    }).fail(function() {
+    }).fail(function () {
       // console.log("error");
-    }).always(function() {
+    }).always(function () {
       // console.log("complete");
     });
   }
-  $('.marker').on('change', function(event) {
+  $('.marker').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).prop('checked') === true) {

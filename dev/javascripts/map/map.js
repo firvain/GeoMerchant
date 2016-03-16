@@ -1,11 +1,11 @@
 var $loading = $('.mdl-spinner');
-var center = [3677385, 4120949],
-    extent = [3590094, 4102833, 3855483, 4261211],
-    lang = document.documentElement.lang,
-    styleCache = {},
-    geoJSONFormat = new ol.format.GeoJSON({
-      defaultDataProjection: 'EPSG:4326'
-    });
+var center = [3677385, 4120949];
+var extent = [3590094, 4102833, 3855483, 4261211];
+var lang = document.documentElement.lang;
+var styleCache = {};
+var geoJSONFormat = new ol.format.GeoJSON({
+  defaultDataProjection: 'EPSG:4326'
+});
 var bing = new ol.layer.Tile({
   visible: true,
   source: new ol.source.BingMaps({
@@ -29,14 +29,14 @@ var mapbox = new ol.layer.Tile({
 
 function getIconType(estateType) {
   var iconType = {
-    'Apartment': function() {
-      return 'apartment'
+    Apartment: function () {
+      return 'apartment';
     },
-    'Store': function() {
-      return 'store'
+    Store: function () {
+      return 'store';
     },
-    'Detached House': function() {
-      return 'detached'
+    'Detached House': function () {
+      return 'detached';
     }
   };
   return (iconType[estateType])();
@@ -44,11 +44,11 @@ function getIconType(estateType) {
 
 function getIconPath(listingType) {
   var iconPath = {
-    true: function() {
-      return './images/pins/sale/'
+    true: function () {
+      return './images/pins/sale/';
     },
-    false: function() {
-      return './images/pins/rent/'
+    false: function () {
+      return './images/pins/rent/';
     }
   };
   return (iconPath[listingType])();
@@ -111,7 +111,7 @@ function propertyStyleFunction(feature, resolution) {
 // }
 var propertySource = new ol.source.Vector({
   format: geoJSONFormat,
-  loader: function(extent, resolution, projection) {
+  loader: function (extent, resolution, projection) {
     console.log(resolution);
     var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
     var url = 'http://127.0.0.1:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
@@ -123,13 +123,13 @@ var propertySource = new ol.source.Vector({
       type: 'GET',
       dataType: 'json'
     })
-      .done(function(response) {
+      .done(function (response) {
         var features = geoJSONFormat.readFeatures(response, {
           featureProjection: 'EPSG:3857'
         });
         self.addFeatures(features);
       })
-      .fail(function() {
+      .fail(function () {
         console.log('error');
       });
   },
@@ -149,7 +149,7 @@ var property = new ol.layer.Vector({
   style: propertyStyleFunction
 });
 property.setZIndex(2);
-var PSAStyleFunction = function(feature, resolution) {
+var PSAStyleFunction = function (feature, resolution) {
   var symbol = feature.get('style');
   var text;
   if (lang === 'el') {
@@ -274,15 +274,15 @@ if (lang === 'el') {
   mapbox.set('name', 'Map');
   property.set('name', 'Properties');
 }
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
   $('.spinner').addClass('visuallyhidden');
   $('.mdl-spinner').removeClass('is-active');
-  handleSelect();
+  // handleSelect();
 });
 $(document)
-  .ajaxStart(function() {
+  .ajaxStart(function () {
     $loading.addClass('is-active');
   })
-  .ajaxStop(function() {
+  .ajaxStop(function () {
     $loading.removeClass('is-active');
   });
