@@ -3,7 +3,7 @@
 }
 .spiner-wrapper {
   position: absolute;
-  z-index: 4;
+  z-index: 99999;
   top: 50%;
   left: 50%;
 
@@ -16,13 +16,14 @@
 }
 .wrapme{
   display: flex;
+  height:100vh;
 }
 .actions {
    border-bottom: 1px solid #448aff;
 }
 .map {
   position: relative;
-  z-index: 1;
+
 
   width: 100vw;
   height: 100vh;

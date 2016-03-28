@@ -85,7 +85,7 @@
       // console.log("complete");
     });
   }
-  $('.marker').on('change', function (event) {
+  $('#marker').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).prop('checked') === true) {

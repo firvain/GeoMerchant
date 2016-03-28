@@ -63,7 +63,7 @@ gulp.task('minify-css-map', function() {
           browsers: ['last 4 versions'],
           cascade: false
         }))
-        .pipe(cssnano({autoprefixer:false}))
+        .pipe(cssnano({autoprefixer:false, zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
@@ -77,7 +77,7 @@ gulp.task('minify-css-admin', function() {
           browsers: ['last 4 versions'],
           cascade: false
         }))
-        .pipe(cssnano({autoprefixer:false}))
+        .pipe(cssnano({autoprefixer:false,zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
