@@ -253,13 +253,15 @@ router.post('/insert', function(req, res, next) {
           var values = estatetype + ',' + estatetype_en + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcel_num + ',' + plan_num + ',' + area_name + ',' + street_el + ',' + street_number + ',' + ps_code + ',' + floor + ',' + street_en + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
           var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
           client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function(error, result) {
-            if (error)
+            if (error) {
               throw error;
+            }
             if (error) return rollback(client, done);
             var propertygid = result.rows[0].gid;
             client.query('INSERT INTO public.owner_property (owner_id,property_gid) VALUES (' + adminId + ',' + propertygid + ')', function(error, result) {
-              if (error)
+              if (error) {
                 throw error;
+              }
               if (err) return rollback(client, done);
               client.query('COMMIT', done);
               res.sendStatus(201);
@@ -270,26 +272,27 @@ router.post('/insert', function(req, res, next) {
     }
   });
 });
-router.post('/delete', function(req, res, next) {
+router.post('/delete', function (req, res, next) {
   var gid = req.body.gid;
   console.log('asdasdd' + gid);
-  pg.connect(conString, function(err, client, done) {
-    if (err)
+  pg.connect(conString, function (err, client, done) {
+    if (err) {
       throw err;
-    client.query('BEGIN', function(err) {
-      if (err) return rollback(client, done);
-      //as long as we do not call the `done` callback we can do
-      //whatever we want...the client is ours until we call `done`
-      //on the flip side, if you do call `done` before either COMMIT or ROLLBACK
-      //what you are doing is returning a client back to the pool while it
-      //is in the middle of a transaction.
-      //Returning a client while its in the middle of a transaction
-      //will lead to weird & hard to diagnose errors.
-      process.nextTick(function() {
+    }
+    client.query('BEGIN', function (err1) {
+      if (err1) return rollback(client, done);
+      // as long as we do not call the `done` callback we can do
+      // whatever we want...the client is ours until we call `done`
+      // on the flip side, if you do call `done` before either COMMIT or ROLLBACK
+      // what you are doing is returning a client back to the pool while it
+      // is in the middle of a transaction.
+      // Returning a client while its in the middle of a transaction
+      // will lead to weird & hard to diagnose errors.
+      process.nextTick(function () {
         var text = 'DELETE FROM public.property WHERE gid= $1';
-        client.query(text, [gid], function(err) {
+        client.query(text, [gid], function (error) {
           // console.log(this.text);
-          if (err) return rollback(client, done);
+          if (error) return rollback(client, done);
           client.query('COMMIT', done);
           res.sendStatus(200);
         });
@@ -297,13 +300,14 @@ router.post('/delete', function(req, res, next) {
     });
   });
 });
-router.post('/fetch', function(req, res, next) {
+router.post('/fetch', function (req, res, next) {
   var gid = req.body.gid;
-  pg.connect(conString, function(err, client, done) {
+  pg.connect(conString, function (err, client, done) {
     var text = 'SELECT *,ST_AsGeoJSON(public.property.the_geom) as geom FROM public.property where gid=$1';
-    if (err)
+    if (err) {
       throw err;
-    client.query(text, [gid], function(error, result) {
+    }
+    client.query(text, [gid], function (error, result) {
       console.log(this.text);
       done();
       if (result) {
@@ -311,13 +315,13 @@ router.post('/fetch', function(req, res, next) {
           res.sendStatus(404);
         } else {
           dbgeo.parse({
-            'data': result.rows,
-            'geometryColumn': 'geom'
-          }, function(error, result) {
-            if (error) {
+            data: result.rows,
+            geometryColumn: 'geom'
+          }, function (erro, resu) {
+            if (erro) {
               res.sendStatus(404);
             } else {
-              res.send(result);
+              res.send(resu);
             }
           });
         }

@@ -1,7 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
-var flash = require('connect-flash');
+// var flash = require('connect-flash');
 var router = express.Router();
 /* GET users listing. */
 router.get('/', ensureLoggedIn, function (req, res, next) {
@@ -41,10 +41,10 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
       email: 'Email',
       user: req.user,
       btns: {
-        'insert': 'insert',
-        'delete': 'delete',
-        'update': 'update',
-        'logout': 'logout'
+        insert: 'insert',
+        delete: 'delete',
+        update: 'update',
+        logout: 'logout'
       },
       id: id
     };
@@ -83,10 +83,10 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
       email: 'Ηλεκτρονική Διεύθυνση',
       user: req.user,
       btns: {
-        'insert': 'εισαγωγη',
-        'delete': 'διαγραφη',
-        'update': 'ενημερωση',
-        'logout': 'αποσυνδεση'
+        insert: 'εισαγωγη',
+        delete: 'διαγραφη',
+        update: 'ενημερωση',
+        logout: 'αποσυνδεση'
       },
       id: id
     };

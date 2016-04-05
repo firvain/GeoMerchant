@@ -10,7 +10,7 @@ var center = [3677385, 4120949],
     extent = [3590094, 4102833, 3855483, 4261211],
     lang = document.documentElement.lang,
     geoJSONFormat = new ol.format.GeoJSON({
-      defaultDataProjection: 'EPSG:4326',
+      defaultDataProjection: 'EPSG:4326'
     }),
     propertySource, property, map, features, drawnProperties, draw, select, translate;
 var bing = new ol.layer.Tile({
@@ -157,7 +157,7 @@ if (lang === 'el') {
   mapbox.set('name', 'Map');
   property.set('name', 'Properties');
 }
-//====== interactions ======
+// ====== interactions ======
 features = new ol.Collection();
 function drawnPropertiesStyle(color) {
   var src;
@@ -230,7 +230,7 @@ translate = new ol.interaction.Translate({
 });
 map.addInteraction(translate);
 translate.setActive(false);
-//====== info ======
+// ====== info ======
 map.on('click', clickInfo);
 
 function clickInfo(event) {
@@ -466,11 +466,11 @@ function clickInfo(event) {
     }
   });
 }
-//====== logout ======
+// ====== logout ======
 $('#logout').click(function() {
   location.href = '/map/logout';
 });
-//====== insert ======
+// ====== insert ======
 $('#insertProperty').click(function() {
   var onEndDraw;
   toastr.clear();
@@ -500,10 +500,10 @@ $('#insertProperty').click(function() {
     geocodeObj = $.getJSON('https://maps.googleapis.com/maps/api/geocode/json', {
       latlng: latlng,
       key: 'AIzaSyCkH39_Ez21_RlC_pjXD09zpJ_ - eVhzCrQ',
-    }, function(json, textStatus) {
+    }, function (json, textStatus) {
       return json;
     });
-    geocodeObj.then(function() {
+    geocodeObj.then(function () {
       geocodeName_el = _.head(_.head(geocodeObj.responseJSON.results).address_components).long_name;
       geocodeName_en = string_el_to_url(geocodeName_el);
       obj.street_el = geocodeName_el;
@@ -606,7 +606,7 @@ $('#insertProperty').click(function() {
     });
   }
 });
-//====== delete ======
+// ====== delete ======
 $('#deleteProperty').click(function(event) {
   event.preventDefault();
   toastr.clear();
@@ -677,7 +677,7 @@ $('#deleteProperty').click(function(event) {
   });
 });
 
-//====== update ======
+// ====== update ======
 
 $('#updateProperty').on('click', function(event) {
   var gid, obj, coords;

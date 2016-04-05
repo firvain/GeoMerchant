@@ -107,18 +107,18 @@ router.get('/', function(req, res, next) {
     res.render('map', data);
   }
 });
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
   res.render('login', {
     env: env
   });
 });
-router.get('/logout', function(req, res) {
+router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
 router.get('/callback', passport.authenticate('auth0', {
   failureRedirect: '/'
-}), function(req, res) {
+}), function (req, res) {
   var id = req.user._json.user_metadata.gid;
   req.flash('id', id);
   req.flash('lang', lang);
