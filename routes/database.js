@@ -4,6 +4,8 @@ var express = require('express');
 var passport = require('passport');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
 var pg = require('pg');
+var config = require('../config/config');
+console.log(config)
 var conString = 'postgres://etsipis:TR81VH83YH1WrSqjeblH@188.226.158.168/cyprus';
 // var conString = "postgres://etsipis:TR81VH83YH1WrSqjeblH@localhost/cyprus";
 var dbgeo = require('dbgeo');

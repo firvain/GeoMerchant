@@ -3,6 +3,9 @@
     "name": "GeoMerchant",
     "script": "bin/www",
     "watch": true,
+    "env": {
+      "NODE_ENV": "production"
+    },
     "cwd": "./",
     "ignore_watch": "./logs",
     "log_date_format": "YYYY-MM-DD HH:mm Z",
