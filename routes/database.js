@@ -1,7 +1,6 @@
 // BASE SETUP
 // ==============================================
 var express = require('express');
-var passport = require('passport');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
 var pg = require('pg');
 var config = require('../config/config');
@@ -14,13 +13,11 @@ var heating;
 var cooling;
 var view;
 var estateType;
-var leaseType;
 var qprice;
 var startPrice;
 var endPrice;
-var rollback;
 var router;
-var listings = require('./models/listings');
+var listings = require('./models/listing');
 var rollback = require('../utils/rollback');
 
 

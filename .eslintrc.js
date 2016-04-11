@@ -7,5 +7,6 @@ module.exports = {
         "$": true,
         "toastr": true,
         "ol": true,
+        "_": true,
     }
 };

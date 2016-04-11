@@ -314,7 +314,8 @@ function clickInfo(event) {
                         dataType: 'text'
                       })
                       .done(function (data, textStatus, jqXHR) {
-                        if (jqXHR.status === 201) {
+                        console.log(jqXHR.status);
+                        if (jqXHR.status === 200) {
                           toastr.success('Property Updated In Database');
                         } else {
                           toastr.error('Oops Something Went Wrong!!!');

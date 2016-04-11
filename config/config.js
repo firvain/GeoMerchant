@@ -1,6 +1,5 @@
 'use strict';
 var environment = process.env.NODE_ENV || 'development';
-console.log(environment);
 var config = {
   development: {
     connection: {
