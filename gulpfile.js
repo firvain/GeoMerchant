@@ -10,7 +10,6 @@ var path = require('path')
 ,watch = require('gulp-watch')
 ,changed = require('gulp-changed')
 ,autoprefixer = require('gulp-autoprefixer')
-,mainBowerFiles = require('main-bower-files')
 ,stripDebug = require('gulp-strip-debug')
 ,eslint = require('gulp-eslint')
 ,exists = require('path-exists').sync;
@@ -22,7 +21,7 @@ gulp.task('lint',function() {
     .pipe(eslint({ fix: true }))
      // .pipe(eslint.format())
         .pipe(eslint.results(function (results) {
-        // Called once for all ESLint results. 
+        // Called once for all ESLint results.
         console.log('Total Results: ' + results.length);
         console.log('Total Warnings: ' + results.warningCount);
         console.log('Total Errors: ' + results.errorCount);
