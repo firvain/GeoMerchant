@@ -17,8 +17,10 @@ var qprice;
 var startPrice;
 var endPrice;
 var router;
-var listings = require('./models/listing');
 var rollback = require('../utils/rollback');
+var listings = require('./controllers/listing');
+var uses = require('./controllers/uses');
+var property = require('./controllers/property');
 
 
 pg.defaults.poolSize = 25;
@@ -30,174 +32,10 @@ pg.defaults.poolSize = 25;
 // get an instance of router
 router = express.Router();
 router.use('/', listings);
+router.use('/', uses);
+router.use('/', property);
 
 
-router.get('/property', function (req, res) {
-  var bbox = req.query.bbox;
-  pg.connect(config.connection, function (err, client, done) {
-    var qstring;
-    var qfrom;
-    var query;
-    if (err) {
-      logger.error('Could not connect to postgres');
-    } else {
-      logger.info('Connected');
-      qstring = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' +
-      'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' +
-      'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.street_number,public.property.ps_code,' +
-      'public.property.floor,public.property.street_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' +
-      'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,public.listing.sale,public.listing.rent,' +
-      'public.owner.phone2';
-      qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
-      query = client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom + 'WHERE public.property.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)', function (error, result) {
-        if (result) {
-          dbgeo.parse({
-            data: result.rows,
-            geometryColumn: 'geom'
-          }, function (error, result) {
-            if (error) {
-              logger.error(' --- error --- ', error);
-            } else {
-              res.send(result);
-            }
-          });
-        } else {
-          logger.error(error);
-        }
-      });
-    }
-    done();
-  });
-});
-router.get('/filteredproperty', function (req, res) {
-  var bbox = req.query.bbox;
-  if (typeof req.query.parking !== 'undefined') {
-    parking = req.query.parking;
-  } else {
-    parking = false;
-  }
-  if (typeof req.query.furnished !== 'undefined') {
-    furnished = req.query.furnished;
-  } else {
-    furnished = false;
-  }
-  if (typeof req.query.heating !== 'undefined') {
-    heating = req.query.heating;
-  } else {
-    heating = false;
-  }
-  if (typeof req.query.cooling !== 'undefined') {
-    cooling = req.query.cooling;
-  } else {
-    cooling = false;
-  }
-  if (typeof req.query.view !== 'undefined') {
-    view = req.query.view;
-  } else {
-    view = false;
-  }
-  if (req.query.startPrice === '') {
-    startPrice = 0;
-  } else {
-    startPrice = parseInt(req.query.startPrice, 10);
-  }
-  if (req.query.endPrice === '') {
-    endPrice = 2147483647;
-  } else {
-    endPrice = parseInt(req.query.endPrice, 10);
-  }
-  estateType = '\'' + req.query.estateType + '\'';
-  pg.connect(config.connection, function (err, client, done) {
-    var qestateType;
-    var qleaseType;
-    var sqlQuery;
-    var qstring;
-    var qfrom;
-    var qparking;
-    var qfurnished;
-    var qheating;
-    var qcooling;
-    var qview;
-    var query;
-    if (err) {
-      logger.error('Could not connect to postgres');
-    } else {
-      logger.info('Connected to cyprus db');
-      qstring = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' + 'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' + 'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.ps_code,' + 'public.property.floor,public.property.street_en,public.property.street_number,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' + 'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,public.listing.sale,public.listing.rent,' + 'public.owner.phone2';
-      qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid) ';
-      qparking = ' AND public.property.parking=' + parking;
-      qfurnished = ' AND public.property.furnished=' + furnished;
-      qheating = ' AND public.property.heating=' + heating;
-      qcooling = ' AND public.property.cooling=' + cooling;
-      qview = ' AND public.property.view=' + view;
-      qestateType = ' AND (public.property.estatetype = ' + estateType + ' OR public.property.estatetype_en = ' + estateType + ')';
-      if (req.query.leaseType === 'Rent') {
-        qleaseType = ' AND  public.listing.sale =false';
-      } else {
-        qleaseType = ' AND  public.listing.sale =true';
-      }
-      // var qleaseType = ' AND  public.listing.sale =\'' + req.query.leaseType + '\'';
-      sqlQuery = 'SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom + 'WHERE public.property.the_geom && ST_MakeEnvelope(' + bbox.x1 + ',' + bbox.y1 + ',' + bbox.x2 + ',' + bbox.y2 + ',4326)' + qleaseType + qestateType;
-      if (parking === 'true') {
-        sqlQuery += qparking;
-      }
-      if (furnished === 'true') {
-        sqlQuery += qfurnished;
-      }
-      if (heating === 'true') {
-        sqlQuery += qheating;
-      }
-      if (cooling === 'true') {
-        sqlQuery += qcooling;
-      }
-      if (view === 'true') {
-        sqlQuery += qview;
-      }
-      qprice = ' AND public.listing.price BETWEEN ' + startPrice + ' AND ' + endPrice;
-      sqlQuery += qprice;
-      query = client.query(sqlQuery, function (error, result) {
-        done();
-        if (result) {
-          dbgeo.parse({
-            data: result.rows,
-            geometryColumn: 'geom'
-          }, function (error, result) {
-            if (error) {
-              logger.info(' --- error --- ', error);
-            } else {
-              res.send(result);
-            }
-          });
-        } else {
-          logger.info(error);
-        }
-      });
-    }
-  });
-});
-router.get('/uses/:propertygid', function (req, res) {
-  var gid = req.params.propertygid;
-  pg.connect(config.connection, function (err, client, done) {
-    var query;
-    if (err) {
-      logger.info('Could not connect to postgres');
-    } else {
-      logger.info('Connected');
-      query = client.query('select property_services_analysis(' + gid + ');', function (error, result) {
-        done();
-        // logger.info(query);
-        if (error) {
-          logger.info(error);
-        }
-        if (result) {
-          res.send(result.rows[0]);
-        } else {
-          logger.info('error in quering db');
-        }
-      });
-    }
-  });
-});
 router.post('/admin', function (req, res) {
   var gid = req.body.id;
   pg.connect(config.connection, function (err, client, done) {

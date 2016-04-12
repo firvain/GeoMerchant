@@ -18,23 +18,6 @@ app.Filters.prototype.createValidator = function () {
 app.Filters.prototype.setDefaults = function () {
   var epsg4326Extent;
   PSA.setSource(null);
-  toastr.options = {
-    'closeButton': false,
-    'debug': false,
-    'newestOnTop': false,
-    'progressBar': false,
-    'positionClass': 'toast-top-center',
-    'preventDuplicates': false,
-    'onclick': null,
-    'showDuration': '300',
-    'hideDuration': '1000',
-    'timeOut': '5000',
-    'extendedTimeOut': '1000',
-    'showEasing': 'swing',
-    'hideEasing': 'linear',
-    'showMethod': 'fadeIn',
-    'hideMethod': 'fadeOut'
-  };
   if (selectSource.getFeatures().length === 0) {
     epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
   } else {
@@ -47,7 +30,7 @@ app.Filters.prototype.setDefaults = function () {
 app.Filters.prototype.ajaxCall = function () {
   if (this.p.validate() === true) {
     $.ajax({
-      url: 'http://127.0.0.1:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
+      url: 'http://127.0.0.1:3000/db/property/filters/?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
       type: 'GET',
       dataType: 'json',
       data: {
@@ -61,23 +44,29 @@ app.Filters.prototype.ajaxCall = function () {
         startPrice: this.startPrice,
         endPrice: this.endPrice
       }
-    }).done(function (response) {
-      var features = geoJSONFormat.readFeatures(response, {
+    }).done(function succeded(data, textStatus, jqXHR) {
+      var features = geoJSONFormat.readFeatures(data, {
         featureProjection: 'EPSG:3857'
       });
-      if (features.length > 0) {
         toastr.clear();
         filteredEstates.getSource().clear();
         filteredEstates.getSource().addFeatures(features);
         filteredEstates.setVisible(true);
         property.setVisible(false);
-        // var extent = filteredEstates.getSource().getExtent();
-        // var center = [];
+        toastr.info('Found ' + features.length + ' properties');
+    })
+    .fail(function failed(jqXHR) {
+      // var a = jQuery.parseJSON(jqXHR.responseText); // response is Json so we need to parse
+      toastr.clear();
+      if (jqXHR.status === 404) {
+        toastr.error('No properties found wit these filters');
+      } else if (jqXHR.status === 503) {
+        toastr.error('Service Unavailable');
       } else {
-        toastr.error('No Info Found!');
-        filteredEstates.setVisible(false);
-        property.setVisible(true);
+        toastr.error('Internal Server Error');
       }
+      filteredEstates.setVisible(false);
+      property.setVisible(true);
     });
   }
 };
@@ -166,7 +155,7 @@ $('#checkbox-6').click(function () {
 });
 
 
-var handleFilters = (function () {
+var handleFilters = (function handleFilters() {
   'use strict';
 
   function selectRange() {
@@ -200,8 +189,7 @@ var handleFilters = (function () {
 }());
 function getValueRange(listingType) {
   var saleType = {
-    Sale: function () {
-
+    Sale: function sale() {
       $('#priceSelect').change(function (e) {
         var val = $(this).val();
         if (val === '100000') {
@@ -225,7 +213,7 @@ function getValueRange(listingType) {
         }
       });
     },
-    Rent: function () {
+    Rent: function rent() {
       $('#priceSelect').change(function (e) {
         var val = $(this).val();
         if (val === '300') {
