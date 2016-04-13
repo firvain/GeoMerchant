@@ -131,7 +131,7 @@ var propertySource = new ol.source.Vector({
     var self = this;
     this.clear();
     $.ajax({
-      url: 'http://127.0.0.1:3000/db/property',
+      url: 'http://127.0.0.1:3000/db/listed',
       type: 'GET',
       dataType: 'json'
     })

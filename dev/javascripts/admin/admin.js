@@ -14,7 +14,26 @@ var drawnProperties;
 var draw;
 var select;
 var translate;
-var bing = new ol.layer.Tile({
+var bing;
+var mapbox;
+toastr.options = {
+  closeButton: false,
+  debug: false,
+  newestOnTop: false,
+  progressBar: false,
+  positionClass: 'toast-top-center',
+  preventDuplicates: false,
+  onclick: null,
+  showDuration: '300',
+  hideDuration: '1000',
+  timeOut: '5000',
+  extendedTimeOut: '1000',
+  showEasing: 'swing',
+  hideEasing: 'linear',
+  showMethod: 'fadeIn',
+  hideMethod: 'fadeOut'
+};
+bing = new ol.layer.Tile({
   visible: true,
   source: new ol.source.BingMaps({
     key: 'Ak2Gq8VUfICsPpuf7LRANXmXt2sHWmSLPhohmVLFtFIEwYjs_5MCyAhAFwRSVpLj',
@@ -25,7 +44,7 @@ var bing = new ol.layer.Tile({
   preload: Infinity,
   id: 'bing'
 });
-var mapbox = new ol.layer.Tile({
+mapbox = new ol.layer.Tile({
   source: new ol.source.XYZ({
     attributions: [new ol.Attribution({
       html: '<a href="https://www.mapbox.com/about/maps/" target="_blank">&copy; Mapbox &copy; OpenStreetMap</a>'
@@ -82,28 +101,34 @@ function PropertyStyle(feature) {
 propertySource = new ol.source.Vector({
   format: geoJSONFormat,
   loader: function (extent, resolution, projection) {
-    var url = 'http://127.0.0.1:3000/db/admin';
+    var url = 'http://127.0.0.1:3000/db/property/' + id;
     var self = this;
-    self.clear();
+    // self.clear();
     $.ajax({
       url: url,
-      type: 'POST',
+      type: 'GET',
       beforeSend: function (xhr) {
         if (localStorage.getItem('userToken')) {
           xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
         }
       },
-      dataType: 'json',
-      data: {
-        id: id
-      }
-    }).done(function (response) {
-      var features = geoJSONFormat.readFeatures(response, {
+      dataType: 'json'
+    })
+    .done(function completed(data, textStatus, jqXHR) {
+      var newFeatures = geoJSONFormat.readFeatures(data, {
         featureProjection: 'EPSG:3857'
       });
-      self.addFeatures(features);
-    }).fail(function () {
-      logger.error('error');
+      self.addFeatures(newFeatures);
+    })
+    .fail(function failed(jqXHR, textStatus, errorThrown) {
+      toastr.clear();
+      if (jqXHR.status === 404) {
+        toastr.error('Sorry, we cannot find this property!');
+      } else if (jqXHR.status === 503) {
+        toastr.error('Service Unavailable');
+      } else {
+        toastr.error('Internal Server Error');
+      }
     });
   },
   strategy: ol.loadingstrategy.all
@@ -314,7 +339,6 @@ function clickInfo(event) {
                         dataType: 'text'
                       })
                       .done(function (data, textStatus, jqXHR) {
-                        console.log(jqXHR.status);
                         if (jqXHR.status === 200) {
                           toastr.success('Property Updated In Database');
                         } else {
@@ -460,11 +484,6 @@ function clickInfo(event) {
       select.getFeatures().clear();
       // select.setActive(false);
       $('.property-info').addClass('visuallyhidden');
-      toastr.options = {
-        'positionClass': 'toast-bottom-full-width',
-        'preventDuplicates': true,
-        'timeOut': 60,
-      };
       toastr.error('Cant Find Any Property There...');
     }
   });
@@ -478,11 +497,6 @@ $('#insertProperty').click(function () {
   var onEndDraw;
   toastr.clear();
   $('.property-info').addClass('visuallyhidden');
-  toastr.options = {
-    'positionClass': 'toast-top-center',
-    'preventDuplicates': true,
-    'timeOut': 60,
-  };
   map.un('click', clickInfo);
   select.getFeatures().clear();
   select.setActive(false);
@@ -580,23 +594,25 @@ $('#insertProperty').click(function () {
           data.y = obj.coords[1];
           data.adminId = id;
           $.ajax({
-            url: 'http://127.0.0.1:3000/db/insert',
+            url: 'http://127.0.0.1:3000/db/property',
             type: 'POST',
-            data: data,
-          }).done(function (data, textStatus, jqXHR) {
-            toastr.options = {
-              'positionClass': 'toast-bottom-full-width',
-              'preventDuplicates': true,
-              'timeOut': 60,
-            };
-            if (jqXHR.status === 201) {
-              toastr.success('Property Recorded In Database');
+            data: data
+          })
+          .done(function completed() {
+            toastr.clear();
+            toastr.success('Property Recorded In Database');
+          })
+          .fail(function failed(jqXHR, textStatus, errorThrown) {
+            toastr.clear();
+            if (jqXHR.status === 404) {
+              toastr.error('Sorry, we cannot find this property!');
+            } else if (jqXHR.status === 503) {
+              toastr.error('Service Unavailable');
             } else {
-              toastr.error('Oops Something Went Wrong!!!');
+              toastr.error('Internal Server Error');
             }
-          }).fail(function (jqXHR, textStatus, errorThrown) {
-            toastr.error('Oops Something Went Wrong!!!');
-          }).always(function () {
+          })
+          .always(function () {
             event.preventDefault();
             drawnProperties.getSource().clear();
             propertySource.clear();
@@ -615,11 +631,6 @@ $('#deleteProperty').click(function (event) {
   event.preventDefault();
   toastr.clear();
   $('.property-info').addClass('visuallyhidden');
-  toastr.options = {
-    'positionClass': 'toast-top-center',
-    'preventDuplicates': true,
-    'timeOut': 20,
-  };
   map.un('click', clickInfo);
   draw.setActive(false);
   features.clear();
@@ -629,41 +640,32 @@ $('#deleteProperty').click(function (event) {
   select.once('select', function (e) {
     var $toast;
     if (e.target.getFeatures().getLength() === 1) {
-      toastr.options.newestOnTop = true;
-      toastr.options.preventDuplicates = true;
-      toastr.options.extendedTimeOut = 0;
-      toastr.options.timeOut = 0;
-      toastr.options.closeButton = true;
       $toast = toastr.warning('<p>Are you sure?</p><div class="toastr-btns"><button id="yesDelete" class="mdl-button mdl-js-button ">Yes</button><button id="noDelete" class="mdl-button mdl-js-button">No</button></div>');
       $toast.on('click', '#yesDelete', function () {
         var gid = select.getFeatures().item(0).get('gid');
         $.ajax({
-            url: 'http://127.0.0.1:3000/db/delete',
-            type: 'POST',
-            dataType: 'text',
-            data: {
-              gid: gid,
-            },
+          url: 'http://127.0.0.1:3000/db/property',
+          type: 'DELETE',
+          dataType: 'json',
+          data: {
+            gid: gid
+          }
+        })
+          .done(function completed(data, textStatus, jqXHR) {
+            toastr.clear();
+            toastr.success('Property Successfully Deleted with id = ' + data.propertygid + ' from Database');
           })
-          .done(function (data, textStatus, jqXHR) {
-
-            // console.log(jqXHR.status);
-            toastr.options = {
-              'positionClass': 'toast-bottom-full-width',
-              'preventDuplicates': true,
-              'timeOut': 60,
-            };
-            toastr.success('Property Deleted From Database');
+          .fail(function failed(jqXHR, textStatus, errorThrown) {
+            toastr.clear();
+            if (jqXHR.status === 404) {
+              toastr.error('Sorry, we cannot find this property!');
+            } else if (jqXHR.status === 503) {
+              toastr.error('Service Unavailable');
+            } else {
+              toastr.error('Internal Server Error');
+            }
           })
-          .fail(function (jqXHR, textStatus, errorThrown) {
-            toastr.options = {
-              'positionClass': 'toast-bottom-full-width',
-              'preventDuplicates': true,
-              'timeOut': 60,
-            };
-            toastr.success('Oops Something Went Wrong!!!');
-          })
-          .always(function () {
+          .always(function always() {
             propertySource.clear();
             select.getFeatures().clear();
             select.setActive(false);
@@ -683,8 +685,10 @@ $('#deleteProperty').click(function (event) {
 
 // ====== update ======
 
-$('#updateProperty').on('click', function (event) {
-  var gid, obj, coords;
+$('#updateProperty').on('click', function updateProperty(event) {
+  var gid;
+  var obj;
+  var coords;
   var onEndTranslte;
   event.preventDefault();
   toastr.clear();
@@ -704,60 +708,54 @@ $('#updateProperty').on('click', function (event) {
       selectedFeature = _.head(e.selected);
       coords = ol.proj.transform(selectedFeature.getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
       $.ajax({
-          url: 'http://127.0.0.1:3000/db/fetch',
-          type: 'POST',
-          dataType: 'json',
-          data: {
-            gid: gid,
-          },
-        })
-        .done(function (data) {
+        url: 'http://127.0.0.1:3000/db/property',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          gid: gid
+        }
+      })
+        .done(function completed(data) {
           var $toast = {};
           $toast.options = {};
           obj = _.head(data.features).properties;
 
-          toastr.options.newestOnTop = true;
-          toastr.options.preventDuplicates = true;
-          toastr.options.extendedTimeOut = 0;
-          toastr.options.timeOut = 0;
-          toastr.options.closeButton = false;
-          toastr.options.positionClass = 'toast-top-center';
           $toast = toastr.warning('<p>Change Property Coordinates?</p><div class="toastr-btns"><button id="yesChangeXY" class="mdl-button mdl-js-button ">Yes</button><button id="noChangeXY" class="mdl-button mdl-js-button">No</button></div>');
-          $toast.on('click', '#yesChangeXY', function () {
+          $toast.on('click', '#yesChangeXY', function yesChangeXY() {
             var latlng;
             var geocodeObj;
-            var geocodeName_el;
-            var geocodeName_en;
+            var geocodeNameEl;
+            var geocodeNameEn;
             var geocodeAreaName;
             translate.setActive(true);
-            onEndTranslte = translate.on('translateend', function (e) {
+            onEndTranslte = translate.on('translateend', function translateEnd(e) {
               // var geocodeObj;
               coords = ol.proj.transform(e.features.item(0).getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
               latlng = coords[1] + '\,' + coords[0];
               geocodeObj = $.getJSON('https://maps.googleapis.com/maps/api/geocode/json', {
                 latlng: latlng,
-                key: 'AIzaSyCkH39_Ez21_RlC_pjXD09zpJ_ - eVhzCrQ',
+                key: 'AIzaSyCkH39_Ez21_RlC_pjXD09zpJ_ - eVhzCrQ'
               }, function (json, textStatus) {
                 return json.results;
               });
               geocodeObj.then(function () {
-                geocodeName_el = _.head(_.head(geocodeObj.responseJSON.results).address_components).long_name;
-                geocodeName_en = string_el_to_url(geocodeName_el);
-                obj.street_el = geocodeName_el;
-                obj.street_en = geocodeName_en;
+                geocodeNameEl = _.head(_.head(geocodeObj.responseJSON.results).address_components).long_name;
+                geocodeNameEn = string_el_to_url(geocodeNameEl);
+                obj.street_el = geocodeNameEl;
+                obj.street_en = geocodeNameEn;
                 geocodeAreaName = _.first(_.drop(_.map(_.head(geocodeObj.responseJSON.results).address_components, 'long_name')));
                 obj.area_name = geocodeAreaName;
                 dataForm(obj, coords);
               });
             });
           });
-          $toast.on('click', '#noChangeXY', function () {
+          $toast.on('click', '#noChangeXY', function noChangeXY() {
             translate.setActive(false);
             toastr.clear();
             dataForm(obj, coords);
           });
         })
-        .fail(function () {
+        .fail(function failed() {
           toastr.error('Oops Something Went Wrong!!!');
         });
     }
@@ -765,7 +763,7 @@ $('#updateProperty').on('click', function (event) {
 
   function dataForm(obj, coords) {
     $('.modal-dialog').removeClass('visuallyhidden');
-    dust.render('propertyUpdate', obj, function (err, out) {
+    dust.render('propertyUpdate', obj, function renderPropertyUpdate(err, out) {
       var oldValues = {};
       $('.modal-content').html(out);
       oldValues.bedrooms = $('#bedrooms').val();
@@ -775,7 +773,7 @@ $('#updateProperty').on('click', function (event) {
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'updateProperty',
-        submitBtnId: 'update',
+        submitBtnId: 'update'
       });
       // $('#street_el').val(obj.geocodeName_el);
       // $('#street_en').val(obj.geocodeName_en);
@@ -815,7 +813,7 @@ $('#updateProperty').on('click', function (event) {
           $('#bedrooms').prop('disabled', true);
         }
       });
-      $('#update').on('click', function (event) {
+      $('#update').on('click', function update(event) {
         var data;
         event.preventDefault();
         data = handleForm.get();
@@ -824,26 +822,25 @@ $('#updateProperty').on('click', function (event) {
           data.y = coords[1];
           data.gid = gid;
           $.ajax({
-            url: 'http://127.0.0.1:3000/db/update',
-            type: 'POST',
+            url: 'http://127.0.0.1:3000/db/property',
+            type: 'PUT',
             data: data
           })
-            .done(function (data, textStatus, jqXHR) {
-              toastr.options = {
-                positionClass: 'toast-bottom-full-width',
-                preventDuplicates: true,
-                timeOut: 60
-              };
-              if (jqXHR.status === 200) {
-                toastr.success('Property Updated In Database');
+            .done(function completed(response, textStatus, jqXHR) {
+              toastr.clear();
+              toastr.success('Property with gid ' + response.propertygid + ' Updated in Database');
+            })
+            .fail(function failed(jqXHR, textStatus, errorThrown) {
+              toastr.clear();
+              if (jqXHR.status === 404) {
+                toastr.error('Sorry, we cannot find this property!');
+              } else if (jqXHR.status === 503) {
+                toastr.error('Service Unavailable');
               } else {
-                toastr.error('Oops Something Went Wrong!!!');
+                toastr.error('Internal Server Error');
               }
             })
-            .fail(function () {
-              toastr.error('Oops Something Went Wrong!!!');
-            })
-            .always(function () {
+            .always(function always() {
               propertySource.clear();
               select.getFeatures().clear();
               select.setActive(false);
@@ -854,7 +851,7 @@ $('#updateProperty').on('click', function (event) {
             });
         }
       });
-      $('#cancelUpdate').on('click', function (event) {
+      $('#cancelUpdate').on('click', function cancelUpdate(event) {
         event.preventDefault();
         handleForm.clear();
         propertySource.clear();

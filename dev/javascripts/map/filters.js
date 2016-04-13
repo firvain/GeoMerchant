@@ -30,7 +30,7 @@ app.Filters.prototype.setDefaults = function () {
 app.Filters.prototype.ajaxCall = function () {
   if (this.p.validate() === true) {
     $.ajax({
-      url: 'http://127.0.0.1:3000/db/property/filters/?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
+      url: 'http://127.0.0.1:3000/db/listed/filters?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
       type: 'GET',
       dataType: 'json',
       data: {
