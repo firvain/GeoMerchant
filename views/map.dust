@@ -201,7 +201,8 @@
     <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
     <script src="/vendor/mdl-selectfield-master/mdl-selectfield.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.auth0.com/js/lock-7.11.js"></script>
-    <script src="/js/map.min.js" crossorigin="anonymous"></script> {! ======= Templates ======= !}
+    <script src="/js/map.min.js" crossorigin="anonymous"></script>
+    <!-- ======= Templates =======  -->
     <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>

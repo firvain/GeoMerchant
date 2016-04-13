@@ -3,6 +3,7 @@ var passport = require('passport');
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
 // var flash = require('connect-flash');
 var router = express.Router();
+// require('./i8n/en.js');
 /* GET users listing. */
 router.get('/', ensureLoggedIn, function (req, res, next) {
   var data = {};

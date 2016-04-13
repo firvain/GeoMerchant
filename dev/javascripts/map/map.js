@@ -6,6 +6,23 @@ var styleCache = {};
 var geoJSONFormat = new ol.format.GeoJSON({
   defaultDataProjection: 'EPSG:4326'
 });
+toastr.options = {
+  closeButton: false,
+  debug: false,
+  newestOnTop: false,
+  progressBar: false,
+  positionClass: 'toast-top-center',
+  preventDuplicates: false,
+  onclick: null,
+  showDuration: '300',
+  hideDuration: '1000',
+  timeOut: '5000',
+  extendedTimeOut: '1000',
+  showEasing: 'swing',
+  hideEasing: 'linear',
+  showMethod: 'fadeIn',
+  hideMethod: 'fadeOut'
+};
 var bing = new ol.layer.Tile({
   visible: true,
   source: new ol.source.BingMaps({
@@ -26,16 +43,15 @@ var mapbox = new ol.layer.Tile({
   }),
   id: 'mapbox'
 });
-
 function getIconType(estateType) {
   var iconType = {
-    Apartment: function () {
+    Apartment: function apartmentIcon() {
       return 'apartment';
     },
-    Store: function () {
+    Store: function storeIcon() {
       return 'store';
     },
-    'Detached House': function () {
+    'Detached House': function detachedHouceIcon() {
       return 'detached';
     }
   };
@@ -44,10 +60,10 @@ function getIconType(estateType) {
 
 function getIconPath(listingType) {
   var iconPath = {
-    true: function () {
+    true: function saleIcon() {
       return './images/pins/sale/';
     },
-    false: function () {
+    false: function rentIcon() {
       return './images/pins/rent/';
     }
   };
@@ -69,9 +85,9 @@ function createPropertyStyle(feature) {
 }
 
 function propertyStyleFunction(feature, resolution) {
-  var size = feature.get('features')
-    .length;
-  var style, originalFeature;
+  var size = feature.get('features').length;
+  var style;
+  var originalFeature;
   if (size > 1) {
     style = [new ol.style.Style({
       image: new ol.style.Circle({
@@ -111,26 +127,29 @@ function propertyStyleFunction(feature, resolution) {
 // }
 var propertySource = new ol.source.Vector({
   format: geoJSONFormat,
-  loader: function (extent, resolution, projection) {
-    console.log(resolution);
-    var epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-    var url = 'http://127.0.0.1:3000/db/property?bbox[x1]=' + epsg4326Extent[0] + '&bbox[y1]=' + epsg4326Extent[1] + '&bbox[x2]=' + epsg4326Extent[2] + '&bbox[y2]=' + epsg4326Extent[3];
+  loader: function featreLoader() {
     var self = this;
     this.clear();
-    console.log(extent);
     $.ajax({
-      url: url,
+      url: 'http://127.0.0.1:3000/db/listed',
       type: 'GET',
       dataType: 'json'
     })
-      .done(function (response) {
+      .done(function succeded(response) {
         var features = geoJSONFormat.readFeatures(response, {
           featureProjection: 'EPSG:3857'
         });
         self.addFeatures(features);
       })
-      .fail(function () {
-        console.log('error');
+      .fail(function failed(jqXHR, textStatus, errorThrown) {
+        toastr.clear();
+        if (jqXHR.status === 404) {
+          toastr.error('Sorry, we cannot find any properties!');
+        } else if (jqXHR.status === 503) {
+          toastr.error('Service Unavailable');
+        } else {
+          toastr.error('Internal Server Error');
+        }
       });
   },
   strategy: ol.loadingstrategy.bbox
