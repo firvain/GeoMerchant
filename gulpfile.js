@@ -10,15 +10,27 @@ var path = require('path')
 ,watch = require('gulp-watch')
 ,changed = require('gulp-changed')
 ,autoprefixer = require('gulp-autoprefixer')
-,mainBowerFiles = require('main-bower-files')
 ,stripDebug = require('gulp-strip-debug')
+,eslint = require('gulp-eslint')
 ,exists = require('path-exists').sync;
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
 });
+gulp.task('lint',function() {
+ return gulp.src(['dev/javascripts/**/map.js', 'dev/javascripts/map/!(map)*.js'],{base: './'})
+    .pipe(eslint({ fix: true }))
+     // .pipe(eslint.format())
+        .pipe(eslint.results(function (results) {
+        // Called once for all ESLint results.
+        console.log('Total Results: ' + results.length);
+        console.log('Total Warnings: ' + results.warningCount);
+        console.log('Total Errors: ' + results.errorCount);
+        }))
+        .pipe(gulp.dest('./'))
+})
 gulp.task('scripts-map',  function() {
     return gulp.src(['dev/javascripts/map/map.js', 'dev/javascripts/map/!(map)*.js'])
-        .pipe(changed('public/js'))
+        // .pipe(changed('public/js'))
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.js'))
         // .pipe(stripDebug())
@@ -50,7 +62,7 @@ gulp.task('minify-css-map', function() {
           browsers: ['last 4 versions'],
           cascade: false
         }))
-        .pipe(cssnano({autoprefixer:false}))
+        .pipe(cssnano({autoprefixer:false, zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);
@@ -64,7 +76,7 @@ gulp.task('minify-css-admin', function() {
           browsers: ['last 4 versions'],
           cascade: false
         }))
-        .pipe(cssnano({autoprefixer:false}))
+        .pipe(cssnano({autoprefixer:false,zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
         .on('error', gutil.log);

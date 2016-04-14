@@ -1,7 +1,8 @@
-(function() {
-  $('.weather').change(function() {
+(function () {
+  $('#weather').click(function () {
     if ($(this).prop('checked') === true) {
-      map.getOverlays().forEach(function(ovl) {
+      $(this).parent().siblings().find('input').each(function () {$(this).prop('disabled', true);});
+      map.getOverlays().forEach(function (ovl) {
         if (ovl.get('name') === 'weather') {
           ($(ovl.getElement()).parent()).remove();
           $(ovl.getElement()).remove();
@@ -14,18 +15,18 @@
         url: 'http://api.openweathermap.org/data/2.5/find?lat=' + lat + '&lon=' + lon + '&cnt=5&cluster=no&units=metric&type=accurate&APPID=f9cd9fa2c427c3b115e87e4862619c5c',
         type: 'GET',
         dataType: 'json'
-      }).done(function(data) {
+      }).done(function (data) {
         function createWeatherOverlay(position, index) {
           var elem = document.createElement('div');
           elem.setAttribute('class', 'weather-popup  mdl-shadow--6dp');
           elem.setAttribute('id', index);
           elem.setAttribute('data-name', 'weather');
-          return new ol.Overlay({element: elem, position: position});
+          return new ol.Overlay({ element: elem, position: position });
         }
         var objs = data.list;
         var overlay,
-            coordinates;
-        $.each(objs, function(index, val) {
+          coordinates;
+        $.each(objs, function (index, val) {
           coordinates = ol.proj.transform([
             val.coord.lon, val.coord.lat
           ], 'EPSG:4326', 'EPSG:3857');
@@ -38,15 +39,16 @@
             'pressure': val.main.pressure,
             'humidity': val.main.humidity
           };
-          dust.render('weatherPopup', weatherData, function(err, out) {
+          dust.render('weatherPopup', weatherData, function (err, out) {
             $('#' + index).html(out);
           });
         });
-      }).fail(function() {
+      }).fail(function () {
         // toastr.error("Δεν βρέθηκαν πληροφορίες για τις καιρικές συνθήκες!");
       });
     } else if ($(this).prop('checked') === false) {
-      map.getOverlays().forEach(function(ovl) {
+      $(this).parent().siblings().find('input').each(function () {$(this).prop('disabled', false);});
+      map.getOverlays().forEach(function (ovl) {
         if (ovl.get('name') === 'weather') {
           ($(ovl.getElement()).parent()).remove();
           $(ovl.getElement()).remove();

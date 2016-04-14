@@ -1,23 +1,24 @@
-//Basic requires
+// Basic requires
 var express = require('express');
 var path = require('path');
 // var favicon = require("serve-favicon");
-var logger = require('morgan');
+var morganLogger = require('morgan');
+var logger = require('./utils/logger');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-//Dust require
+// Dust require
 var cons = require('consolidate');
-//CORS
+// CORS
 var cors = require('cors');
-//login related vars
+// login related vars
 var session = require('express-session');
 var dotenv = require('dotenv');
 var passport = require('passport');
 var Auth0Strategy = require('passport-auth0');
-//load .env vars
+// load .env vars
 dotenv.load();
-//route requires
+// route requires
 var index = require('./routes/index');
 var admin = require('./routes/admin');
 var map = require('./routes/map');
@@ -42,25 +43,34 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
   done(null, user);
 });
-///================ Initialize app ================//
+// ================ Initialize app ================//
 var app = express();
 // view engine setup
 app.engine('dust', cons.dust);
 app.set('view engine', 'dust');
 app.set('views', path.join(__dirname, 'views'));
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors());
 app.use(flash());
-app.use(logger('dev'));
+if (app.get('env') === 'production') {
+  app.use(morganLogger('combined', {
+    skip(req, res) { return res.statusCode < 400; },
+    stream: logger.stream,
+  }));
+} else {
+  app.use(morganLogger('combined', {
+    stream: logger.stream,
+  }));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
-//static files by express
+// static files by express
 app.use(express.static(path.join(__dirname, 'public')));
-//Passport setup and init//
+// Passport setup and init//
 app.use(session({
   secret: 'shhhhhhhhh',
   resave: false,
@@ -68,12 +78,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-//================ Routes ================//
+// ================ Routes ================//
 app.use('/', index);
 app.use('/map', map);
 app.use('/admin', admin);
 app.use('/db', database);
-//================ Routes ================//
+// ================ Routes ================//
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');

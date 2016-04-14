@@ -1,6 +1,13 @@
-#
+### App ###
+# Release
+dist
+
+### Node ###
+# Logs
 logs
 *.log
+npm-debug.log*
+
 # Runtime data
 pids
 *.pid
@@ -21,10 +28,32 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+# Dependency directories
 node_modules
+jspm_packages
 
+# Optional npm cache directory
+.npm
 
-#sftp
+# Optional REPL history
+.node_repl_history
+
+### SublimeText ###
+# cache files for sublime text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# workspace files are user-specific
+*.sublime-workspace
+
+# project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using SublimeText
+# *.sublime-project
+
+# sftp configuration file
 sftp-config.json
+
+### Sass ###
+.sass-cache/
+*.css.map
