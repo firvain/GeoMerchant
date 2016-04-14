@@ -1,16 +1,16 @@
 .infobox {
-  position: absolute;
+/*   position: absolute;
   z-index: 15;
   top: 6.000em;
-  left: .5em;
-
+  left: .5em; */
+  flex-grow: 1;
   width: 27em;
   min-width: 27em;
-  height: 39em;
-  max-height: 39em;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
 
-  border-radius: .429em;
-  background: white;
+  background: rgb(255, 255, 255);
 }
 
 .input-align-center {
@@ -21,21 +21,16 @@
 
 .infobox-content {
   position: relative;
-
   height: auto;
 }
 
 .filters {
-  position: absolute;
-  z-index: 16;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+ 
 
-  height: 39em;
+  height: auto;
   padding-right: .5em;
   padding-left: .5em;
+  border-bottom: 1px solid #448aff;
 }
 .infobox .error-msg {
   font-size: 12px;
@@ -54,4 +49,7 @@
   padding: 0;
 
   list-style-type: none;
+}
+.mdl-selectfield {
+  min-width: 100%;
 }

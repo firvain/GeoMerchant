@@ -1,4 +1,4 @@
-var handleForm = (function($, parsley) {
+var handleForm = (function ($, parsley) {
   'use strict';
   var formName, submitBtnId, p;
 
@@ -9,16 +9,16 @@ var handleForm = (function($, parsley) {
   }
   function enableSelect() {
     var e = $('.getmdl-select');
-    e.each(function() {
+    e.each(function () {
       addEventListeners(this);
     });
   }
   function addEventListeners(e) {
     var t = e.querySelector('input'),
-        n = e.querySelectorAll('li');
+      n = e.querySelectorAll('li');
     e.querySelector('i');
-    [].forEach.call(n, function(e) {
-      e.onclick = function() {
+    [].forEach.call(n, function (e) {
+      e.onclick = function () {
         t.value = e.textContent;
       };
     });
@@ -43,7 +43,7 @@ var handleForm = (function($, parsley) {
   function onValidateFormSuccess() {
     p.on('form:success',
 
-      function() {});
+      function () {});
   }
   function setAttributes(atr) {
     $('#street_el').val(atr.street_el);
@@ -55,20 +55,20 @@ var handleForm = (function($, parsley) {
     if (validateForm() === true) {
       $('form[name="' + formName + '"').find('.mdl-textfield__input').each(
 
-        function(index, element) {
+        function (index, element) {
           obj[$(this).attr('id')] = $(this).val();
         });
       $('form[name="' + formName + '"').find('.mdl-checkbox__input').each(
 
-        function(index, element) {
+        function (index, element) {
           obj[$(this).attr('id')] = $(this).prop('checked');
         });
       $('form[name="' + formName + '"').find('.mdl-radio__button').each(
-        function(index, element) {
+        function (index, element) {
           obj[$(this).attr('id')] = $(this).prop('checked');
         });
       $('form[name="' + formName + '"').find('.mdl-selectfield__select').each(
-        function(index, element) {
+        function (index, element) {
           obj[$(this).attr('id')] = $(this).val();
         });
       return obj;
@@ -82,19 +82,19 @@ var handleForm = (function($, parsley) {
     }
     $('form[name="' + formName + '"').find('.mdl-textfield__input').each(
 
-      function(index, element) {
+      function (index, element) {
         $(this).val('');
         $(this).parent().eq(0).removeClass('is-dirty');
         $(this).parent().eq(0).removeClass('is-invalid');
       });
     $('form[name="' + formName + '"').find('.mdl-checkbox__input').each(
 
-      function(index, element) {
+      function (index, element) {
         $(this).prop('checked', false);
       });
     $('form[name="' + formName + '"').find('.mdl-checkbox').each(
 
-      function(index, element) {
+      function (index, element) {
         $(this).removeClass('is-checked');
       });
   }

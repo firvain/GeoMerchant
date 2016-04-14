@@ -6,6 +6,7 @@ function handleInfo(evt) {
   var features = [];
   var clickedFeature;
   var f;
+
   map.removeInteraction(draw);
   evt.preventDefault();
   obj.title = title;
@@ -50,20 +51,20 @@ function handleInfo(evt) {
     title.phone = 'Telephone';
     title.email = 'Email';
   }
-  clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+  clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
     return {
       feature: feature,
       layer: layer
     };
-  }, this, function(layer) {
+  }, this, function (layer) {
     if (layer.get('id') === 'estates' || layer.get('id') === 'filteredEstates') {
       return true;
     }
+    return false;
   }, this);
   if (clickedFeature) {
     if (clickedFeature.layer.get('id') === 'estates' && clickedFeature.feature.get('features').length === 1) {
       f = clickedFeature.feature.getProperties().features[0];
-      console.log(f);
       createPSAandCard(f, obj);
     } else if (clickedFeature.layer.get('id') === 'filteredEstates') {
       f = clickedFeature.feature;
@@ -84,28 +85,28 @@ function createPSAandCard(f, obj) {
     feature.name = f.get('name_el');
     feature.lastname = f.get('lastname_el');
     if (f.get('sale') === true) {
-      feature.listing_type = 'Πώληση'
+      feature.listing_type = 'Πώληση';
     } else {
-      feature.listing_type = 'Ενοικίαση'
+      feature.listing_type = 'Ενοικίαση';
     }
     feature.btns = {
       info: 'πληροφοριες',
       close: 'κλεισιμο'
-    }
+    };
   } else {
     feature.type = f.get('estatetype_en');
     feature.address = f.get('street_en') + ' ' + f.get('street_number');
     feature.name = f.get('name_en');
     feature.lastname = f.get('lastname_en');
     if (f.get('sale') === true) {
-      feature.listing_type = 'Sale'
+      feature.listing_type = 'Sale';
     } else {
-      feature.listing_type = 'Rent'
+      feature.listing_type = 'Rent';
     }
     feature.btns = {
       info: 'info',
       close: 'close'
-    }
+    };
   }
   feature.bedrooms = f.get('bedrooms');
   feature.price = f.get('price');
@@ -125,17 +126,18 @@ function createPSAandCard(f, obj) {
       html: 'POI by ' + '<a href="http://www.terracognita.gr/">Terra Cognita</a>'
     })],
     format: geoJSONFormat,
-    loader: function(extent, resolution, projection) {
+    loader: function (extent, resolution, projection) {
       var url = 'http://127.0.0.1:3000/db/uses/' + feature.gid;
       var self = this;
       $.ajax({
         url: url,
         type: 'GET',
         dataType: 'json'
-      }).done(function(response) {
-        var features = geoJSONFormat.readFeatures(response.property_services_analysis, {
+      }).done(function succeded(data, textStatus, jqXHR) {
+        var features = geoJSONFormat.readFeatures(data.property_services_analysis, {
           featureProjection: 'EPSG:3857'
         });
+        var featuresLength = features.length - 1;
         var area = new ol.style.Style({
           fill: new ol.style.Fill({
             color: [156, 39, 176, 0.1]
@@ -143,8 +145,17 @@ function createPSAandCard(f, obj) {
         });
         features[0].setStyle(area);
         self.addFeatures(features);
-      }).fail(function() {
-        console.log('error');
+        toastr.clear();
+        toastr.info('Found ' + featuresLength + ' Points of Interest in 8 minute distance!');
+      }).fail(function failed(jqXHR) {
+        toastr.clear();
+        if (jqXHR.status === 404) {
+          toastr.error('Sorry, we cannot find any Points of Interest in 8 minute distance!');
+        } else if (jqXHR.status === 503) {
+          toastr.error('Service Unavailable');
+        } else {
+          toastr.error('Internal Server Error');
+        }
       });
     },
     strategy: ol.loadingstrategy.all
@@ -154,28 +165,29 @@ function createPSAandCard(f, obj) {
   map.getView().setResolution(1.2);
   obj.feature = feature;
 
-  dust.render('estateCards', obj, function(err, out) {
+  dust.render('estateCards', obj, function renderEstateCards(err, out) {
     $('.estate-cards').html(out);
     $('.mdl-card__title').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/w_432,c_scale/' + obj.feature.gid + '.jpg)');
     $('.estate-cards').addClass('estate-cards-active');
   // $("#infobox").addClass("visuallyhidden");
   });
-  $('a[href="#openModal"]').click(function() {
-    dust.render('modalInfo', obj, function(err, out) {
+  $('a[href="#openModal"]').click(function () {
+    dust.render('modalInfo', obj, function renderModalInfo(err, out) {
       $('.modal-content').html(out);
       $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + obj.feature.gid + '.jpg)');
     });
   });
-  $('a[href="#closeEstateCard"]').click(function() {
+  $('a[href="#closeEstateCard"]').click(function () {
     $('.estate-cards').removeClass('estate-cards-active');
   });
 }
-$('.info').on('change', function(e) {
-  e.preventDefault();
+$('#information').on('click', function (e) {
   PSA.setSource(null);
   if ($(this).prop('checked') === true) {
     map.on('click', handleInfo);
+    $(this).parent().siblings().find('input').each(function () {$(this).prop('disabled', true);});
   } else {
     map.un('click', handleInfo);
+    $(this).parent().siblings().find('input').each(function () {$(this).prop('disabled', false);});
   }
 });

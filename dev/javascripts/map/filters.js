@@ -1,6 +1,6 @@
 window.app || (window.app = {});
 var app = window.app;
-app.filters = function(options) {
+app.Filters = function (options) {
   this.estateType = options.estateType;
   this.leaseType = options.leaseType !== undefined ? options.leaseType : 'Rent';
   this.startPrice = options.startPrice !== undefined ? options.startPrice : 0;
@@ -11,44 +11,26 @@ app.filters = function(options) {
   this.cooling = options.cooling !== undefined ? options.cooling : false;
   this.view = options.view !== undefined ? options.view : false;
 };
-app.filters.prototype.createValidator = function() {
+app.Filters.prototype.createValidator = function () {
   var p = $('form[name=filters]').parsley();
   return p;
-}
-app.filters.prototype.setDefaults = function() {
+};
+app.Filters.prototype.setDefaults = function () {
   var epsg4326Extent;
   PSA.setSource(null);
-  toastr.options = {
-    'closeButton': false,
-    'debug': false,
-    'newestOnTop': false,
-    'progressBar': false,
-    'positionClass': 'toast-top-center',
-    'preventDuplicates': false,
-    'onclick': null,
-    'showDuration': '300',
-    'hideDuration': '1000',
-    'timeOut': '5000',
-    'extendedTimeOut': '1000',
-    'showEasing': 'swing',
-    'hideEasing': 'linear',
-    'showMethod': 'fadeIn',
-    'hideMethod': 'fadeOut'
-  };
   if (selectSource.getFeatures().length === 0) {
     epsg4326Extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
   } else {
-    epsg4326Extent = ol.proj.transformExtent(selectSource.getFeatures()[0].getGeometry().getExtent(), 'EPSG:3857', 'EPSG:4326');
+    epsg4326Extent = ol.proj.transformExtent(selectSource.getFeatures()[0]
+      .getGeometry().getExtent(), 'EPSG:3857', 'EPSG:4326');
   }
   this.extent = epsg4326Extent;
   this.p = this.createValidator();
 };
-
-app.filters.prototype.ajaxCall = function() {
-  console.log(this.estateType);
+app.Filters.prototype.ajaxCall = function () {
   if (this.p.validate() === true) {
     $.ajax({
-      url: 'http://127.0.0.1:3000/db/filteredproperty?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
+      url: 'http://127.0.0.1:3000/db/listed/filters?bbox[x1]=' + this.extent[0] + '&bbox[y1]=' + this.extent[1] + '&bbox[x2]=' + this.extent[2] + '&bbox[y2]=' + this.extent[3],
       type: 'GET',
       dataType: 'json',
       data: {
@@ -62,29 +44,34 @@ app.filters.prototype.ajaxCall = function() {
         startPrice: this.startPrice,
         endPrice: this.endPrice
       }
-    }).done(function(response) {
-      var features = geoJSONFormat.readFeatures(response, {
+    }).done(function succeded(data, textStatus, jqXHR) {
+      var features = geoJSONFormat.readFeatures(data, {
         featureProjection: 'EPSG:3857'
       });
-      if (features.length > 0) {
         toastr.clear();
         filteredEstates.getSource().clear();
         filteredEstates.getSource().addFeatures(features);
         filteredEstates.setVisible(true);
         property.setVisible(false);
-        // var extent = filteredEstates.getSource().getExtent();
-        // var center = [];
+        toastr.info('Found ' + features.length + ' properties');
+    })
+    .fail(function failed(jqXHR) {
+      // var a = jQuery.parseJSON(jqXHR.responseText); // response is Json so we need to parse
+      toastr.clear();
+      if (jqXHR.status === 404) {
+        toastr.error('No properties found wit these filters');
+      } else if (jqXHR.status === 503) {
+        toastr.error('Service Unavailable');
       } else {
-        toastr.error('No Info Found!');
-        filteredEstates.setVisible(false);
-        property.setVisible(true);
+        toastr.error('Internal Server Error');
       }
+      filteredEstates.setVisible(false);
+      property.setVisible(true);
     });
   }
-
 };
-$('#invokeFilters').click(function() {
-  var filters ;
+$('#invokeFilters').click(function () {
+  var filters;
   var options = {};
   options.estateType = $('#estateType').val();
   options.leaseType = $('input[name=options]:checked').val();
@@ -95,14 +82,13 @@ $('#invokeFilters').click(function() {
   options.heating = $('#checkbox-3').prop('checked');
   options.cooling = $('#checkbox-4').prop('checked');
   options.view = $('#checkbox-5').prop('checked');
-  filters = new app.filters(options);
+  filters = new app.Filters(options);
   filters.setDefaults();
-
   filters.ajaxCall();
-
 });
-$('#clearFilters').click(function() {
-  var orignalValue = $('#estateType option').val();
+$('#clearFilters').click(function () {
+  var orignalEstateTypeValue = $('#estateType option').val();
+  var orignalPriceRangeValue = $('#priceSelect option').val();
   $('label[for=option-1]').addClass('is-checked');
   $('label[for=option-2]').removeClass('is-checked');
   $('label[for=checkbox-1]').removeClass('is-checked');
@@ -111,7 +97,10 @@ $('#clearFilters').click(function() {
   $('label[for=checkbox-4]').removeClass('is-checked');
   $('label[for=checkbox-5]').removeClass('is-checked');
   $('label[for=checkbox-6]').removeClass('is-checked');
-  $('.mdl-selectfield__box-value').html(orignalValue);
+  $('#estateType').siblings().find('.mdl-selectfield__box-value').html(orignalEstateTypeValue);
+  $('#priceSelect').siblings().find('.mdl-selectfield__box-value').html(orignalPriceRangeValue);
+  $('#startPrice').parent().eq(0).removeClass('is-dirty');
+  $('#endPrice').parent().eq(0).removeClass('is-dirty');
   filteredEstates.getSource().clear();
   property.setVisible(true);
   PSA.setSource(null);
@@ -127,10 +116,10 @@ function addInteraction() {
     geometryFunction: geometryFunction,
     maxPoints: 2
   });
-  draw.on('drawstart', function() {
+  draw.on('drawstart', function () {
     selectSource.clear();
   });
-  draw.on('drawend', function() {
+  draw.on('drawend', function () {
     map.removeInteraction(draw);
   });
   map.addInteraction(draw);
@@ -156,11 +145,109 @@ function geometryFunction(coordinates, geometry) {
   ]);
   return geometry;
 }
-$('#checkbox-6').click(function() {
+$('#checkbox-6').click(function () {
   if (this.checked) {
     addInteraction();
   } else {
     map.removeInteraction(draw);
     selectSource.clear();
   }
+});
+
+
+var handleFilters = (function handleFilters() {
+  'use strict';
+
+  function selectRange() {
+    $('#priceSelect').change(function (e) {
+      var val = $(this).val();
+      if (val === 100000) {
+        $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
+      } else if (val === 150000) {
+        $('#startPrice').val('100000').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('150000').parent().eq(0).addClass('is-dirty');
+      } else if (val === 200000) {
+        $('#startPrice').val('150000').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('200000').parent().eq(0).addClass('is-dirty');
+      } else if (val === 250000) {
+        $('#startPrice').val('200000').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('250000').parent().eq(0).addClass('is-dirty');
+      } else if (val === 300000) {
+        $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
+      } else {
+        $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
+        $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
+      }
+    });
+  }
+
+  return {
+    selectRange: selectRange
+  };
+}());
+function getValueRange(listingType) {
+  var saleType = {
+    Sale: function sale() {
+      $('#priceSelect').change(function (e) {
+        var val = $(this).val();
+        if (val === '100000') {
+          $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
+        } else if (val === '150000') {
+          $('#startPrice').val('100000').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('150000').parent().eq(0).addClass('is-dirty');
+        } else if (val === '200000') {
+          $('#startPrice').val('150000').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('200000').parent().eq(0).addClass('is-dirty');
+        } else if (val === '250000') {
+          $('#startPrice').val('200000').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('250000').parent().eq(0).addClass('is-dirty');
+        } else if (val === '300000') {
+          $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
+        } else {
+          $('#startPrice').val('300000').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('');
+        }
+      });
+    },
+    Rent: function rent() {
+      $('#priceSelect').change(function (e) {
+        var val = $(this).val();
+        if (val === '300') {
+          $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('300').parent().eq(0).addClass('is-dirty');
+        } else if (val === '450') {
+          $('#startPrice').val('300').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('450').parent().eq(0).addClass('is-dirty');
+        } else if (val === '600') {
+          $('#startPrice').val('450').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('600').parent().eq(0).addClass('is-dirty');
+        } else {
+          $('#startPrice').val('600').parent().eq(0).addClass('is-dirty');
+          $('#endPrice').val('');
+        }
+      });
+    }
+  };
+  return (saleType[listingType])();
+}
+$(function () {
+  getValueRange('Rent');
+  $('input[type=radio][name=options]').change(function () {
+    var value = this.value;
+    var type = {
+      rangeType: this.value
+    };
+    $('#startPrice').val('').parent().eq(0).removeClass('is-dirty');
+    $('#endPrice').val('').parent().eq(0).removeClass('is-dirty');
+    dust.render('valueRange', type, function (error, html) {
+      $('.priceSelect').html(html);
+      componentHandler.upgradeAllRegistered();
+      getValueRange(value);
+    });
+  }
+  );
 });
