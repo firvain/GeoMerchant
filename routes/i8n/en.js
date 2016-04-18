@@ -17,7 +17,8 @@ module.exports = {
     insert: 'insert',
     delete: 'delete',
     update: 'update',
-    logout: 'logout'
+    logout: 'logout',
+    advancedFilters: 'Advanced Filters'
   },
   price: 'Price',
   from: 'from',
@@ -33,7 +34,9 @@ module.exports = {
     type: {
       detached: 'Detached House',
       apartment: 'Apartment',
-      store: 'Store'
+      store: 'Store',
+      maisonette: 'Maisonette',
+      villa: 'Villa'
     }
   },
   area: 'Size',

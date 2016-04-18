@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.1/material.purple-indigo.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous"> {!
-    <link rel="stylesheet" href="/vendor/getmdl-select/getmdl-select.min.css" crossorigin="anonymous"> !}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/vendor/mdl-selectfield-master/mdl-selectfield.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/map.min.css" crossorigin="anonymous"> </head>
 
@@ -28,35 +27,14 @@
           </a>
           <div class="modal-content"> </div>
         </div>
-      </div> {!
-      <div id="popup" class="ol-popup  mdl-shadow--2dp">
-        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-        <div id="popup-content"></div>
-      </div> !} {!
-      <nav class="menu" style="display: none">
-        <form action="#" autocomplete="off">
-          <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-          <label class="menu-open-button default-primary-color mdl-shadow--8dp" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
-          <input type="checkbox" href="#" class="with-font geolocation" name="geolocation" id="geolocation" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="geolocation"></label>
-          <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="marker"></label>
-          <input type="checkbox" href="#" class="with-font info" name="info" id="info" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="info"></label>
-          <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="weather"></label>
-          <a id="adminLogin" href="javascript:void(0)" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-user"></i> </a>
-          <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick="window.location.assign('/')" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="home"></label>
-        </form>
-      </nav> !}
+      </div>
       <div class="wrapme">
         <div class="infobox" id="infobox">
           <nav class="actions">
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="information">
               <input type="checkbox" id="information" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">info</i> </label>
-            <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="weather">
-              <input type="checkbox" id="weather" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">cloud_queue</i> </label>
+         <!--    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="weather">
+              <input type="checkbox" id="weather" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">cloud_queue</i> </label> -->
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="adminLogin">
               <input type="checkbox" id="adminLogin" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">account_circle</i> </label>
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="marker">
@@ -65,23 +43,7 @@
           </nav>
           <div class="infobox-content">
             <div class="filters">
-              <form name="filters" action="#" autocomplete="off"> {!
-                <div class="mdl-grid">
-                  <div class="mdl-cell mdl-cell--12-col">
-                    <fieldset>
-                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                        <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.detached}" readonly tabIndex="-1">
-                        <label for="estateType"> <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i> </label>
-                        <label for="estateType" class="mdl-textfield__label">{estate.title}</label>
-                        <ul for="estateType" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                          <li class="mdl-menu__item">{estate.type.detached}</li>
-                          <li class="mdl-menu__item">{estate.type.apartment}</li>
-                          <li class="mdl-menu__item">{estate.type.store}</li>
-                        </ul>
-                      </div>
-                    </fieldset>
-                  </div>
-                </div> !}
+              <form name="filters" action="#" autocomplete="off">
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
                     <fieldset>
@@ -106,7 +68,9 @@
                       <select id="estateType" name="estateType" class="mdl-selectfield__select">
                         <option value="{estate.type.apartment}" selected="selected">{estate.type.apartment}</option>
                         <option value="{estate.type.detached}">{estate.type.detached}</option>
-                        <option value="{estate.type.store}">{estate.type.store}</option>
+                        <!-- <option value="{estate.type.store}">{estate.type.store}</option> -->
+                        <option value="{estate.type.maisonette}">{estate.type.maisonette}</option>
+                        <option value="{estate.type.villa}">{estate.type.villa}</option>
                       </select>
                       <label class="mdl-selectfield__label" for="estateType">{estate.title}</label>
                     </div>
@@ -123,6 +87,11 @@
                   </div>
                 </div>
                 <div class="mdl-grid">
+                   <div class="mdl-cell mdl-cell--12-col">
+                      <a id="advanced-filters" href="#">{btns.advancedFilters}</a>
+                   </div>
+                </div>
+                <div id="estateProperties" class="mdl-grid estateProperties" >
                   <div class="mdl-cell mdl-cell--12-col">
                     <fieldset>
                       <legend>
@@ -162,14 +131,14 @@
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--6-col">
                     <div class="mdl-textfield mdl-js-textfield">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" />
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" onkeypress="return preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span>
                       <div class="error-msg" id="error_msg_start_price"> </div>
                     </div>
                   </div>
                   <div class="mdl-cell mdl-cell--6-col">
                     <div class="mdl-textfield mdl-js-textfield">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" />
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" onkeypress="return preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span>
                       <div class="error-msg" id="error_msg_end_price"> </div>
                     </div>
@@ -191,9 +160,7 @@
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->{!
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script> !}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
     <script src="https://storage.googleapis.com/code.getmdl.io/1.1.1/material.min.js"></script>
@@ -203,7 +170,7 @@
     <script src="https://cdn.auth0.com/js/lock-7.11.js"></script>
     <script src="/js/map.min.js" crossorigin="anonymous"></script>
     <!-- ======= Templates =======  -->
-    <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
+    <!-- <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script> -->
     <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>

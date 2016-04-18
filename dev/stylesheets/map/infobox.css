@@ -25,7 +25,7 @@
 }
 
 .filters {
- 
+
 
   height: auto;
   padding-right: .5em;
@@ -52,4 +52,8 @@
 }
 .mdl-selectfield {
   min-width: 100%;
+}
+
+.estateProperties {
+  display: none;
 }

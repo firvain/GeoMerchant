@@ -48,11 +48,14 @@ function getIconType(estateType) {
     Apartment: function apartmentIcon() {
       return 'apartment';
     },
-    Store: function storeIcon() {
-      return 'store';
-    },
     'Detached House': function detachedHouceIcon() {
       return 'detached';
+    },
+    Villa: function villaIcon() {
+      return 'villa';
+    },
+    Maisonette: function maisonetteIcon() {
+      return 'villa';
     }
   };
   return (iconType[estateType])();

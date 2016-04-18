@@ -61,7 +61,7 @@ router.get('/', ensureLoggedIn, function (req, res, next) {
       rent: 'Ενοικίαση',
       price: 'Τιμή',
       from: 'Από',
-      to: 'Εως',
+      to: 'Εώς',
       priceError: 'Η τιμή δεν είναι αριθμός!',
       estateCode: 'Κωδικός Ιδιοκτησίας',
       estateProperties: 'Χαρακτηριστικά Ακινήτου',

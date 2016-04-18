@@ -17,11 +17,12 @@ module.exports = {
     insert: 'εισαγωγη',
     delete: 'διαγραφη',
     update: 'ενημερωση',
-    logout: 'αποσυνδεση'
+    logout: 'αποσυνδεση',
+    advancedFilters: 'Περισσότερα Κριτήρια'
   },
   price: 'Τιμή',
   from: 'από',
-  to: 'έως',
+  to: 'εώς',
   andMore: 'και πάνω',
   priceError: 'Η τιμή δεν είναι αριθμός!',
   estateCode: 'Κωδικός Ιδιοκτησίας',
@@ -33,7 +34,9 @@ module.exports = {
     type: {
       detached: 'Μονοκατοικία',
       apartment: 'Διαμέρισμα',
-      store: 'Κατάστημα'
+      store: 'Κατάστημα',
+      maisonette: 'Μεζονέτα',
+      villa: 'Έπαυλη'
     }
   },
   area: 'Εμβαδό',
