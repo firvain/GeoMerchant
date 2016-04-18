@@ -102,6 +102,7 @@ $('#clearFilters').click(function () {
   $('#startPrice').parent().eq(0).removeClass('is-dirty');
   $('#endPrice').parent().eq(0).removeClass('is-dirty');
   $('#estate-filters').addClass('visuallyhidden');
+  $('#price-range').addClass('visuallyhidden');
   filteredEstates.getSource().clear();
   property.setVisible(true);
   PSA.setSource(null);
@@ -238,15 +239,33 @@ function getValueRange(listingType) {
 $(function () {
   getValueRange('Rent');
   $('input[type=radio][name=options]').change(function () {
+    var lang = document.documentElement.lang;
     var value = this.value;
     var type = {
       rangeType: this.value
     };
+    if (lang === 'en') {
+      type.priceTitle = 'Choose Estate Price';
+      type.price = 'Price';
+      type.or = 'or Enter Price';
+    } else {
+      type.priceTitle = 'Επιλέξτε Τιμή Ακινήτου';
+      type.price = 'Τιμή';
+      type.or = 'ή Εισάγετε Τιμές';
+    }
     $('#startPrice').val('').parent().eq(0).removeClass('is-dirty');
     $('#endPrice').val('').parent().eq(0).removeClass('is-dirty');
     dust.render('valueRange', type, function (error, html) {
       $('.priceSelect').html(html);
       componentHandler.upgradeAllRegistered();
+      $('#toggle-price-range').on('click', function(event) {
+        event.preventDefault();
+        if ($('#price-range').hasClass('visuallyhidden')) {
+          $('#price-range').removeClass('visuallyhidden');
+        } else {
+          $('#price-range').addClass('visuallyhidden');
+        }
+      });
       getValueRange(value);
     });
   }
@@ -257,6 +276,14 @@ $('#advanced-filters').on('click', function (event) {
     $('#estate-filters').removeClass('visuallyhidden');
   } else {
     $('#estate-filters').addClass('visuallyhidden');
+  }
+});
+$('#toggle-price-range').on('click', function(event) {
+  event.preventDefault();
+  if ($('#price-range').hasClass('visuallyhidden')) {
+    $('#price-range').removeClass('visuallyhidden');
+  } else {
+    $('#price-range').addClass('visuallyhidden');
   }
 });
 });
