@@ -1,18 +1,22 @@
 var path = require('path')
-,gulp = require('gulp')
-,gutil = require('gulp-util')
-,concat = require('gulp-concat')
-,uglify = require('gulp-uglify')
-,cssnano = require('gulp-cssnano')
-,dust = require('gulp-dust')
-,sourcemaps = require('gulp-sourcemaps')
-,del = require('del')
-,watch = require('gulp-watch')
-,changed = require('gulp-changed')
-,autoprefixer = require('gulp-autoprefixer')
-,stripDebug = require('gulp-strip-debug')
-,eslint = require('gulp-eslint')
-,exists = require('path-exists').sync;
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var cssnano = require('gulp-cssnano');
+var dust = require('gulp-dust');
+var sourcemaps = require('gulp-sourcemaps');
+var del = require('del');
+var watch = require('gulp-watch');
+var changed = require('gulp-changed');
+var autoprefixer = require('gulp-autoprefixer');
+var stripDebug = require('gulp-strip-debug');
+var eslint = require('gulp-eslint');
+var exists = require('path-exists').sync;
+var gulpif = require('gulp-if');
+var argv = require('yargs').argv;
+var environment = argv.env || 'development';
+console.log(environment);
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
 });
@@ -34,7 +38,7 @@ gulp.task('scripts-map',  function() {
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.js'))
         // .pipe(stripDebug())
-        .pipe(uglify())
+        .pipe(gulpif(environment === 'production', uglify()))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
         .on('error', gutil.log);
@@ -45,7 +49,7 @@ gulp.task('scripts-admin', function() {
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.js'))
         // .pipe(stripDebug())
-        .pipe(uglify())
+        .pipe(gulpif(environment === 'production', uglify()))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/js'))
         .on('error', gutil.log);
