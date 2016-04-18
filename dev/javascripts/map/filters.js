@@ -101,7 +101,7 @@ $('#clearFilters').click(function () {
   $('#priceSelect').siblings().find('.mdl-selectfield__box-value').html(orignalPriceRangeValue);
   $('#startPrice').parent().eq(0).removeClass('is-dirty');
   $('#endPrice').parent().eq(0).removeClass('is-dirty');
-  $('#estateProperties').addClass('estateProperties');
+  $('#estate-filters').addClass('visuallyhidden');
   filteredEstates.getSource().clear();
   property.setVisible(true);
   PSA.setSource(null);
@@ -253,10 +253,10 @@ $(function () {
   );
 $('#advanced-filters').on('click', function (event) {
   event.preventDefault();
-  if ($('#estateProperties').hasClass('estateProperties')) {
-    $('#estateProperties').removeClass('estateProperties');
+  if ($('#estate-filters').hasClass('visuallyhidden')) {
+    $('#estate-filters').removeClass('visuallyhidden');
   } else {
-    $('#estateProperties').addClass('estateProperties');
+    $('#estate-filters').addClass('visuallyhidden');
   }
 });
 });

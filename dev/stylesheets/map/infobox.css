@@ -30,7 +30,6 @@
   height: auto;
   padding-right: .5em;
   padding-left: .5em;
-  border-bottom: 1px solid #448aff;
 }
 .infobox .error-msg {
   font-size: 12px;
@@ -54,6 +53,6 @@
   min-width: 100%;
 }
 
-.estateProperties {
+/* .estateProperties {
   display: none;
-}
+} */
