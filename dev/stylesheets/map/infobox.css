@@ -56,3 +56,14 @@
 /* .estateProperties {
   display: none;
 } */
+.actions {
+  /* display: block; */
+  /* flex-direction: row-reverse; */
+  /* align-items: center; */
+  padding-right:0.5em;
+  padding-left:0.5em;
+}
+.language {
+  display: inline-block;
+  vertical-align: middle;
+}

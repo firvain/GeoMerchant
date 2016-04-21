@@ -79,8 +79,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 // ================ Routes ================//
-app.use('/', index);
-app.use('/map', map);
+app.use('/', map);
+// app.use('/map', map);
 app.use('/admin', admin);
 app.use('/db', database);
 // ================ Routes ================//

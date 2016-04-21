@@ -24,6 +24,6 @@ router = express.Router();
 router.use('/', uses);
 router.use('/', listed);
 router.use('/', ensureLoggedIn, property);
-router.use('/', ensureLoggedIn,listings);
+router.use('/', ensureLoggedIn, listings);
 
 module.exports = router;

@@ -8,5 +8,6 @@ module.exports = {
         "toastr": true,
         "ol": true,
         "_": true,
+        "dust": true
     }
 };

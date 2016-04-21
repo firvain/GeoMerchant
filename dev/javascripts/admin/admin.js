@@ -56,19 +56,19 @@ mapbox = new ol.layer.Tile({
 
 function getIconType(estateType) {
   var iconType = {
-    Apartment: function () {
+    Apartment: function getApartmentIcon() {
       return 'apartment';
     },
-    Store: function () {
+    Store: function getStoreIcon() {
       return 'store';
     },
-    'Detached House': function () {
+    'Detached House': function getDetachedHouseIcon() {
       return 'detached';
     },
-    Maisonette: function () {
+    Maisonette: function getMaisonetteIcon() {
       return 'maisonette';
     },
-    Villa: function () {
+    Villa: function getVillaIon() {
       return 'villa';
     }
   };
@@ -113,11 +113,11 @@ propertySource = new ol.source.Vector({
     $.ajax({
       url: url,
       type: 'GET',
-      beforeSend: function (xhr) {
-        if (localStorage.getItem('userToken')) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-        }
-      },
+      // beforeSend: function (xhr) {
+      //   if (localStorage.getItem('userToken')) {
+      //     xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
+      //   }
+      // },
       dataType: 'json'
     })
     .done(function completed(data, textStatus, jqXHR) {
@@ -496,7 +496,7 @@ function clickInfo(event) {
 }
 // ====== logout ======
 $('#logout').click(function () {
-  location.href = '/map/logout';
+  location.href = '/logout';
 });
 // ====== insert ======
 $('#insertProperty').click(function () {

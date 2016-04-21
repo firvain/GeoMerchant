@@ -1,5 +1,7 @@
 module.exports = {
   lang: 'el',
+  altLang: 'en',
+  langChange: 'English',
   title: 'Geomerchant',
   basemap: 'Υπόβαθρο',
   btns: {

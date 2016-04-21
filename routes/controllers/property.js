@@ -1,5 +1,4 @@
 'use strict';
-/* eslint no-shadow: ["error", { "hoist": "never" }] */
 var config = require('../../config/config');
 var express = require('express');
 var logger = require('../../utils/logger');
@@ -21,9 +20,9 @@ router.route('/property/:adminid')
       logger.error('Could not connect to postgres');
       return err;
     }
-    whatTofetch = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,public.property.parking,public.property.furnished,  public.property.view,  public.property.heating,  public.property.cooling,public.property.title,public.property.year,public.property.other,public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.ps_code,public.property.floor,public.property.street_en,public.property.street_number,public.property."isnew"';
-    fromWhat = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id)' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid)';
-    client.query('select ' + whatTofetch + ',ST_AsGeoJSON(public.property.the_geom) as geom ' + 'FROM ' + fromWhat + ' where public.owner.id=$1 ', [id],
+    whatTofetch = 'property.estatetype,property.estatetype_en,property.plotarea,property.gid,property.estatearea,property.bedrooms,property.parking,property.furnished,  property.view,  property.heating,  property.cooling,property.title,property.year,property.other,property.parcel_num,property.plan_num,property.area_name,property.street_el,property.ps_code,property.floor,property.street_en,property.street_number,property."isnew"';
+    fromWhat = 'owner_property ' + 'INNER JOIN owner ON (owner_property.owner_id = owner.id)' + 'INNER JOIN property ON (owner_property.property_gid = property.gid)';
+    client.query('select ' + whatTofetch + ',ST_AsGeoJSON(property.the_geom) as geom ' + 'FROM ' + fromWhat + ' where owner.id=$1 ', [id],
       function queryDB(queryErr, queryRes) {
         done();
         if (queryErr) {
