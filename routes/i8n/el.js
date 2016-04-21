@@ -16,6 +16,7 @@ module.exports = {
     heating: 'Θέρμανση',
     cooling: 'Κλιματισμός',
     newbuild: 'Νεόδμητο',
+    login: 'Σύνδεση',
     insert: 'εισαγωγη',
     delete: 'διαγραφη',
     update: 'ενημερωση',

@@ -16,6 +16,7 @@ module.exports = {
     heating: 'Heating',
     cooling: 'Air Condition',
     newbuild: 'Newly Build',
+    login: 'Login',
     insert: 'insert',
     delete: 'delete',
     update: 'update',

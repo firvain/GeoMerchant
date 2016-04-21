@@ -33,12 +33,9 @@
           <nav class="actions">
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="information">
               <input type="checkbox" id="information" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">info</i> </label>
-         <!--    <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="weather">
-              <input type="checkbox" id="weather" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">cloud_queue</i> </label> -->
-            <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="adminLogin">
-              <input type="checkbox" id="adminLogin" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">account_circle</i> </label>
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="marker">
               <input type="checkbox" id="marker" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">location_on</i> </label>
+            <button class="mdl-button mdl-js-button mdl-button--icon" id="adminLogin"> <i class="material-icons">account_circle</i><div class="mdl-tooltip" for="adminLogin">{btns.login}</div></button>
             <button class="mdl-button mdl-js-button mdl-button--icon" id="language" onclick="window.location.assign('/{altLang}')"> <i class="material-icons">language</i><div class="mdl-tooltip" for="language">{langChange}</div> </button>
 
           </nav>

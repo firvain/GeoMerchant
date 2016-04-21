@@ -154,8 +154,7 @@ var propertySource = new ol.source.Vector({
           toastr.error('Internal Server Error');
         }
       });
-  },
-  strategy: ol.loadingstrategy.bbox
+  }
 });
 var propertyClusterSource = new ol.source.Cluster({
   distance: 40,

@@ -136,8 +136,7 @@ propertySource = new ol.source.Vector({
         toastr.error('Internal Server Error');
       }
     });
-  },
-  strategy: ol.loadingstrategy.all
+  }
 });
 property = new ol.layer.Vector({
   source: propertySource,
