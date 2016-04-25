@@ -113,11 +113,6 @@ propertySource = new ol.source.Vector({
     $.ajax({
       url: url,
       type: 'GET',
-      // beforeSend: function (xhr) {
-      //   if (localStorage.getItem('userToken')) {
-      //     xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-      //   }
-      // },
       dataType: 'json'
     })
     .done(function completed(data, textStatus, jqXHR) {

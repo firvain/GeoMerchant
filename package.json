@@ -26,6 +26,7 @@
     "morgan": "~1.7.0",
     "passport": "^0.3.2",
     "passport-auth0": "^0.5.1",
+    "path-exists": "^2.1.0",
     "pg": "^4.5.3",
     "serve-favicon": "~2.3.0",
     "winston": "^2.2.0",
@@ -46,6 +47,7 @@
     "gulp-dust": "^3.0.0",
     "gulp-eslint": "^2.0.0",
     "gulp-if": "^2.0.0",
+    "gulp-inject": "^4.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-minify-html": "^1.0.6",
     "gulp-sourcemaps": "^2.0.0-alpha",
@@ -54,7 +56,7 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
     "nodemon": "^1.9.1",
-    "path-exists": "^2.1.0",
+    "stream-series": "^0.1.1",
     "yargs": "^4.6.0"
   }
 }

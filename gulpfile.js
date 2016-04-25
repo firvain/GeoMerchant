@@ -14,11 +14,17 @@ var stripDebug = require('gulp-strip-debug');
 var eslint = require('gulp-eslint');
 var exists = require('path-exists').sync;
 var gulpif = require('gulp-if');
+var inject = require('gulp-inject');
+var series = require('stream-series');
 var argv = require('yargs').argv;
 var environment = argv.env || 'development';
 console.log(environment);
+
 gulp.task('clean-scripts', function() {
     return del(['public/js/*.js']);
+});
+gulp.task('clean-vendor', function() {
+    return del(['public/lib/*.*']);
 });
 gulp.task('lint',function() {
  return gulp.src(['dev/javascripts/**/map.js', 'dev/javascripts/map/!(map)*.js'],{base: './'})
@@ -90,8 +96,33 @@ gulp.task('dust-compile', function() {
         .pipe(dust())
         .pipe(gulp.dest('public/js/tpl'));
 });
+// gulp.task('map', function () {
+//   var target = gulp.src('./views/map.dust');
+//   var sources = gulp.src(['./public/js/map.min.js', './public/css/map.min.css'], {read: false});
+//   return target.pipe(inject(sources, {ignorePath: 'public'}))
+//     .pipe(gulp.dest('./views'));
+// })
+gulp.task('map', function () {
+  var target = gulp.src('./views/map.dust');
+  var appStream = gulp.src(['./public/js/map.min.js', './public/css/map.min.css'], {read: false});
+  var vendorStream = gulp.src([
+    './public/libs/jquery/dist/jquery.min.js',
+    './public/libs/dustjs-linkedin/dist/dust-core.min.js',
+    './public/libs/dustjs-helpers/dist/dust-helpers.min.js',
+    './public/libs/material-design-lite/material.min.js',
+    './public/libs/toastr/toastr.min.js',
+    './public/libs/parsleyjs/dist/parsley.min.js',
+    './public/libs/mdl-selectfield/mdl-selectfield.min.js',
+    './public/libs/auth0-lock/build/auth0-lock.min.js',
+    './public/libs/dialog-polyfill/dialog-polyfill.js'
+    ], {read: false});
+
+  return target.pipe(inject(series(vendorStream, appStream), {ignorePath: 'public'}))
+    .pipe(gulp.dest('./views'));
+})
+
 gulp.task('watch', function() {
-    gulp.watch('dev/javascripts/**/*.js', ['clean-scripts','scripts-map','scripts-admin']).on('error', gutil.log);
+    gulp.watch('dev/javascripts/**/*.js', ['clean-scripts','scripts-map','scripts-admin','map']).on('error', gutil.log);
     gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);
     gulp.watch('templates/*.dust', ['dust-compile'])
         .on('error', gutil.log);
