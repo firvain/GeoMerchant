@@ -1,5 +1,5 @@
 body {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Ubuntu', sans-serif!important;
   overflow: hidden;
 }
 
@@ -21,6 +21,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+.spaced {
+  justify-content: space-around;
 }
 .text-centered {
   text-align: center;

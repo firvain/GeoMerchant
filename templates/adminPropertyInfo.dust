@@ -3,7 +3,8 @@
   <div class="mdl-cell mdl-cell--12-col">
     <button id="listing" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" data-gid="{gid}"> listing </button>
   </div>
-</div>{/feature}
+</div>
+{/feature}
 <div class="mdl-grid estate-atributes-list">
   <div class="mdl-cell mdl-cell--12-col">
     <ul class='mdl-list'> {#feature}

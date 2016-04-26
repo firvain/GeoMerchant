@@ -27,6 +27,5 @@
   },
   "_source": "https://github.com/auth0/lock.git",
   "_target": "^9.0.4",
-  "_originalSource": "auth0-lock",
-  "_direct": true
+  "_originalSource": "auth0-lock"
 }

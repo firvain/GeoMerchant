@@ -27,7 +27,7 @@
       </div>
       <div class="adminMap" id="adminMap"> </div>
       <div class="infobox mdl-shadow--8dp">
-        
+
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
             <div class="userinfo">
@@ -43,11 +43,7 @@
             <button id="logout" class="mdl-button mdl-js-button mdl-js-ripple-effect "> {btns.logout} </button>
           </div>
         </div>
-        <div class="mdl-grid property-info visuallyhidden">
-          <div class="mdl-cell mdl-cell--12-col ">
-            <div class="property-info visuallyhidden"> </div>
-          </div>
-        </div>
+        <div class="property-info visuallyhidden"> </div>
       </div>
     </div>
     <!-- jQuery -->
@@ -79,7 +75,7 @@
       //   cloud_name: 'firvain',
       //   api_key: '375138932689591'
       // });
-      
+
     </script>
     <script type="text/javascript">
     var id = parseInt('{id}');

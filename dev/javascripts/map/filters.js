@@ -258,14 +258,6 @@ $(function () {
     dust.render('valueRange', type, function (error, html) {
       $('.priceSelect').html(html);
       componentHandler.upgradeAllRegistered();
-      $('#toggle-price-range').on('click', function(event) {
-        event.preventDefault();
-        if ($('#price-range').hasClass('visuallyhidden')) {
-          $('#price-range').removeClass('visuallyhidden');
-        } else {
-          $('#price-range').addClass('visuallyhidden');
-        }
-      });
       getValueRange(value);
     });
   }

@@ -3,33 +3,39 @@
     <div class="mdl-cell mdl-cell--12-col">
     <fieldset>
       <legend><h6>{priceTitle}</h6></legend>
-        <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-          <select id="priceSelect" name="priceSelect" class="mdl-selectfield__select">
-            <option value="100000" selected="selected">{to} 100000&euro; </option>
-            <option value="150000">100000&euro; - 150000&euro;</option>
-            <option value="200000">150000&euro; - 200000&euro;</option>
-            <option value="250000">200000&euro; - 250000&euro;</option>
-            <option value="300000">250000&euro; - 300000&euro;</option>
-            <option value="400000">300000&euro; {andMore}</option>
-          </select>
-          <label class="mdl-selectfield__label" for="estateType_en">{price}</label>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+           <input class="mdl-textfield__input" type="text" id="priceSelect" value="{to} 100000&euro;" readonly tabIndex="-1">
+           <label for="priceSelect">
+               <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+           </label>
+           <label for="priceSelect" class="mdl-textfield__label">{price}</label>
+           <ul for="priceSelect" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+               <li class="mdl-menu__item">{to} 100000&euro;</li>
+               <li class="mdl-menu__item">100000&euro; - 150000&euro;</li>
+               <li class="mdl-menu__item">150000&euro; - 200000&euro;</li>
+               <li class="mdl-menu__item">200000&euro; - 250000&euro;</li>
+               <li class="mdl-menu__item">250000&euro; - 300000&euro;</li>
+               <li class="mdl-menu__item">300000&euro; {andMore}</li>
+           </ul>
         </div>
-        <a id="toggle-price-range" href="#">{or}</a>
       </fieldset>
     </div> {/eq} {@eq value="Rent"}
     <div class="mdl-cell mdl-cell--12-col">
     <fieldset>
       <legend><h6>{priceTitle}</h6></legend>
-        <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-          <select id="priceSelect" name="priceSelect" class="mdl-selectfield__select">
-            <option value="300" selected="selected">{to} 300&euro; </option>
-            <option value="450">300&euro; - 450&euro;</option>
-            <option value="600">450&euro; - 600&euro;</option>
-            <option value="400000">600&euro; {andMore}</option>
-          </select>
-          <label class="mdl-selectfield__label" for="estateType_en">{price}</label>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+           <input class="mdl-textfield__input" type="text" id="priceSelect" value="{to} 300&euro;" readonly tabIndex="-1">
+           <label for="priceSelect">
+               <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+           </label>
+           <label for="priceSelect" class="mdl-textfield__label">{price}</label>
+           <ul for="priceSelect" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+               <li class="mdl-menu__item">{to} 300&euro;</li>
+               <li class="mdl-menu__item">300&euro; - 450&euro;</li>
+               <li class="mdl-menu__item">450&euro; - 600&euro;</li>
+               <li class="mdl-menu__item">600&euro; {andMore}</li>
+           </ul>
         </div>
-      <a id="toggle-price-range" href="#">{or}</a>
     </fieldset>
     </div>
   {/eq}
