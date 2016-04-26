@@ -10,6 +10,7 @@ app.Filters = function (options) {
   this.heating = options.heating !== undefined ? options.heating : false;
   this.cooling = options.cooling !== undefined ? options.cooling : false;
   this.view = options.view !== undefined ? options.view : false;
+  console.log(this.startPrice);
 };
 app.Filters.prototype.createValidator = function () {
   var p = $('form[name=filters]').parsley();
@@ -82,25 +83,34 @@ $('#invokeFilters').click(function () {
   options.heating = $('#checkbox-3').prop('checked');
   options.cooling = $('#checkbox-4').prop('checked');
   options.view = $('#checkbox-5').prop('checked');
+  console.log(options);
   filters = new app.Filters(options);
   filters.setDefaults();
   filters.ajaxCall();
 });
 $('#clearFilters').click(function () {
-  var orignalEstateTypeValue = $('#estateType option').val();
-  var orignalPriceRangeValue = $('#priceSelect option').val();
+  var lang = document.documentElement.lang;
   $('label[for=option-1]').addClass('is-checked');
+  $('#option-1').prop('checked', true);
   $('label[for=option-2]').removeClass('is-checked');
+  $('#option-2').prop('checked', false);
   $('label[for=checkbox-1]').removeClass('is-checked');
   $('label[for=checkbox-2]').removeClass('is-checked');
   $('label[for=checkbox-3]').removeClass('is-checked');
   $('label[for=checkbox-4]').removeClass('is-checked');
   $('label[for=checkbox-5]').removeClass('is-checked');
   $('label[for=checkbox-6]').removeClass('is-checked');
-  $('#estateType').siblings().find('.mdl-selectfield__box-value').html(orignalEstateTypeValue);
-  $('#priceSelect').siblings().find('.mdl-selectfield__box-value').html(orignalPriceRangeValue);
-  $('#startPrice').parent().eq(0).removeClass('is-dirty');
-  $('#endPrice').parent().eq(0).removeClass('is-dirty');
+  $('#estateType').attr('data-val', 'Apartment');
+  $('#priceSelect').attr('data-val', '0');
+  if (lang === 'en') {
+    $('#priceSelect').val('To 300');
+    $('#estateType').val('Apartment');
+  } else {
+    $('#priceSelect').val('Εώς 300');
+    $('#estateType').val('Διαμέρισμα');
+  }
+  $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+  $('#endPrice').val('300').parent().eq(0).addClass('is-dirty');
   $('#estate-filters').addClass('visuallyhidden');
   $('#price-range').addClass('visuallyhidden');
   filteredEstates.getSource().clear();
@@ -157,43 +167,46 @@ $('#checkbox-6').click(function () {
 });
 
 
-var handleFilters = (function handleFilters() {
-  'use strict';
+// var handleFilters = (function handleFilters() {
+//   'use strict';
 
-  function selectRange() {
-    $('#priceSelect').change(function (e) {
-      var val = $(this).val();
-      if (val === 100000) {
-        $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
-      } else if (val === 150000) {
-        $('#startPrice').val('100000').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('150000').parent().eq(0).addClass('is-dirty');
-      } else if (val === 200000) {
-        $('#startPrice').val('150000').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('200000').parent().eq(0).addClass('is-dirty');
-      } else if (val === 250000) {
-        $('#startPrice').val('200000').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('250000').parent().eq(0).addClass('is-dirty');
-      } else if (val === 300000) {
-        $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
-      } else {
-        $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
-        $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
-      }
-    });
-  }
+//   function selectRange() {
+//     $('#priceSelect').change(function (e) {
+//       var val = $(this).data('data-val');
+//       alert(e);
+//       if (val === 100000) {
+//         $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
+//       } else if (val === 150000) {
+//         $('#startPrice').val('100000').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('150000').parent().eq(0).addClass('is-dirty');
+//       } else if (val === 200000) {
+//         $('#startPrice').val('150000').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('200000').parent().eq(0).addClass('is-dirty');
+//       } else if (val === 250000) {
+//         $('#startPrice').val('200000').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('250000').parent().eq(0).addClass('is-dirty');
+//       } else if (val === 300000) {
+//         $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
+//       } else {
+//         $('#startPrice').val('250000').parent().eq(0).addClass('is-dirty');
+//         $('#endPrice').val('300000').parent().eq(0).addClass('is-dirty');
+//       }
+//     });
+//   }
 
-  return {
-    selectRange: selectRange
-  };
-}());
+//   return {
+//     selectRange: selectRange
+//   };
+// }());
 function getValueRange(listingType) {
   var saleType = {
     Sale: function sale() {
+      $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+      $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
       $('#priceSelect').change(function (e) {
-        var val = $(this).val();
+        var val = $(this).attr('data-val');
         if (val === '100000') {
           $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
           $('#endPrice').val('100000').parent().eq(0).addClass('is-dirty');
@@ -216,8 +229,10 @@ function getValueRange(listingType) {
       });
     },
     Rent: function rent() {
+      $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
+      $('#endPrice').val('300').parent().eq(0).addClass('is-dirty');
       $('#priceSelect').change(function (e) {
-        var val = $(this).val();
+        var val = $(this).attr('data-val');
         if (val === '300') {
           $('#startPrice').val('0').parent().eq(0).addClass('is-dirty');
           $('#endPrice').val('300').parent().eq(0).addClass('is-dirty');
@@ -247,37 +262,40 @@ $(function () {
     if (lang === 'en') {
       type.priceTitle = 'Choose Estate Price';
       type.price = 'Price';
-      type.or = 'or Enter Price';
+      type.from = 'From';
+      type.to = 'To';
+      type.andMore = 'and more';
     } else {
       type.priceTitle = 'Επιλέξτε Τιμή Ακινήτου';
       type.price = 'Τιμή';
-      type.or = 'ή Εισάγετε Τιμές';
+      type.from = 'Από';
+      type.to = 'Εώς';
+      type.andMore = 'και πάνω';
     }
-    $('#startPrice').val('').parent().eq(0).removeClass('is-dirty');
-    $('#endPrice').val('').parent().eq(0).removeClass('is-dirty');
     dust.render('valueRange', type, function (error, html) {
       $('.priceSelect').html(html);
-      componentHandler.upgradeAllRegistered();
+      // componentHandler.upgradeAllRegistered();
+      getmdlSelect.init('.getmdl-select');
       getValueRange(value);
     });
   }
   );
-$('#advanced-filters').on('click', function (event) {
-  event.preventDefault();
-  if ($('#estate-filters').hasClass('visuallyhidden')) {
-    $('#estate-filters').removeClass('visuallyhidden');
-  } else {
-    $('#estate-filters').addClass('visuallyhidden');
-  }
-});
-$('#toggle-price-range').on('click', function(event) {
-  event.preventDefault();
-  if ($('#price-range').hasClass('visuallyhidden')) {
-    $('#price-range').removeClass('visuallyhidden');
-  } else {
-    $('#price-range').addClass('visuallyhidden');
-  }
-});
+  $('#advanced-filters').on('click', function (event) {
+    event.preventDefault();
+    if ($('#estate-filters').hasClass('visuallyhidden')) {
+      $('#estate-filters').removeClass('visuallyhidden');
+    } else {
+      $('#estate-filters').addClass('visuallyhidden');
+    }
+  });
+  $('#toggle-price-range').on('click', function(event) {
+    event.preventDefault();
+    if ($('#price-range').hasClass('visuallyhidden')) {
+      $('#price-range').removeClass('visuallyhidden');
+    } else {
+      $('#price-range').addClass('visuallyhidden');
+    }
+  });
 });
 function preventDotAndSpace(e) {
   var key = e.charCode ? e.charCode : e.keyCode;

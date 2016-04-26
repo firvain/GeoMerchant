@@ -58,7 +58,7 @@ gulp.task('scripts-admin', function(cb) {
         cb();
 });
 gulp.task('minify-css-map', function(cb) {
-    return gulp.src(['/public/libs/normalize-css/normalize.css','dev/stylesheets/map/*.css'])
+    return gulp.src(['/public/libs/normalize-css/normalize.css', 'dev/stylesheets/map/*.css'])
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.css'))
         .pipe(cssnano({
@@ -71,7 +71,7 @@ gulp.task('minify-css-map', function(cb) {
         cb();
 });
 gulp.task('minify-css-admin', function(cb) {
-    return gulp.src(['/public/libs/normalize-css/normalize.css','dev/stylesheets/admin/*.css'])
+    return gulp.src(['/public/libs/normalize-css/normalize.css', 'dev/stylesheets/admin/*.css'])
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.css'))
         .pipe(cssnano({
@@ -98,13 +98,14 @@ gulp.task('inject-map',['scripts-map','scripts-admin','minify-css-map','minify-c
     './public/libs/dustjs-helpers/dist/dust-helpers.min.js',
     './public/libs/material-design-lite/material.min.js',
     './public/libs/toastr/toastr.min.js',
-    './public/libs/parsleyjs/dist/parsley.min.js',
-    './public/vendor/getmdl-select/getmdl-select.min.js',
+    './public/libs/getmdl-select/src/js/getmdl-select.js',
     './public/libs/auth0-lock/build/auth0-lock.min.js',
+    './public/libs/parsleyjs/dist/parsley.min.js',
     './public/libs/dialog-polyfill/dialog-polyfill.js',
     './public/libs/material-design-lite/material.min.css',
+     './public/libs/material.purple-indigo.min.css',
     './public/libs/toastr/toastr.min.css',
-    './public/vendor/getmdl-select/getmdl-select.min.css'
+    './public/libs/getmdl-select/getmdl-select.min.css'
     ], {read: false});
 
   return target.pipe(inject(series(vendorStream, appStream), {ignorePath: 'public'}))
