@@ -3,7 +3,7 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/login');
 var router = express.Router();
 // require('./i8n/en.js');
 /* GET users listing. */
-router.get('/',  function (req, res, next) {
+router.get('/', ensureLoggedIn, function (req, res, next) {
   var data = {};
   var lang = String(req.flash('lang'));
   var id = String(req.flash('id'));

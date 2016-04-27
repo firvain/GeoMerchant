@@ -7,28 +7,28 @@ var logger = require('./utils/logger');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-// Dust require
+// Dust
 var cons = require('consolidate');
+
 // CORS
 var cors = require('cors');
+
 // login related vars
 var session = require('express-session');
-var dotenv = require('dotenv');
+var config = require('./config/config');
 var passport = require('passport');
 var Auth0Strategy = require('passport-auth0');
-// load .env vars
-dotenv.load();
-// route requires
-var index = require('./routes/index');
+
+// Routes
 var admin = require('./routes/admin');
 var map = require('./routes/map');
 var database = require('./routes/database');
 // This will configure Passport to use Auth0
 var strategy = new Auth0Strategy({
-  domain: process.env.AUTH0_DOMAIN,
-  clientID: process.env.AUTH0_CLIENT_ID,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  callbackURL: process.env.AUTH0_CALLBACK_URL || 'http://127.0.0.1:3000/callback'
+  domain: config.auth0.AUTH0_DOMAIN,
+  clientID: config.auth0.AUTH0_CLIENT_ID,
+  clientSecret: config.auth0.AUTH0_CLIENT_SECRET,
+  callbackURL: config.auth0.AUTH0_CALLBACK_URL || 'http://127.0.0.1:3000/callback'
 }, function (accessToken, refreshToken, extraParams, profile, done) {
   // accessToken is the token to call Auth0 API (not needed in the most cases)
   // extraParams.id_token has the JSON Web Token

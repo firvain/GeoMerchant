@@ -4,7 +4,6 @@ var router = express.Router();
 var flash = require('connect-flash');
 var logger = require('../utils/logger');
 var config = require('../config/config');
-var env = config.auth0;
 var lang;
 var data = {};
 
@@ -12,20 +11,20 @@ var data = {};
 router.get('/', function (req, res, next) {
   lang = 'el'; // we need this for flash
   data = require('./i8n/el.js');
-  data.env = env;
+  data.env = config.auth0;
   res.render('map', data);
 });
 router.get('/en', function (req, res, next) {
   lang = 'en'; // we need this for flash
   data = require('./i8n/en.js');
-  data.env = env;
+  data.env = config.auth0;
   res.render('map', data);
 });
-router.get('/login', function (req, res) {
-  res.render('login', {
-    env: env
-  });
-});
+// router.get('/login', function (req, res) {
+//   res.render('login', {
+//     env: config.auth0
+//   });
+// });
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
