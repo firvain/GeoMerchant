@@ -102,7 +102,7 @@ var handleForm = (function ($, parsley) {
     set: setOptions,
     get: getAttributes,
     clear: resetForm,
-    setAttributes: setAttributes,
+    setAttributes: setAttributes
   // createValidator: createValidator,
   // destroyValidator: destroyValidator,
   // validateForm: validateForm,

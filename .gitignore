@@ -57,3 +57,10 @@ sftp-config.json
 ### Sass ###
 .sass-cache/
 *.css.map
+
+### Bower ###
+bower_components
+public/libs
+.bower-cache
+.bower-registry
+.bower-tmp

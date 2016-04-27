@@ -1,5 +1,7 @@
 .appwrapper {
   position: relative;
+  display: flex;
+  height: 100%;
 }
 .spiner-wrapper {
   position: absolute;
@@ -11,15 +13,8 @@
           transform: translate(-50%, -50%);
 }
 .mdl-spinner-big {
-  width: 80px;
-  height: 80px;
-}
-.wrapme{
-  display: flex;
-  height:100vh;
-}
-.actions {
-   border-bottom: 1px solid #448aff;
+  width: 80px!important;
+  height: 80px!important;
 }
 .map {
   position: relative;

@@ -8,14 +8,17 @@
     <title>{title}</title>
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,700&subset=latin,greek-ext,cyrillic-ext,latin-ext,greek,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.1/material.purple-indigo.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" crossorigin="anonymous"> {!
-    <link rel="stylesheet" href="/vendor/getmdl-select/getmdl-select.min.css" crossorigin="anonymous"> !}
-    <link rel="stylesheet" href="/vendor/mdl-selectfield-master/mdl-selectfield.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/map.min.css" crossorigin="anonymous"> </head>
-
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/libs/normalize-css/normalize.css">
+    <link rel="stylesheet" href="/libs/openlayers/dist/ol-debug.css">
+    <link rel="stylesheet" href="/libs/material-design-lite/material.min.css">
+    <link rel="stylesheet" href="/libs/material.purple-indigo.min.css">
+    <link rel="stylesheet" href="/libs/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/libs/getmdl-select/getmdl-select.min.css">
+    <link rel="stylesheet" href="/css/map.min.css">
+    <!-- endinject -->
+    {! <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.purple-indigo.min.css" /> !}
+</head>
   <body>
     <div class="appwrapper">
       <div class="spiner-wrapper">
@@ -28,88 +31,62 @@
           </a>
           <div class="modal-content"> </div>
         </div>
-      </div> {!
-      <div id="popup" class="ol-popup  mdl-shadow--2dp">
-        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-        <div id="popup-content"></div>
-      </div> !} {!
-      <nav class="menu" style="display: none">
-        <form action="#" autocomplete="off">
-          <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-          <label class="menu-open-button default-primary-color mdl-shadow--8dp" for="menu-open"> <span class="hamburger hamburger-1"></span> <span class="hamburger hamburger-2"></span> <span class="hamburger hamburger-3"></span> </label>
-          <input type="checkbox" href="#" class="with-font geolocation" name="geolocation" id="geolocation" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="geolocation"></label>
-          <input type="checkbox" href="#" class="with-font marker" name="marker" id="marker" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="marker"></label>
-          <input type="checkbox" href="#" class="with-font info" name="info" id="info" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="info"></label>
-          <input type="checkbox" href="#" class="with-font weather" name="weather" id="weather" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="weather"></label>
-          <a id="adminLogin" href="javascript:void(0)" class="menu-item default-primary-color mdl-shadow--2dp"> <i class="fa fa-user"></i> </a>
-          <input type="checkbox" href="#" class="with-font home" name="home" id="home" onclick="window.location.assign('/')" />
-          <label class="menu-item  default-primary-color mdl-shadow--2dp" for="home"></label>
-        </form>
-      </nav> !}
-      <div class="wrapme">
-        <div class="infobox" id="infobox">
+      </div>
+      <div class="infobox" id="infobox">
           <nav class="actions">
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="information">
               <input type="checkbox" id="information" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">info</i> </label>
-            <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="weather">
-              <input type="checkbox" id="weather" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">cloud_queue</i> </label>
-            <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="adminLogin">
-              <input type="checkbox" id="adminLogin" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">account_circle</i> </label>
             <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="marker">
               <input type="checkbox" id="marker" class="mdl-icon-toggle__input"> <i class="mdl-icon-toggle__label material-icons">location_on</i> </label>
-            <button class="mdl-button mdl-js-button mdl-button--icon" id="home" onclick="window.location.assign('/')"> <i class="material-icons">home</i> </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon" id="adminLogin"> <i class="material-icons">account_circle</i><div class="mdl-tooltip" for="adminLogin">{btns.login}</div></button>
+            <button class="mdl-button mdl-js-button mdl-button--icon" id="language" onclick="window.location.assign('/{altLang}')"> <i class="material-icons">language</i><div class="mdl-tooltip" for="language">{langChange}</div> </button>
+
           </nav>
           <div class="infobox-content">
             <div class="filters">
-              <form name="filters" action="#" autocomplete="off"> {!
-                <div class="mdl-grid">
-                  <div class="mdl-cell mdl-cell--12-col">
-                    <fieldset>
-                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                        <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.detached}" readonly tabIndex="-1">
-                        <label for="estateType"> <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i> </label>
-                        <label for="estateType" class="mdl-textfield__label">{estate.title}</label>
-                        <ul for="estateType" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
-                          <li class="mdl-menu__item">{estate.type.detached}</li>
-                          <li class="mdl-menu__item">{estate.type.apartment}</li>
-                          <li class="mdl-menu__item">{estate.type.store}</li>
-                        </ul>
-                      </div>
-                    </fieldset>
-                  </div>
-                </div> !}
+              <form name="filters" action="#" autocomplete="off">
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
                     <fieldset>
                       <legend>
                         <h6>{listingType}</h6></legend>
-                      <div class="mdl-grid">
-                        <div class="mdl-cell mdl-cell--6-col">
+                      <div class="mdl-grid spaced">
                           <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked/> <span class="mdl-radio__label">{btns.rent}</span> </label>
-                        </div>
-                        <div class="mdl-cell mdl-cell--6-col">
+                            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked/> <span class="mdl-radio__label">{btns.rent}</span>
+                          </label>
+                          {! <div class="mdl-layout-spacer"></div> !}
                           <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{btns.sale}</span> </label>
-                        </div>
+                            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" /> <span class="mdl-radio__label">{btns.sale}</span>
+                          </label>
                       </div>
                     </fieldset>
                   </div>
                 </div>
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label ">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                       <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.apartment}" readonly tabIndex="-1" data-val="{estate.type.apartment}">
+                       <label for="estateType">
+                           <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                       </label>
+                       <label for="estateType" class="mdl-textfield__label">{estate.title}</label>
+                       <ul for="estateType" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                           <li class="mdl-menu__item" data-val="{estate.type.apartment}">{estate.type.apartment}</li>
+                           <li class="mdl-menu__item" data-val="{estate.type.detached}">{estate.type.detached}</li>
+                           <li class="mdl-menu__item" data-val="{estate.type.maisonette}">{estate.type.maisonette}</li>
+                           <li class="mdl-menu__item" data-val="{estate.type.villa}">{estate.type.villa}</li>
+                       </ul>
+                    </div>
+           {!          <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label ">
                       <select id="estateType" name="estateType" class="mdl-selectfield__select">
                         <option value="{estate.type.apartment}" selected="selected">{estate.type.apartment}</option>
                         <option value="{estate.type.detached}">{estate.type.detached}</option>
-                        <option value="{estate.type.store}">{estate.type.store}</option>
+                        <!-- <option value="{estate.type.store}">{estate.type.store}</option> -->
+                        <option value="{estate.type.maisonette}">{estate.type.maisonette}</option>
+                        <option value="{estate.type.villa}">{estate.type.villa}</option>
                       </select>
                       <label class="mdl-selectfield__label" for="estateType">{estate.title}</label>
-                    </div>
+                    </div> !}
                   </div>
                 </div>
                 <div class="mdl-grid">
@@ -123,6 +100,11 @@
                   </div>
                 </div>
                 <div class="mdl-grid">
+                   <div class="mdl-cell mdl-cell--12-col">
+                      <a id="advanced-filters" href="#">{btns.advancedFilters}</a>
+                   </div>
+                </div>
+                <div id="estate-filters" class="mdl-grid visuallyhidden" >
                   <div class="mdl-cell mdl-cell--12-col">
                     <fieldset>
                       <legend>
@@ -146,64 +128,76 @@
                     </fieldset>
                   </div>
                 </div>
+
                 <div class="mdl-grid priceSelect">
                   <div class="mdl-cell mdl-cell--12-col">
-                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
-                      <select id="priceSelect" name="priceSelect" class="mdl-selectfield__select">
-                        <option value="300" selected="selected">{to} 300&euro; </option>
-                        <option value="450">300&euro; - 450&euro;</option>
-                        <option value="600">450&euro; - 600&euro;</option>
-                        <option value="400000">600&euro; {andMore}</option>
-                      </select>
-                      <label class="mdl-selectfield__label" for="estateType_en">{price}</label>
+                      <fieldset>
+                  <legend><h6>{priceTitle}</h6></legend>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+                       <input class="mdl-textfield__input" type="text" id="priceSelect" value="{to} 300&euro;" readonly tabIndex="-1" data-val="300">
+                       <label for="priceSelect">
+                           <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                       </label>
+                       <label for="priceSelect" class="mdl-textfield__label">{price}</label>
+                       <ul for="priceSelect" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                           <li class="mdl-menu__item" data-val="300">{to} 300&euro;</li>
+                           <li class="mdl-menu__item" data-val="450">300&euro; - 450&euro;</li>
+                           <li class="mdl-menu__item" data-val="600">450&euro; - 600&euro;</li>
+                           <li class="mdl-menu__item" data-val="601">600&euro; {andMore}</li>
+                       </ul>
                     </div>
+                    </fieldset>
                   </div>
                 </div>
                 <div class="mdl-grid">
+                   <div class="mdl-cell mdl-cell--12-col">
+                      <a id="toggle-price-range" href="#">{or}</a>
+                   </div>
+                </div>
+                <div id="price-range" class="mdl-grid visuallyhidden">
                   <div class="mdl-cell mdl-cell--6-col">
-                    <div class="mdl-textfield mdl-js-textfield">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" onkeypress="return preventDotAndSpace(event);" />
                       <label class="mdl-textfield__label" for="startPrice">{from}</label> <span class="mdl-textfield__error">{priceError}</span>
                       <div class="error-msg" id="error_msg_start_price"> </div>
                     </div>
                   </div>
                   <div class="mdl-cell mdl-cell--6-col">
-                    <div class="mdl-textfield mdl-js-textfield">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" onkeypress="return preventDotAndSpace(event);"  />
                       <label class="mdl-textfield__label" for="endPrice">{to}</label> <span class="mdl-textfield__error">{priceError}</span>
                       <div class="error-msg" id="error_msg_end_price"> </div>
                     </div>
                   </div>
                 </div>
-                <div class="mdl-grid mdl-grid-center">
-                  <div class="mdl-cell mdl-cell--6-col">
-                    <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.search}"> </div>
-                  <div class="mdl-cell mdl-cell--6-col">
-                    <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="reset" value="{btns.clear}"> </div>
+                <div class="mdl-grid spaced">
+                  <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.search}">
+                  <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="button" value="{btns.clear}">
                 </div>
               </form>
             </div>
             <form action="#" class="estate-cards "> </form>
           </div>
-        </div>
-        <div class="map" id="map"> </div>
       </div>
+      <div class="map" id="map"> </div>
     </div>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->{!
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script> !}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.13.0/ol.min.js" crossorigin="anonymous"></script> {!-- OpenLayers 3.0 !}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-linkedin/2.7.2/dust-full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dustjs-helpers/1.7.3/dust-helpers.min.js"></script>
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.1.1/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="/vendor/parsley/parsley.min.js" crossorigin="anonymous"></script>
-    <script src="/vendor/mdl-selectfield-master/mdl-selectfield.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.auth0.com/js/lock-7.11.js"></script>
-    <script src="/js/map.min.js" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.15.1/ol-debug.js" crossorigin="anonymous"></script>
+
+    <!-- inject:js -->
+    <script src="/libs/openlayers/dist/ol-debug.js"></script>
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/libs/dustjs-linkedin/dist/dust-core.min.js"></script>
+    <script src="/libs/dustjs-helpers/dist/dust-helpers.min.js"></script>
+    <script src="/libs/material-design-lite/material.min.js"></script>
+    <script src="/libs/toastr/toastr.min.js"></script>
+    <script src="/libs/getmdl-select/src/js/getmdl-select.js"></script>
+    <script src="/libs/auth0-lock/build/auth0-lock.min.js"></script>
+    <script src="/libs/parsleyjs/dist/parsley.min.js"></script>
+    <script src="/libs/dialog-polyfill/dialog-polyfill.js"></script>
+    <script src="/js/map.min.js"></script>
+    <!-- endinject -->
     <!-- ======= Templates =======  -->
-    <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script>
+    <!-- <script src="/js/tpl/weatherPopup.js" crossorigin="anonymous"></script> -->
     <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>
@@ -216,7 +210,9 @@
         responseType: 'code',
         authParams: {
           scope: 'openid name email picture user_metadata'
-        }
+        },
+        gravatar: false,
+        connections: ['Username-Password-Authentication'],
       });
     });
     </script>

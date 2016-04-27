@@ -1,7 +1,6 @@
 var $loading = $('.mdl-spinner');
-
 var center = [3677385, 4120949];
-var extent = [3590094, 4102833, 3855483, 4261211];
+var extent = [3652772, 4112808, 3700000, 4132797];
 var lang = document.documentElement.lang;
 var geoJSONFormat = new ol.format.GeoJSON({
   defaultDataProjection: 'EPSG:4326'
@@ -56,14 +55,20 @@ mapbox = new ol.layer.Tile({
 
 function getIconType(estateType) {
   var iconType = {
-    Apartment: function () {
+    Apartment: function getApartmentIcon() {
       return 'apartment';
     },
-    Store: function () {
+    Store: function getStoreIcon() {
       return 'store';
     },
-    'Detached House': function () {
+    'Detached House': function getDetachedHouseIcon() {
       return 'detached';
+    },
+    Maisonette: function getMaisonetteIcon() {
+      return 'maisonette';
+    },
+    Villa: function getVillaIon() {
+      return 'villa';
     }
   };
   return (iconType[estateType])();
@@ -107,11 +112,6 @@ propertySource = new ol.source.Vector({
     $.ajax({
       url: url,
       type: 'GET',
-      beforeSend: function (xhr) {
-        if (localStorage.getItem('userToken')) {
-          xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('userToken'));
-        }
-      },
       dataType: 'json'
     })
     .done(function completed(data, textStatus, jqXHR) {
@@ -130,8 +130,7 @@ propertySource = new ol.source.Vector({
         toastr.error('Internal Server Error');
       }
     });
-  },
-  strategy: ol.loadingstrategy.all
+  }
 });
 property = new ol.layer.Vector({
   source: propertySource,
@@ -169,11 +168,11 @@ map = new ol.Map({
   ]),
   view: new ol.View({
     center: center,
-    // extent: extent,
+    extent: extent,
     projection: 'EPSG:3857',
     zoom: 14,
     maxZoom: 19,
-    minZoom: 10
+    minZoom: 14
   })
 });
 if (lang === 'el') {
@@ -490,7 +489,7 @@ function clickInfo(event) {
 }
 // ====== logout ======
 $('#logout').click(function () {
-  location.href = '/map/logout';
+  location.href = '/logout';
 });
 // ====== insert ======
 $('#insertProperty').click(function () {
@@ -539,24 +538,24 @@ $('#insertProperty').click(function () {
       componentHandler.upgradeDom();
       handleForm.set({
         name: 'insertProperty',
-        submitBtnId: 'insert',
+        submitBtnId: 'insert'
       });
       $('#estateType').change(function () {
         if ($(this).val() === 'Μονοκατοικία') {
           $('#estateType_en').val('Detached House');
           $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
           $('#bedrooms').val('');
-          $('#bedrooms').prop('disabled', false);
         } else if ($(this).val() === 'Διαμέρισμα') {
           $('#estateType_en').val('Apartment');
           $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
           $('#bedrooms').val('');
-          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Έπαυλη') {
+          $('#estateType_en').val('Villa');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Villa');
+          $('#bedrooms').val('');
         } else {
-          $('#estateType_en').val('Store');
-          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
-          $('#bedrooms').val(0);
-          $('#bedrooms').prop('disabled', true);
+          $('#estateType_en').val('Maisonette');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Maisonette');
         }
       });
       $('#estateType_en').change(function () {
@@ -564,17 +563,19 @@ $('#insertProperty').click(function () {
           $('#estateType').val('Μονοκατοικία');
           $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
           $('#bedrooms').val('');
-          $('#bedrooms').prop('disabled', false);
         } else if ($(this).val() === 'Apartment') {
           $('#estateType').val('Διαμέρισμα');
           $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
           $('#bedrooms').val('');
-          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Villa') {
+          $('#estateType').val('Έπαυλη');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Έπαυλη');
+          $('#bedrooms').val('');
         } else {
-          $('#estateType').val('Κατάστημα');
-          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
-          $('#bedrooms').val(0);
-          $('#bedrooms').prop('disabled', true);
+          $('#estateType').val('Μεζονέτα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μεζονέτα');
+
+
         }
       });
       $('#cancelInsert').on('click', function (event) {
@@ -719,6 +720,7 @@ $('#updateProperty').on('click', function updateProperty(event) {
           var $toast = {};
           $toast.options = {};
           obj = _.head(data.features).properties;
+          console.log(obj)
 
           $toast = toastr.warning('<p>Change Property Coordinates?</p><div class="toastr-btns"><button id="yesChangeXY" class="mdl-button mdl-js-button ">Yes</button><button id="noChangeXY" class="mdl-button mdl-js-button">No</button></div>');
           $toast.on('click', '#yesChangeXY', function yesChangeXY() {
@@ -782,17 +784,17 @@ $('#updateProperty').on('click', function updateProperty(event) {
           $('#estateType_en').val('Detached House');
           $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Detached House');
           $('#bedrooms').val(oldValues.bedrooms);
-          $('#bedrooms').prop('disabled', false);
         } else if ($(this).val() === 'Διαμέρισμα') {
           $('#estateType_en').val('Apartment');
           $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Apartment');
           $('#bedrooms').val(oldValues.bedrooms);
-          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Έπαυλη') {
+          $('#estateType_en').val('Villa');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Villa');
+          $('#bedrooms').val(oldValues.bedrooms);
         } else {
-          $('#estateType_en').val('Store');
-          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Store');
-          $('#bedrooms').val(0);
-          $('#bedrooms').prop('disabled', true);
+          $('#estateType_en').val('Maisonette');
+          $('#estateType_en').parent().find('.mdl-selectfield__box-value').html('Maisonette');
         }
       });
       $('#estateType_en').change(function () {
@@ -800,17 +802,17 @@ $('#updateProperty').on('click', function updateProperty(event) {
           $('#estateType').val('Μονοκατοικία');
           $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μονοκατοικία');
           $('#bedrooms').val(oldValues.bedrooms);
-          $('#bedrooms').prop('disabled', false);
         } else if ($(this).val() === 'Apartment') {
           $('#estateType').val('Διαμέρισμα');
           $('#estateType').parent().find('.mdl-selectfield__box-value').html('Διαμέρισμα');
           $('#bedrooms').val(oldValues.bedrooms);
-          $('#bedrooms').prop('disabled', false);
+        } else if ($(this).val() === 'Villa') {
+          $('#estateType').val('Έπαυλη');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Έπαυλη');
+          $('#bedrooms').val(oldValues.bedrooms);
         } else {
-          $('#estateType').val('Κατάστημα');
-          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Κατάστημα');
-          $('#bedrooms').val(0);
-          $('#bedrooms').prop('disabled', true);
+          $('#estateType').val('Μεζονέτα');
+          $('#estateType').parent().find('.mdl-selectfield__box-value').html('Μεζονέτα');
         }
       });
       $('#update').on('click', function update(event) {

@@ -6,21 +6,20 @@ var logger = require('../utils/logger');
 var config = require('../config/config');
 var env = config.auth0;
 var lang;
-
+var data = {};
 
 /* GET map page. */
 router.get('/', function (req, res, next) {
-  var data = {};
-  lang = req.query.lang;
-  if (lang === 'en') {
-    data = require('./i8n/en.js');
-    data.env = env;
-    res.render('map', data);
-  } else if (lang === 'el') {
-    data = require('./i8n/el.js');
-    data.env = env;
-    res.render('map', data);
-  }
+  lang = 'el'; // we need this for flash
+  data = require('./i8n/el.js');
+  data.env = env;
+  res.render('map', data);
+});
+router.get('/en', function (req, res, next) {
+  lang = 'en'; // we need this for flash
+  data = require('./i8n/en.js');
+  data.env = env;
+  res.render('map', data);
 });
 router.get('/login', function (req, res) {
   res.render('login', {
