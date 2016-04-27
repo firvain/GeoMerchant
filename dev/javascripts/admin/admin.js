@@ -1,7 +1,6 @@
 var $loading = $('.mdl-spinner');
-
 var center = [3677385, 4120949];
-var extent = [3590094, 4102833, 3855483, 4261211];
+var extent = [3652772, 4112808, 3700000, 4132797];
 var lang = document.documentElement.lang;
 var geoJSONFormat = new ol.format.GeoJSON({
   defaultDataProjection: 'EPSG:4326'
@@ -169,11 +168,11 @@ map = new ol.Map({
   ]),
   view: new ol.View({
     center: center,
-    // extent: extent,
+    extent: extent,
     projection: 'EPSG:3857',
     zoom: 14,
     maxZoom: 19,
-    minZoom: 10
+    minZoom: 14
   })
 });
 if (lang === 'el') {

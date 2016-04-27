@@ -23,7 +23,7 @@ pg.defaults.poolSize = 25;
 router = express.Router();
 router.use('/', uses);
 router.use('/', listed);
-router.use('/', ensureLoggedIn, property);
-router.use('/', ensureLoggedIn, listings);
+router.use('/',  property);
+router.use('/',  listings);
 
 module.exports = router;
