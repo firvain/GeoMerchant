@@ -1,5 +1,7 @@
 module.exports = {
   lang: 'en',
+  altLang: '',
+  langChange: 'Greek',
   title: 'Geomerchant',
   basemap: 'BaseMap',
   btns: {
@@ -14,26 +16,32 @@ module.exports = {
     heating: 'Heating',
     cooling: 'Air Condition',
     newbuild: 'Newly Build',
+    login: 'Login',
     insert: 'insert',
     delete: 'delete',
     update: 'update',
-    logout: 'logout'
+    logout: 'logout',
+    advancedFilters: 'Advanced Filters'
   },
+  priceTitle: 'Choose Estate Price',
   price: 'Price',
-  from: 'from',
-  to: 'to',
+  from: 'From',
+  to: 'To',
   andMore: 'and more',
+  or: 'or Enter Price',
   priceError: 'Input is not a number!',
   estateCode: 'Estate Code',
   estateProperties: 'Choose Estate Properites',
-  chooseArea: 'Choose Area of Search',
+  chooseArea: 'Search By Map Area',
   listingType: 'Listing Type',
   estate: {
     title: 'Estate Type',
     type: {
       detached: 'Detached House',
       apartment: 'Apartment',
-      store: 'Store'
+      store: 'Store',
+      maisonette: 'Maisonette',
+      villa: 'Villa'
     }
   },
   area: 'Size',

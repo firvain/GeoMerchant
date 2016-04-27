@@ -1,5 +1,6 @@
 'use strict';
 var environment = process.env.NODE_ENV || 'development';
+
 var config = {
   development: {
     connection: {
@@ -16,7 +17,7 @@ var config = {
       AUTH0_CLIENT_ID: '6hbMw33jaFwwnBLcd1IVcJFhGeqLNyZR',
       AUTH0_CLIENT_SECRET: 'GxdpBofr-UozXstRDKTiQRDWGTDrdmzQif9iq4lN4DbihxavbbWQqXjaMbL2mdIz',
       AUTH0_DOMAIN: 'terracognita.eu.auth0.com',
-      AUTH0_CALLBACK_URL: 'http://127.0.0.1:3000/map/callback'
+      AUTH0_CALLBACK_URL: 'http://127.0.0.1:3000/callback'
     }
   },
   production: {
@@ -34,7 +35,7 @@ var config = {
       AUTH0_CLIENT_ID: '6hbMw33jaFwwnBLcd1IVcJFhGeqLNyZR',
       AUTH0_CLIENT_SECRET: 'GxdpBofr-UozXstRDKTiQRDWGTDrdmzQif9iq4lN4DbihxavbbWQqXjaMbL2mdIz',
       AUTH0_DOMAIN: 'terracognita.eu.auth0.com',
-      AUTH0_CALLBACK_URL: 'http://www.geomerchant.eu/map/callback'
+      AUTH0_CALLBACK_URL: 'http://www.geomerchant.eu/callback'
     }
   }
 

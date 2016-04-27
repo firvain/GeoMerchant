@@ -1,5 +1,4 @@
 'use strict';
-/* eslint no-shadow: ["error", { "hoist": "never" }] */
 var config = require('../../config/config');
 var express = require('express');
 var logger = require('../../utils/logger');
