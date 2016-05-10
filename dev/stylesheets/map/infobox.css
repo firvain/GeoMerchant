@@ -57,13 +57,14 @@
   display: none;
 } */
 .actions {
-  /* display: block; */
-  /* flex-direction: row-reverse; */
-  /* align-items: center; */
   padding-right:0.5em;
   padding-left:0.5em;
+  border-bottom:0.5em solid rgb(156,39,176);
 }
 .language {
   display: inline-block;
   vertical-align: middle;
 }
+/* .mdl-checkbox > span {
+  white-space: nowrap;
+} */

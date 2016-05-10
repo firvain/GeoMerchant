@@ -1,4 +1,5 @@
 // Basic requires
+'use strict';
 var express = require('express');
 var path = require('path');
 // var favicon = require("serve-favicon");
@@ -23,6 +24,8 @@ var Auth0Strategy = require('passport-auth0');
 var admin = require('./routes/admin');
 var map = require('./routes/map');
 var database = require('./routes/database');
+var api = require('./routes/api');
+
 // This will configure Passport to use Auth0
 var strategy = new Auth0Strategy({
   domain: config.auth0.AUTH0_DOMAIN,
@@ -83,6 +86,8 @@ app.use('/', map);
 // app.use('/map', map);
 app.use('/admin', admin);
 app.use('/db', database);
+app.use('/api', api);
+
 // ================ Routes ================//
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

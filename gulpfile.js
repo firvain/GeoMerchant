@@ -45,7 +45,7 @@ gulp.task('lint',function() {
         .pipe(gulp.dest('./'))
 })
 gulp.task('scripts-map',  function(cb) {
-    return gulp.src(['dev/javascripts/map/map.js', 'dev/javascripts/map/!(map)*.js'])
+    return gulp.src(['dev/javascripts/commons/globals.js','dev/javascripts/commons/!(globals)*.js', 'dev/javascripts/map/modules/ol3-map.js','dev/javascripts/map/modules/!(ol3-map)*.js', 'dev/javascripts/map/index.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('map.min.js'))
         // .pipe(stripDebug())
@@ -56,7 +56,7 @@ gulp.task('scripts-map',  function(cb) {
         cb();
 });
 gulp.task('scripts-admin', function(cb) {
-    return gulp.src(['dev/javascripts/admin/*.js'])
+    return gulp.src(['dev/javascripts/commons/translation.js', 'dev/javascripts/admin/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('admin.min.js'))
         .pipe(gulpif(environment === 'production', uglify()))
@@ -101,9 +101,10 @@ gulp.task('inject-map',['scripts-map','minify-css-map'], function () {
   var target = gulp.src('./views/map.dust');
   var appStream = gulp.src(['./public/js/map.min.js', './public/css/map.min.css'], {read: false});
   var vendorStream = gulp.src([
-    './public/libs/openlayers/dist/ol-debug.js',
+    './public/libs/openlayers/dist/ol.js',
+    './public/libs/bluebird/js/browser/bluebird.min.js',
     './public/libs/jquery/dist/jquery.min.js',
-    './public/libs/dustjs-linkedin/dist/dust-core.min.js',
+    './public/libs/dustjs-linkedin/dist/dust-full.min.js',
     './public/libs/dustjs-helpers/dist/dust-helpers.min.js',
     './public/libs/material-design-lite/material.min.js',
     './public/libs/toastr/toastr.min.js',
@@ -126,9 +127,10 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
   var target = gulp.src('./views/admin.dust');
   var appStream = gulp.src(['./public/js/admin.min.js', './public/css/admin.min.css'], {read: false});
   var vendorStream = gulp.src([
-    './public/libs/openlayers/dist/ol-debug.js',
+    './public/libs/openlayers/dist/ol.js',
+    './public/libs/bluebird/js/browser/bluebird.min.js',
     './public/libs/jquery/dist/jquery.min.js',
-    './public/libs/dustjs-linkedin/dist/dust-core.min.js',
+    './public/libs/dustjs-linkedin/dist/dust-full.min.js',
     './public/libs/dustjs-helpers/dist/dust-helpers.min.js',
     './public/libs/material-design-lite/material.min.js',
     './public/libs/toastr/toastr.min.js',
@@ -152,7 +154,7 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
     .pipe(gulp.dest('./views'));
 })
 gulp.task('watch', function() {
-    gulp.watch('dev/**/map/*.*', ['clean-map-scripts','clean-map-css','inject-map']).on('error', gutil.log);
+    gulp.watch('dev/javascripts/**/*.*', ['clean-map-scripts','clean-map-css','inject-map']).on('error', gutil.log);
     gulp.watch('dev/**/admin/*.*', ['clean-admin-scripts','clean-admin-css','inject-admin']).on('error', gutil.log);
     // gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);
     gulp.watch('templates/*.dust', ['dust-compile'])

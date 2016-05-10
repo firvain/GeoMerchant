@@ -52,6 +52,7 @@
     <!-- inject:js -->
     <script src="/libs/openlayers/dist/ol-debug.js"></script>
     <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/libs/bluebird/js/browser/bluebird.min.js"></script>
     <script src="/libs/dustjs-linkedin/dist/dust-core.min.js"></script>
     <script src="/libs/dustjs-helpers/dist/dust-helpers.min.js"></script>
     <script src="/libs/material-design-lite/material.min.js"></script>

@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
@@ -5,16 +6,17 @@ var flash = require('connect-flash');
 var logger = require('../utils/logger');
 var config = require('../config/config');
 var lang;
-var data = {};
 
 /* GET map page. */
 router.get('/', function (req, res, next) {
+  var data = {};
   lang = 'el'; // we need this for flash
   data = require('./i8n/el.js');
   data.env = config.auth0;
   res.render('map', data);
 });
 router.get('/en', function (req, res, next) {
+  var data = {};
   lang = 'en'; // we need this for flash
   data = require('./i8n/en.js');
   data.env = config.auth0;

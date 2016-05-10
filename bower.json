@@ -39,7 +39,8 @@
     "cloudinary-jquery-file-upload": "^2.0.8",
     "auth0-lock": "^9.0.4",
     "normalize-css": "^4.1.1",
-    "getmdl-select": "*"
+    "getmdl-select": "*",
+    "bluebird": "^3.3.5"
   },
   "resolutions": {
     "material-design-lite": "^1.1.3"
