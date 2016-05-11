@@ -11,8 +11,8 @@
     <div >{@eq key=isnew type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.isnew}"><i class="fa fa-star"></i></a>{/eq}{~s} {@eq key=furnished type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.furnished}"><i class="fa fa-bed"></i></a>{/eq}{~s} {@eq key=pets type="boolean" value="true"}<a href="#" class="tooltip-right" data-tooltip="{title.pets}"><i class="fa fa-paw"></i></a>{/eq} </div>
   <div class="mdl-card__actions mdl-card--border">
     <div class="mdl-grid spaced">
-      <input id="openModal" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.info}">
-      <input id="closeEstateCard" class="input-align-center mdl-button mdl-js-button " type="button" value="{btns.close}">
+      <input id="estate-card-square-extra-info" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.info}">
+      <input id="estate-card-square-close" class="input-align-center mdl-button mdl-js-button " type="button" value="{btns.close}">
     </div>
   </div>
 </div>

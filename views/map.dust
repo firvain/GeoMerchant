@@ -25,14 +25,12 @@
     <div class="spiner-wrapper">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner  mdl-spinner-big"></div>
     </div>
-    <div id="openModal" class="modalDialog">
-      <div class="modalwraper">
-        <a href="#close" title="Close" class="close">
-          <button class="mdl-button mdl-js-button mdl-button--icon"> <i class="material-icons">close</i> </button>
-        </a>
+    {! <div id="modalDialog" class="modalDialog"> !}
+      <div id="modal" class="modal visuallyhidden">
+          <button id="modal-close" class="mdl-button mdl-js-button mdl-button--icon modal-close"> <i class="material-icons">close</i> </button>
         <div class="modal-content"> </div>
       </div>
-    </div>
+    {! </div> !}
     <div class="infobox" id="infobox">
       <nav class="actions">
         <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="marker">

@@ -42,12 +42,16 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info) {
       })
       )
       .then(function resolve(data) {
+        var map;
         trans = data;
-        var map = mymap.initialize(trans);
+        map = mymap.initialize(trans);
         return map;
       })
       .then(function resolve(map) {
         info.init(map);
+      })
+      .finally(function finish() {
+        console.log(this);
       })
       .catch(function error(e) {
         console.log(e);

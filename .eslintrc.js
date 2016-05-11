@@ -10,6 +10,7 @@ module.exports = {
         "_": true,
         "dust": true,
         "Promise": true,
-        "jQuery": true
+        "jQuery": true,
+        "dustBluebird": true
     }
 };
