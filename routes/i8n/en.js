@@ -47,7 +47,7 @@ module.exports = {
   },
   btns: {
     estateProperties: 'Choose Estate Amenities',
-    chooseArea: 'Search By Area on Map',
+    chooseArea: 'Define Search Area on Map',
     clear: 'Clear',
     search: 'Search',
     login: 'Login',

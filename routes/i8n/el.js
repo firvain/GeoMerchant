@@ -47,7 +47,7 @@ module.exports = {
   },
   btns: {
     estateProperties: 'Επιλέξτε Χαρακτηριστικά Ακινήτου',
-    chooseArea: 'Αναζήτηση Βάση Περιοχής στο Χάρτη',
+    chooseArea: 'Ορισμός Περιοχής για Αναζήτηση',
     clear: 'Καθαρισμός',
     search: 'Αναζήτηση',
     login: 'Σύνδεση',
