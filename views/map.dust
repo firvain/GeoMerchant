@@ -132,14 +132,14 @@
                      <div id="price-range" class="mdl-grid visuallyhidden">
                       <div class="mdl-cell mdl-cell--6-col">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                          <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" onkeypress="return preventDotAndSpace(event);" />
+                          <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_start_price" id="startPrice" onkeypress="return utils.preventDotAndSpace(event);" value="0" />
                           <label class="mdl-textfield__label" for="startPrice">{listing.from}</label> <span class="mdl-textfield__error">{listing.priceError}</span>
                           <div class="error-msg" id="error_msg_start_price"> </div>
                         </div>
                       </div>
                       <div class="mdl-cell mdl-cell--6-col">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                          <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" onkeypress="return preventDotAndSpace(event);"  />
+                          <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error_msg_end_price" id="endPrice" onkeypress="return utils.preventDotAndSpace(event);"  value="300"/>
                           <label class="mdl-textfield__label" for="endPrice">{listing.to}</label> <span class="mdl-textfield__error">{listing.priceError}</span>
                           <div class="error-msg" id="error_msg_end_price"> </div>
                         </div>

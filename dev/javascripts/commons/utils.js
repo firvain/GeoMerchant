@@ -18,5 +18,13 @@ var utils = {
       }
     }
     return null;
+  },
+  preventDotAndSpace: function preventDotAndSpace(e) {
+    var key = e.charCode ? e.charCode : e.keyCode;
+    this.innerHTML = key;
+    if (key === 46 || key === 32) {
+      return false;
+    }
+    return true;
   }
 };

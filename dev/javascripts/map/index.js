@@ -1,5 +1,5 @@
 var trans;
-var userMap = (function userMap(window, document, Promise, $, mymap, info) {
+var userMap = (function userMap(window, document, Promise, $, mymap, info, filters) {
   'use strict';
   var context = 'map';
   var lang = document.documentElement.lang;
@@ -49,6 +49,7 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info) {
       })
       .then(function resolve(map) {
         info.init(map);
+        filters.init();
       })
       .finally(function finish() {
         console.log(this);
@@ -61,7 +62,7 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info) {
   return {
     init: init
   };
-}(window, document, Promise, jQuery, mymap, info));
+}(window, document, Promise, jQuery, mymap, info, filters));
 
 
 // jQuery(document).ready(function ($) {
