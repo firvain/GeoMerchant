@@ -49,7 +49,7 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info, filte
       })
       .then(function resolve(map) {
         info.init(map);
-        filters.init();
+        filters.init(map);
       })
       .finally(function finish() {
         console.log(this);
@@ -75,6 +75,6 @@ userMap.init();
 $('#advanced-filters').click(function toggleFilters() {
   $('#estate-filters').toggleClass('visuallyhidden');
 });
-$('#toggle-price-range').click(function togglePriceRange() {
-  $('#price-range').toggleClass('visuallyhidden');
-});
+// $('#toggle-price-range').click(function togglePriceRange() {
+//   $('#price-range').toggleClass('visuallyhidden');
+// });

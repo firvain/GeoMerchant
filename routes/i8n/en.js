@@ -33,11 +33,12 @@ module.exports = {
     }
   },
   listing: {
-    title: 'Choose Estate Price',
+    price: 'Estate Price',
+    area: 'Estate area',
+    areaUnits: 'sq.m.',
     type: 'Listing Type',
     sale: 'Sale',
     rent: 'Rent',
-    price: 'Price',
     from: 'from',
     to: 'to',
     andMore: 'and more',
@@ -64,5 +65,11 @@ module.exports = {
     lastname: 'Last Name',
     phone: 'Phone Number',
     email: 'Email'
+  },
+  errors: {
+    internal: 'An error occured, please try again later!',
+    property: {
+      404: 'No properties found!'
+    }
   }
 };

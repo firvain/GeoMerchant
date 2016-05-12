@@ -69,6 +69,8 @@ router.route('/listed/filters')
   filters.view = typeof req.query.view !== 'undefined' ? req.query.view : false;
   filters.startPrice = req.query.startPrice !== '' ? parseInt(req.query.startPrice, 10) : 0;
   filters.endPrice = req.query.endPrice !== '' ? parseInt(req.query.endPrice, 10) : 2147483647;
+  filters.areaStart = req.query.areaStart !== '' ? parseInt(req.query.areaStart, 10) : 0;
+  filters.areaEnd = req.query.areaEnd !== '' ? parseInt(req.query.areaEnd, 10) : 2147483647;
   filters.estateType = '\'' + req.query.estateType + '\'';
   pg.connect(config.connection, function connectToPG(err, client, done) {
     var qestateType;
@@ -82,6 +84,7 @@ router.route('/listed/filters')
     var qcooling;
     var qview;
     var qprice;
+    var qarea;
     if (err) {
       res.status(503).json({
         msg: 'Service Unavailable'
@@ -107,9 +110,9 @@ router.route('/listed/filters')
     qview = ' AND  property.view=' + filters.view;
     qestateType = ' AND ( property.estatetype = ' + filters.estateType + ' OR  property.estatetype_en = ' + filters.estateType + ')';
     if (req.query.leaseType === 'Rent') {
-      qleaseType = ' AND   listing.sale =false';
+      qleaseType = ' AND listing.sale = false';
     } else {
-      qleaseType = ' AND   listing.sale =true';
+      qleaseType = ' AND listing.sale = true';
     }
       // var qleaseType = ' AND   listing.sale =\'' + req.query.leaseType + '\'';
     sqlQuery = 'SELECT ' + qstring + ',ST_AsGeoJSON( property.the_geom) as geom FROM ' + qfrom + qleaseType + qestateType;
@@ -128,11 +131,12 @@ router.route('/listed/filters')
     if (filters.view === 'true') {
       sqlQuery += qview;
     }
-    qprice = ' AND public.listing.price BETWEEN ' + filters.startPrice + ' AND ' + filters.endPrice;
+    qprice = ' AND listing.price BETWEEN ' + filters.startPrice + ' AND ' + filters.endPrice;
+    qarea = ' AND property.estatearea BETWEEN ' + filters.areaStart + ' AND ' + filters.areaEnd;
     sqlQuery += qprice;
+    sqlQuery += qarea;
     client.query(sqlQuery,
       function queryDB(queryErr, queryRes) {
-        console.log(this.text);
         done();
         if (queryErr) {
           res.sendStatus(500);

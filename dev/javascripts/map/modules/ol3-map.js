@@ -108,7 +108,7 @@ var mymap = (function (window, document, undefined, Promise, ol) {
     },
     filteredEstates: function filteredEstates(feature) {
       var src = mapStyles.iconPath(feature.get('sale')) +
-      mapStyles.iconType(feature.get('estatetype_en')) + '-64.png';
+      mapStyles.iconType(feature.get('estatetype_en')) + '-48.png';
       return new ol.style.Style({
         image: new ol.style.Icon(({
           src: src,

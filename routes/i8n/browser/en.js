@@ -64,5 +64,12 @@ module.exports = {
     lastname: 'Last Name',
     phone: 'Phone Number',
     email: 'Email'
+  },
+  errors: {
+    internal: 'An error occured, please try again later!',
+    503: 'Service Unavailable, please try again later!',
+    property: {
+      404: 'No properties found!'
+    }
   }
 };
