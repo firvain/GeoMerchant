@@ -30,7 +30,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
     filterData.heating = $('#checkbox-3').prop('checked') !== undefined ? $('#checkbox-3').prop('checked') : false;
     filterData.cooling = $('#checkbox-4').prop('checked') !== undefined ? $('#checkbox-4').prop('checked') : false;
     filterData.view = $('#checkbox-5').prop('checked') !== undefined ? $('#checkbox-5').prop('checked') : false;
-    filterData.bbox = window.bbox !== undefined ? window.bbox : utils.findById(map, 'estates').getSource().getExtent();
+    filterData.bbox = window.bbox !== undefined ? window.bbox : ol.proj.transform(utils.findById(map, 'estates').getSource().getExtent(), 'EPSG:3857', 'EPSG:4326');
     console.log(filterData);
     return filterData;
   }
