@@ -78,8 +78,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
       var transformedCoordinates = _.chunk(coordinates, 2).map(function split(currentValue) {
         return ol.proj.transform(currentValue, 'EPSG:3857', 'EPSG:4326');
       });
-      console.log(transformedCoordinates);
-      window.bbox = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+      window.bbox = _.concat(transformedCoordinates[0], transformedCoordinates[1]);
     });
   }
   function init(map) {
