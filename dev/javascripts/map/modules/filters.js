@@ -17,7 +17,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
   function clearResults(map) {
     utils.findById(map, 'filteredEstates').getSource().clear();
   }
-  function setOptions() {
+  function setOptions(map) {
     var filterData = {};
     filterData.estateType = $('#estateType').val();
     filterData.leaseType = $('input[name=options]:checked').val() !== undefined ? $('input[name=options]:checked').val() : 'Rent';
@@ -30,6 +30,8 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
     filterData.heating = $('#checkbox-3').prop('checked') !== undefined ? $('#checkbox-3').prop('checked') : false;
     filterData.cooling = $('#checkbox-4').prop('checked') !== undefined ? $('#checkbox-4').prop('checked') : false;
     filterData.view = $('#checkbox-5').prop('checked') !== undefined ? $('#checkbox-5').prop('checked') : false;
+    filterData.bbox = window.bbox !== undefined ? window.bbox : utils.findById(map, 'estates').getSource().getExtent();
+    console.log(filterData);
     return filterData;
   }
   function getResults(options, map) {
@@ -56,12 +58,56 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
       }
     });
   }
+  function chooseByArea(draw) {
+    var map = draw.getMap();
+    $(map.getViewport()).mouseleave(function leaveMapForAreaSelection(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      draw.setActive(false);
+    });
+    $(map.getViewport()).mouseenter(function enterMapForAreaSelection(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      draw.setActive(true);
+    });
+    draw.on('drawstart', function drawstart() {
+      utils.findById(map, 'select').getSource().clear();
+    });
+    draw.on('drawend', function drawend(e) {
+      var coordinates = e.feature.getGeometry().getExtent();
+      var transformedCoordinates = _.chunk(coordinates, 2).map(function split(currentValue) {
+        return ol.proj.transform(currentValue, 'EPSG:3857', 'EPSG:4326');
+      });
+      console.log(transformedCoordinates);
+      window.bbox = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+    });
+  }
   function init(map) {
+    var drawInteraction = new ol.interaction.Draw({
+      source: utils.findById(map, 'select').getSource(),
+      type: 'LineString',
+      geometryFunction: utils.geometryFunction,
+      maxPoints: 2
+    });
+    drawInteraction.setProperties({
+      id: 'draw'
+    });
+    drawInteraction.setActive(false);
+    $('#checkbox-6').change(function enableAreaSelection() {
+      if (this.checked) {
+        map.addInteraction(drawInteraction);
+        chooseByArea(drawInteraction);
+      } else {
+        map.removeInteraction(drawInteraction);
+        drawInteraction.setActive(false);
+        utils.findById(map, 'select').getSource().clear();
+      }
+    });
     $('#invokeFilters').click(function invokeFilters(event) {
       var options;
       event.preventDefault();
       event.stopPropagation();
-      options = setOptions();
+      options = setOptions(map);
       if ($('form[name=filters]').parsley().validate()) {
         getResults(options, map);
       }

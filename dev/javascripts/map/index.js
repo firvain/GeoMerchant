@@ -45,14 +45,12 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info, filte
         var map;
         trans = data;
         map = mymap.initialize(trans);
+        map1 = map;
         return map;
       })
       .then(function resolve(map) {
         info.init(map);
         filters.init(map);
-      })
-      .finally(function finish() {
-        console.log(this);
       })
       .catch(function error(e) {
         console.log(e);

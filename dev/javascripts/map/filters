@@ -137,12 +137,17 @@ function addInteraction() {
   map.addInteraction(draw);
 }
 function geometryFunction(coordinates, geometry) {
+  var geom;
+  var start;
+  var end;
   if (!geometry) {
-    geometry = new ol.geom.Polygon(null);
+    geom = new ol.geom.Polygon(null);
+  } else {
+    geom = geometry;
   }
-  var start = coordinates[0];
-  var end = coordinates[1];
-  geometry.setCoordinates([
+  start = coordinates[0];
+  end = coordinates[1];
+  geom.setCoordinates([
     [
       start,
       [
@@ -155,7 +160,7 @@ function geometryFunction(coordinates, geometry) {
       start
     ]
   ]);
-  return geometry;
+  return geom;
 }
 $('#checkbox-6').click(function () {
   if (this.checked) {

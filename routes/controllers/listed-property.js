@@ -72,6 +72,7 @@ router.route('/listed/filters')
   filters.areaStart = req.query.areaStart !== '' ? parseInt(req.query.areaStart, 10) : 0;
   filters.areaEnd = req.query.areaEnd !== '' ? parseInt(req.query.areaEnd, 10) : 2147483647;
   filters.estateType = '\'' + req.query.estateType + '\'';
+  filters.bbox = req.query.bbox;
   pg.connect(config.connection, function connectToPG(err, client, done) {
     var qestateType;
     var qleaseType;
@@ -115,7 +116,10 @@ router.route('/listed/filters')
       qleaseType = ' AND listing.sale = true';
     }
       // var qleaseType = ' AND   listing.sale =\'' + req.query.leaseType + '\'';
-    sqlQuery = 'SELECT ' + qstring + ',ST_AsGeoJSON( property.the_geom) as geom FROM ' + qfrom + qleaseType + qestateType;
+    sqlQuery = 'SELECT ' + qstring + ',ST_AsGeoJSON( property.the_geom) as geom FROM ' + qfrom +
+    'WHERE public.property.the_geom && ST_MakeEnvelope(' +
+    filters.bbox[0] + ',' + filters.bbox[1] + ',' + filters.bbox[2] + ',' + filters.bbox[3] + ',4326)' +
+    qleaseType + qestateType;
     if (filters.parking === 'true') {
       sqlQuery += qparking;
     }

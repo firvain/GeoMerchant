@@ -107,6 +107,7 @@ gulp.task('inject-map',['scripts-map','minify-css-map'], function () {
     './public/libs/dustjs-linkedin/dist/dust-full.min.js',
     './public/libs/dustjs-helpers/dist/dust-helpers.min.js',
     './public/libs/material-design-lite/material.min.js',
+    './public/libs/lodash/dist/lodash.min.js',
     './public/libs/toastr/toastr.min.js',
     './public/libs/getmdl-select/src/js/getmdl-select.js',
     './public/libs/auth0-lock/build/auth0-lock.min.js',

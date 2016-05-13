@@ -185,6 +185,7 @@
   <script src="/libs/dustjs-linkedin/dist/dust-full.min.js"></script>
   <script src="/libs/dustjs-helpers/dist/dust-helpers.min.js"></script>
   <script src="/libs/material-design-lite/material.min.js"></script>
+  <script src="/libs/lodash/dist/lodash.min.js"></script>
   <script src="/libs/toastr/toastr.min.js"></script>
   <script src="/libs/getmdl-select/src/js/getmdl-select.js"></script>
   <script src="/libs/auth0-lock/build/auth0-lock.min.js"></script>

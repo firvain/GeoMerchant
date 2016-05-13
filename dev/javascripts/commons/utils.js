@@ -26,5 +26,31 @@ var utils = {
       return false;
     }
     return true;
+  },
+  geometryFunction: function geometryFunction(coordinates, geometry) {
+    var geom;
+    var start;
+    var end;
+    if (!geometry) {
+      geom = new ol.geom.Polygon(null);
+    } else {
+      geom = geometry;
+    }
+    start = coordinates[0];
+    end = coordinates[1];
+    geom.setCoordinates([
+      [
+        start,
+        [
+          start[0], end[1]
+        ],
+        end,
+        [
+          end[0], start[1]
+        ],
+        start
+      ]
+    ]);
+    return geom;
   }
 };

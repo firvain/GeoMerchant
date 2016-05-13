@@ -1,10 +1,11 @@
-var mymap = (function (window, document, undefined, Promise, ol) {
+var mymap = (function (window, document, undefined, Promise, ol, utils) {
   'use strict';
   var center = [3677385, 4120949];
   var extent = [3652772, 4112808, 3700000, 4132797];
   var geoJSONFormat = new ol.format.GeoJSON({
     defaultDataProjection: 'EPSG:4326'
   });
+
   var mapStyles = {
     iconType: function iconType(estateType) {
       var type = {
@@ -237,7 +238,7 @@ var mymap = (function (window, document, undefined, Promise, ol) {
         zIndex: 2
       });
     },
-    select: function select(trans) {
+    select: function select() {
       return new ol.layer.Vector({
         source: mapSources.select(),
         style: new ol.style.Style({
@@ -255,7 +256,8 @@ var mymap = (function (window, document, undefined, Promise, ol) {
             })
           })
         }),
-        zIndex: 3
+        zIndex: 3,
+        id: 'select'
       });
     }
   };
@@ -301,4 +303,4 @@ var mymap = (function (window, document, undefined, Promise, ol) {
   return {
     initialize: initialize
   };
-}(window, document, undefined, Promise, ol));
+}(window, document, undefined, Promise, ol, utils));
