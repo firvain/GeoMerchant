@@ -7,9 +7,11 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info, filte
   var $loading = $('.mdl-spinner');
   $(document)
   .ajaxStart(function start() {
+    $('.spiner-wrapper').removeClass('visuallyhidden');
     $loading.addClass('is-active');
   })
   .ajaxStop(function stop() {
+    $('.spiner-wrapper').addClass('visuallyhidden');
     $loading.removeClass('is-active');
   });
   toastr.options = {

@@ -1,5 +1,9 @@
 var filters = (function filters(window, document, Promise, $, utils, Parsley) {
   'use strict';
+  var xy1 = ol.proj.transform([3652772, 4112808], 'EPSG:3857', 'EPSG:4326');
+  var xy2 = ol.proj.transform([3700000, 4132797], 'EPSG:3857', 'EPSG:4326');
+  var extent = _.concat(xy1, xy2);
+  var bbox = extent;
   function addResults(data, map) {
     var geoJSONFormat = new ol.format.GeoJSON({
       defaultDataProjection: 'EPSG:4326'
@@ -16,6 +20,17 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
   }
   function clearResults(map) {
     utils.findById(map, 'filteredEstates').getSource().clear();
+    utils.findById(map, 'select').getSource().clear();
+    map.getInteractions().forEach(function findInteractionById(i) {
+      if (i.getProperties().id === 'draw') {
+        i.setActive(false);
+      }
+    });
+    $(map.getViewport()).off('mouseleave');
+    $(map.getViewport()).off('mouseenter');
+    bbox = extent;
+    utils.findById(map, 'estates').setVisible(true);
+    info.init(map);
   }
   function setOptions(map) {
     var filterData = {};
@@ -30,8 +45,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
     filterData.heating = $('#checkbox-3').prop('checked') !== undefined ? $('#checkbox-3').prop('checked') : false;
     filterData.cooling = $('#checkbox-4').prop('checked') !== undefined ? $('#checkbox-4').prop('checked') : false;
     filterData.view = $('#checkbox-5').prop('checked') !== undefined ? $('#checkbox-5').prop('checked') : false;
-    filterData.bbox = window.bbox !== undefined ? window.bbox : ol.proj.transform(utils.findById(map, 'estates').getSource().getExtent(), 'EPSG:3857', 'EPSG:4326');
-    console.log(filterData);
+    filterData.bbox = bbox;
     return filterData;
   }
   function getResults(options, map) {
@@ -46,7 +60,8 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
     .then(function resolve(data) {
       utils.findById(map, 'estates').setVisible(false);
       utils.findById(map, 'poi').getSource().clear();
-      clearResults(map);
+      utils.findById(map, 'filteredEstates').getSource().clear();
+      // utils.findById(map, 'select').getSource().clear();
       addResults(data, map);
     }).catch(function error(e) {
       if (e.status === 404) {
@@ -78,7 +93,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
       var transformedCoordinates = _.chunk(coordinates, 2).map(function split(currentValue) {
         return ol.proj.transform(currentValue, 'EPSG:3857', 'EPSG:4326');
       });
-      window.bbox = _.concat(transformedCoordinates[0], transformedCoordinates[1]);
+      bbox = _.concat(transformedCoordinates[0], transformedCoordinates[1]);
     });
   }
   function init(map) {
@@ -87,6 +102,9 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
       type: 'LineString',
       geometryFunction: utils.geometryFunction,
       maxPoints: 2
+      // condition: function(event) {
+      //   return ol.events.condition.platformModifierKeyOnly(event);
+      // }
     });
     drawInteraction.setProperties({
       id: 'draw'
@@ -95,11 +113,14 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
     $('#checkbox-6').change(function enableAreaSelection() {
       if (this.checked) {
         map.addInteraction(drawInteraction);
+        info.disable(map);
         chooseByArea(drawInteraction);
       } else {
+        info.init(map);
         map.removeInteraction(drawInteraction);
         drawInteraction.setActive(false);
         utils.findById(map, 'select').getSource().clear();
+        bbox = extent;
       }
     });
     $('#invokeFilters').click(function invokeFilters(event) {
@@ -137,7 +158,6 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley) {
           }
         }
       });
-      utils.findById(map, 'estates').setVisible(true);
     });
   }
   return {

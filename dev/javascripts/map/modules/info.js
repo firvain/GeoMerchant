@@ -70,7 +70,6 @@ var info = (function info(window, document, Promise, $, utils) {
     })
     .then(function resolve() {
       $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + feature.get('gid') + '.jpg)');
-      console.log(feature);
     })
     .catch(function error(e) {
       console.log(e);

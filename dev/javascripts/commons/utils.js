@@ -28,29 +28,14 @@ var utils = {
     return true;
   },
   geometryFunction: function geometryFunction(coordinates, geometry) {
-    var geom;
-    var start;
-    var end;
     if (!geometry) {
-      geom = new ol.geom.Polygon(null);
-    } else {
-      geom = geometry;
+      geometry = new ol.geom.Polygon(null);
     }
-    start = coordinates[0];
-    end = coordinates[1];
-    geom.setCoordinates([
-      [
-        start,
-        [
-          start[0], end[1]
-        ],
-        end,
-        [
-          end[0], start[1]
-        ],
-        start
-      ]
+    var start = coordinates[0];
+    var end = coordinates[1];
+    geometry.setCoordinates([
+      [start, [start[0], end[1]], end, [end[0], start[1]], start]
     ]);
-    return geom;
+    return geometry;
   }
 };

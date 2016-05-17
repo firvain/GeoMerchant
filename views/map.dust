@@ -22,7 +22,7 @@
 </head>
 <body>
   <div class="appwrapper">
-    <div class="spiner-wrapper">
+    <div class="spiner-wrapper visuallyhidden">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner mdl-spinner-big"></div>
     </div>
     <div id="modal" class="modal visuallyhidden">
