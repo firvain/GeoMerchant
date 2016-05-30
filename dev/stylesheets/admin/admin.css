@@ -1,18 +1,15 @@
-/*body {
-
-
-  overflow: hidden;
-
-  width: 100%;
-  height: 100vh;
-}*/
 .appwrapper {
   position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
   height: 100%;
+  overflow:hidden;
+
 }
 .spiner-wrapper {
   position: absolute;
-  z-index: 4;
+  z-index: 99999;
   top: 50%;
   left: 50%;
 
@@ -24,185 +21,67 @@
   width: 80px!important;
   height: 80px!important;
 }
-.adminMap {
-  position: relative;
-  z-index: 1;
-
-  width: inherit;
-  height: inherit;
-}
-
-.ol-custom-overviewmap,
-.ol-custom-overviewmap.ol-uncollapsible {
-  top: 7em;
-  right: .5em;
-  bottom: auto;
-  left: auto;
-}
-
-.ol-custom-overviewmap:not(.ol-collapsed) {
-  border: .071em solid #2b3643;
-}
-
-.ol-custom-overviewmap .ol-overviewmap-map {
-  width: 21.429em;
-
-  border: none;
-}
-
-.ol-custom-overviewmap .ol-overviewmap-box {
-  border: 2px solid red;
-}
-
-.ol-custom-overviewmap:not(.ol-collapsed) button {
-  top: .071em;
-  right: .071em;
-  bottom: auto;
-  left: auto;
-}
-
-.ol-zoom {
-  top: .5em;
-  right: .5em;
-  bottom: auto;
-  left: auto;
-}
-
-.ol-zoom-extent {
-  top: 4.643em;
-  right: .5em;
-  bottom: auto;
-  left: auto;
-}
-
 .infobox {
-  position: absolute;
-  z-index: 2;
-  top: .5em;
-  left: .5em;
-
-  width: auto;
-  height: auto;
-  padding: .357em;
-
-  border-radius: .429em;
-  background: white;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+  flex: 1 0 30%;
+  background-color: #fff;
 }
-
-.actions {
-  display:         flex;
-  justify-content: space-around;
+@media (max-width: 839px) and (min-width: 480px) {
+  .infobox {
+    flex: 1 0 40%;
+  }
 }
-
-.property-info {
-  text-align: center;
+@media (max-width: 479px) {
+  .infobox {
+    flex: 1 0 40%;
+  }
 }
-.estate-atributes-list {
-  overflow-y: scroll;
-  height: 20em;
-}
-.estate-atributes-list .mdl-list__item {
-  min-height: 28px;
-  padding: 0;
-}
-.estate-atributes-list .mdl-list__item .mdl-list__item-primary-content .material-icons {
-  font-size: 14px;
-  margin-right: 5px;
-}
-.estate-atributes-list span {
-  font-size: 14px;
-}
-
-
-.toast-message {
-  display:         flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.toast-message > p {
-  font-size: 16px;
-  margin: 0;
-}
-
-.toastr-btns {
-  display:         flex;
-  justify-content: space-around;
-}
-
-.toastr-btns > button {
-  color: white;
-}
-
-.userinfo {
-  margin: .5em auto;
-}
-
-.userinfo p {
-  font-size: 1.5em;
-
-  text-align: center;
-}
-
-.modal-dialog {
-  position: absolute;
-  z-index: 3;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  width: 50%;
-}
-
-.modal-content {
+.map {
   position: relative;
+  flex: 1 0 70%;
+
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 839px) and (min-width: 480px) {
+  .map {
+    flex: 1 0 60%;
+  }
+}
+@media (max-width: 479px) {
+  .map {
+    flex: 1 0 60%;
+  }
+}
+.actions {
+
+  padding-right:0.5em;
+  padding-left:0.5em;
+  border-bottom:0.5em solid rgb(255,82,82);
 }
 
-.modal-content .mdl-textfield {
+.edit-actions {
   width: 100%;
 }
-.modal-content .mdl-selectfield {
-  width: 100%;
-}
-.error-msg {
-  font-size: 12px;
-  position: absolute;
-  display: block;
-  margin-top: 3px;
-  color: #de3226;
-}
-
-.error-msg ul {
-  margin: 0;
-  padding: 0;
-
-  list-style-type: none;
-}
-.mdl-list__item {
-  height: 24px;
-}
-.dialog {
+.edit-actions .mdl-cell{
   text-align: center;
 }
-.insert-update-listing {
-  max-width: 20em;
+.mdl-textfield.is-disabled .mdl-textfield__input {
+  color: inherit;
 }
-.options {
-  text-align: center;
+.mdl-textfield.is-disabled.is-disabled .mdl-textfield__label {
+  color: inherit;
 }
-label.mdl-checkbox {
-  width: 50%;
-  margin: 0 auto;
+.mdl-checkbox.is-disabled .mdl-checkbox__label{
+  color: inherit;
 }
-.checkboxes {
-  display: flex;
-  flex-direction: column;
+.infobox .mdl-grid {
+  padding-top: 0;
+  padding-bottom: 0;
 }
-.checkboxes span {
-  white-space: pre;
-}
-.buttons {
-  width: 50%;
-
-  text-align: center;
+.infobox .mdl-cell {
+  margin-top: 0;
+  margin-bottom: 0;
 }

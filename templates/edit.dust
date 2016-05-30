@@ -1,0 +1,176 @@
+<div id='estate-info--gid' class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch" style="text-align: center;">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input not-edditable" type="text" id="edit-gid" value="{values.gid}" disabled>
+      <label class="mdl-textfield__label" for="edit-address">{estate.gid}</label>
+    </div>
+  </div>
+</div>
+<div id='estate-info--general' class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+    <div  class="as mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+      <input class="mdl-textfield__input" type="text" id="estate-type" value="{values.estateType}" readonly tabIndex="-1" disabled>
+      <label for="estate-type">
+        <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+      </label>
+      <label for="estate-type" class="mdl-textfield__label">{estate.title}</label>
+      <ul for="estate-type" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+        <li class="mdl-menu__item" data-val='{estate.type.apartment}'>{estate.type.apartment}</li>
+        <li class="mdl-menu__item" data-val='{estate.type.detached}'>{estate.type.detached}</li>
+        <li class="mdl-menu__item" data-val='{estate.type.maisonette}'>{estate.type.maisonette}</li>
+        <li class="mdl-menu__item" data-val='{estate.type.villa}'>{estate.type.villa}</li>
+      </ul>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="edit-address" value="{values.address}" disabled>
+      <label class="mdl-textfield__label" for="edit-address">{estate.address}</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="edit-address-number" value="{values.addressNumber}" disabled>
+      <label class="mdl-textfield__label" for="edit-address-number">{estate.addressNumber}</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="edit-pscode" value="{values.pscode}" disabled>
+      <label class="mdl-textfield__label" for="edit-pscode">{estate.pscode}</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-estate-area" value="{values.estateArea}" disabled>
+      <label class="mdl-textfield__label" for="edit-estate-area">{estate.area}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-bedrooms" value="{values.bedrooms}" disabled>
+      <label class="mdl-textfield__label" for="edit-bedrooms">{estate.amenities.bedrooms}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-floor" value="{values.floor}" disabled>
+      <label class="mdl-textfield__label" for="edit-floor">{estate.floor}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-year" value="{values.year}" disabled>
+      <label class="mdl-textfield__label" for="edit-year">{estate.year}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-plot-area" value="{values.plotArea}" disabled>
+      <label class="mdl-textfield__label" for="edit-plot-area">{estate.plotArea}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="edit-plot-number" value="{values.parcelNumber}" disabled>
+      <label class="mdl-textfield__label" for="edit-plot-number">{estate.parcelNumber}</label>
+      <span class="mdl-textfield__error">{errors.notNumber}</span>
+    </div>
+  </div>
+</div>
+<div id='estate-info--amenities' class="mdl-grid" >
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-parking">
+      <input type="checkbox" id="amenities-parking" class="mdl-checkbox__input" {@eq key="{values.parking}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.parking}</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-furnished">
+      <input type="checkbox" id="amenities-furnished" class="mdl-checkbox__input" {@eq key="{values.furnished}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.furnished}</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-isnew">
+      <input type="checkbox" id="amenities-isnew" class="mdl-checkbox__input" {@eq key="{values.isnew}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.isnew}</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-title">
+      <input type="checkbox" id="amenities-title" class="mdl-checkbox__input" {@eq key="{values.title}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.title}</span>
+    </label>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-heating">
+      <input type="checkbox" id="amenities-heating" class="mdl-checkbox__input" {@eq key="{values.heating}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.heating}</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-cooling">
+      <input type="checkbox" id="amenities-cooling" class="mdl-checkbox__input" {@eq key="{values.cooling}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.cooling}</span>
+    </label>
+    <label class="mdl-checkbox mdl-js-checkbox" for="amenities-view">
+      <input type="checkbox" id="amenities-view" class="mdl-checkbox__input" {@eq key="{values.view}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{estate.amenities.view}</span>
+    </label>
+  </div>
+</div>
+{@eq key=listing.exists type="boolean" value="true"}
+<div id='listing-info--gid' class="mdl-grid" style="border-top: .3em solid rgb(255,82,82);">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input not-edditable" type="text" id="listing-id" value="{listing.values.id}" disabled>
+      <label class="mdl-textfield__label" for="listing-id">{listing.id}</label>
+    </div>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="listing-type" value="{@eq key=listing.values.sale type="boolean" value="true"} {listing.sale} {:else} {listing.rent} {/eq}" disabled>
+      <label class="mdl-textfield__label" for="listing-type">{listing.type}</label>
+    </div>
+  </div>
+</div>
+<div id='listing-info--general' class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="listing-price" value="{listing.values.price}" disabled>
+      <label class="mdl-textfield__label" for="listing-price">{listing.price}</label>
+    </div>
+    {@eq key=listing.values.sale type="boolean" value="false"}
+    <label class="mdl-checkbox mdl-js-checkbox" for="listing-pets">
+      <input type="checkbox" id="listing-pets" class="mdl-checkbox__input" {@eq key="{listing.values.pets}" value="true" type="boolean"} checked {/eq} disabled>
+      <span class="mdl-checkbox__label">{listing.pets}</span>
+    </label>
+    {/eq}
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <div class="mdl-grid" style="padding: 0;">
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--stretch">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="listing-date--start" value="{listing.values.date_start}" disabled>
+          <label class="mdl-textfield__label" for="listing-date--start">{listing.dateStart}</label>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--2-col mdl-cell--middle">
+      <button id='listing-date--start__toggle' class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" disabled>
+        <i class="material-icons">date_range</i>
+      </button>
+      </div>
+    </div>
+    <div class="mdl-grid" style="padding: 0;">
+      <div class="mdl-cell mdl-cell--10-col mdl-cell--stretch">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="listing-date--end" value="{listing.values.date_end}" disabled>
+          <label class="mdl-textfield__label" for="listing-date--end">{listing.dateEnd}</label>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--2-col mdl-cell--middle">
+      <button id='listing-date--end__toggle' class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" disabled>
+        <i class="material-icons">date_range</i>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+{:else}
+<div id='listing-info--404' class="mdl-grid" style="border-top: .3em solid rgb(255,82,82);">
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+    <p>{errors.listing404}</p>
+  </div>
+</div>
+{/eq}
+
+<div id='edit-actions' class="mdl-grid edit-actions visuallyhidden">
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+    <button type="button" class="mdl-button close">Disagree</button>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+    <button type="button" class="mdl-button mdl-button--raised mdl-button--accent agree">Agree</button>
+  </div>
+</div>

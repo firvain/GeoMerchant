@@ -7,9 +7,9 @@ var rollback = require('../../utils/rollback');
 var dbgeo = require('dbgeo');
 var router = express.Router();
 
-router.route('/property/:adminid')
-.get(function getProperty(req, res) {
-  var id = req.params.adminid;
+router.route('/all/:userId')
+.get(function getAllPropertiesForUser(req, res) {
+  var id = req.params.userId;
   pg.connect(config.connection, function connectToPG(err, client, done) {
     var whatTofetch;
     var fromWhat;
@@ -20,7 +20,7 @@ router.route('/property/:adminid')
       logger.error('Could not connect to postgres');
       return err;
     }
-    whatTofetch = 'property.estatetype,property.estatetype_en,property.plotarea,property.gid,property.estatearea,property.bedrooms,property.parking,property.furnished,  property.view,  property.heating,  property.cooling,property.title,property.year,property.other,property.parcel_num,property.plan_num,property.area_name,property.street_el,property.ps_code,property.floor,property.street_en,property.street_number,property."isnew"';
+    whatTofetch = 'property.estatetype,property.estatetype_en,property.plotarea,property.gid,property.estatearea,property.bedrooms,property.parking,property.furnished,  property.view,  property.heating,  property.cooling,property.title,property.year,property.parcel_num,property.plan_num,property.area_name,property.street_el,property.ps_code,property.floor,property.street_en,property.street_number,property."isnew"';
     fromWhat = 'owner_property ' + 'INNER JOIN owner ON (owner_property.owner_id = owner.id)' + 'INNER JOIN property ON (owner_property.property_gid = property.gid)';
     client.query('select ' + whatTofetch + ',ST_AsGeoJSON(property.the_geom) as geom ' + 'FROM ' + fromWhat + ' where owner.id=$1 ', [id],
       function queryDB(queryErr, queryRes) {
@@ -55,7 +55,7 @@ router.route('/property/:adminid')
 });
 
 
-router.route('/property')
+router.route('/')
 .get(function getProperty(req, res) {
   var gid = req.query.gid;
   pg.connect(config.connection, function (err, client, done) {
@@ -96,7 +96,6 @@ router.route('/property')
   var furnished = '\'' + req.body.furnished + '\'';
   var title = '\'' + req.body.title + '\'';
   var year = '\'' + req.body.year + '\'';
-  var other = '\'' + req.body.other + '\'';
   var parcelNum = '\'' + req.body.parcel_num + '\'';
   var planNum = '\'' + req.body.plan_num + '\'';
   var areaName = '\'' + req.body.area_name + '\'';
@@ -127,8 +126,8 @@ router.route('/property')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
-        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
+        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
+        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
         var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
         client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function query1(queryErr, queryRes) {
           var propertygid;
@@ -213,7 +212,6 @@ router.route('/property')
   var furnished = '\'' + req.body.furnished + '\'';
   var title = '\'' + req.body.title + '\'';
   var year = '\'' + req.body.year + '\'';
-  var other = '\'' + req.body.other + '\'';
   var parcelNum = '\'' + req.body.parcel_num + '\'';
   var planNum = '\'' + req.body.plan_num + '\'';
   var areaName = '\'' + req.body.area_name + '\'';
@@ -244,8 +242,8 @@ router.route('/property')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,other,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
-        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + other + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
+        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
+        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
         var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) ';
         client.query('UPDATE public.property SET ' + columns + '= (' + values + geom + 'WHERE gid=$1', [gid],
         function query1(queryErr, queryRes) {

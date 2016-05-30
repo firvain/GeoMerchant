@@ -19,6 +19,7 @@ module.exports = {
     },
     gid: 'Estate ID',
     area: 'Area',
+    areaUnits: 'sq.m.',
     address: 'Address',
     amenities: {
       title: 'Amenities',

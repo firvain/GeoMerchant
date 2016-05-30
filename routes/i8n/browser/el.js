@@ -19,6 +19,7 @@ module.exports = {
     },
     gid: 'Κωδικός Ακινήτου',
     area: 'Εμβαδό',
+    areaUnits: 'τ.μ.',
     address: 'Διεύθυνση',
     amenities: {
       title: 'Χαρακτηριστικά Ακινήτου',

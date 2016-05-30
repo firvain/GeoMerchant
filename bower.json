@@ -40,7 +40,9 @@
     "normalize-css": "^4.1.1",
     "getmdl-select": "*",
     "bluebird": "^3.3.5",
-    "mdl-selectfield": "^1.0.1"
+    "mdl-selectfield": "^1.0.1",
+    "mdi": "^1.6.50",
+    "md-date-time-picker": "^2.1.0"
   },
   "resolutions": {
     "material-design-lite": "^1.1.3"

@@ -20,7 +20,7 @@ router.route('/listed')
       return err;
     }
     qstring = 'public.property.estatetype,public.property.estatetype_en,public.property.plotarea,public.property.gid,public.property.estatearea,public.property.bedrooms,' +
-    'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,public.property.other,' +
+    'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,' +
     'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.street_number,public.property.ps_code,' +
     'public.property.floor,public.property.street_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' +
     'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,public.listing.sale,public.listing.rent,' +
@@ -95,7 +95,7 @@ router.route('/listed/filters')
     }
     qstring = 'property.estatetype, property.estatetype_en, property.plotarea, property.gid,' +
     'property.estatearea, property.bedrooms, property.parking, property.furnished, property.view,' +
-    'property.heating, property.cooling, property.title, property.year, property.other,' +
+    'property.heating, property.cooling, property.title, property.year,' +
     ' property.parcel_num, property.plan_num, property.area_name,' +
     'property.street_el, property.ps_code, property.floor, property.street_en, property.street_number,' +
     'property."isnew", owner.name_el, owner.lastname_el, owner.fathername_el, owner.name_en,' +

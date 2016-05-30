@@ -69,7 +69,7 @@
 
 .main-container .menu-open-button:hover .hamburger
 {
-    background: #ff4081;
+    background: rgb(255,82,82);
 }
 
 .main-container .menu-open:checked ~ .menu-item:nth-child(4)

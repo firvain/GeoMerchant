@@ -19,6 +19,7 @@ module.exports = {
     },
     gid: 'Κωδικός Ακινήτου',
     area: 'Εμβαδό',
+    areaUnits: 'τ.μ.',
     address: 'Διεύθυνση',
     amenities: {
       title: 'Χαρακτηριστικά Ακινήτου',
@@ -35,7 +36,6 @@ module.exports = {
   listing: {
     price: 'Τιμή Ακινήτου',
     area: 'Εμβαδό ακινήτου',
-    areaUnits: 'τ.μ.',
     type: 'Τύπος Αγγελίας',
     sale: 'Πώληση',
     rent: 'Ενοικίαση',

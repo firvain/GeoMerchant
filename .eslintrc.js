@@ -11,6 +11,6 @@ module.exports = {
         "dust": true,
         "Promise": true,
         "jQuery": true,
-        "dustBluebird": true
+        "App": true
     }
 };

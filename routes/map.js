@@ -22,11 +22,6 @@ router.get('/en', function (req, res, next) {
   data.env = config.auth0;
   res.render('map', data);
 });
-// router.get('/login', function (req, res) {
-//   res.render('login', {
-//     env: config.auth0
-//   });
-// });
 router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');

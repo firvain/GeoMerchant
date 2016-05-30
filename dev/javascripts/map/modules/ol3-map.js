@@ -144,7 +144,7 @@ var mymap = (function (window, document, undefined, Promise, ol, utils) {
           var self = this;
           this.clear();
           $.ajax({
-            url: 'http://127.0.0.1:3000/db/listed',
+            url: 'http://127.0.0.1:3000/api/listing/all',
             type: 'GET',
             dataType: 'json'
           })
@@ -263,11 +263,12 @@ var mymap = (function (window, document, undefined, Promise, ol, utils) {
   };
   var initialize = function initialize(trans) {
     var layers = Object.keys(mapLayers).map(function addMapLayers(key) {
-      return mapLayers[key](trans);
+      if (key !== 'bing') { return mapLayers[key](trans); }
+      return null;
     });
     return new ol.Map({
       target: 'map',
-      layers: layers,
+      layers: _.compact(layers),
       loadTilesWhileAnimating: true,
       loadTilesWhileInteracting: true,
       renderer: 'canvas',

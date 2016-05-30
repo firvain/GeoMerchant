@@ -1,7 +1,12 @@
 'use strict';
 var express = require('express');
 var router = express.Router();
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login');
 // var logger = require('../utils/logger');
 var language = require('./controllers/language');
+var property = require('./controllers/property');
+var listing = require('./controllers/listing');
 router.use('/', language);
+router.use('/property', property);
+router.use('/listing', listing);
 module.exports = router;

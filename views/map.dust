@@ -11,9 +11,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
   <!-- inject:css -->
   <link rel="stylesheet" href="/libs/normalize-css/normalize.css">
-  <link rel="stylesheet" href="/libs/openlayers/dist/ol-debug.css">
+  <link rel="stylesheet" href="/libs/openlayers/dist/ol.css">
   <link rel="stylesheet" href="/libs/material-design-lite/material.min.css">
-  <link rel="stylesheet" href="/libs/material.purple-indigo.min.css">
   <link rel="stylesheet" href="/libs/toastr/toastr.min.css">
   <link rel="stylesheet" href="/libs/getmdl-select/getmdl-select.min.css">
   <link rel="stylesheet" href="/css/map.min.css">
@@ -29,6 +28,7 @@
       <button id="modal-close" class="mdl-button mdl-js-button mdl-button--icon modal-close"> <i class="material-icons">close</i></button>
       <div class="modal-content"></div>
     </div>
+
     <div class="infobox" id="infobox">
       <nav class="actions">
         <label class="mdl-icon-toggle mdl-js-icon-toggle mdl-js-ripple-effect" for="marker">
@@ -47,13 +47,13 @@
         <div class="filters">
           <form name="filters" action="#" autocomplete="off">
             <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--6-col" style="text-align: center">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" >
                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
                   <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="Rent" checked/>
                   <span class="mdl-radio__label">{listing.rent}</span>
                 </label>
               </div>
-              <div class="mdl-cell mdl-cell--6-col" style="text-align: center">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" >
                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
                   <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="Sale" />
                   <span class="mdl-radio__label">{listing.sale}</span>
@@ -61,7 +61,7 @@
               </div>
             </div>
             <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--6-col">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--stretch">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
                   <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.apartment}" readonly tabIndex="-1" data-val="{estate.type.apartment}">
                   <label for="estateType">
@@ -77,7 +77,7 @@
                     </ul>
                 </div>
              </div>
-             <div class="mdl-cell mdl-cell--6-col">
+             <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--stretch">
                 <div>
                   <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-6">
                     <input type="checkbox" id="checkbox-6" class="mdl-checkbox__input">
@@ -87,10 +87,11 @@
               </div>
             </div>
             <div class="mdl-grid" >
-              <div class="mdl-cell mdl-cell--6-col" style="border:1px solid #448aff;">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch" style="border:1px solid rgb(96,125,139);">
                 <div id="price-range" class="mdl-grid">
-                  <p>{listing.price} <strong style="color: #9c27b0;">&euro;</strong></p>
-                  <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--middle">
+                  <p>{listing.price} <strong style="color: rgb(255,82,82);;">&euro;</strong></p></div>
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-start" id="startPrice" onkeypress="return utils.preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="startPrice">{listing.from}</label>
@@ -98,7 +99,7 @@
                       <div class="error-msg" id="error-msg-price-start"></div>
                     </div>
                   </div>
-                  <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-end" id="endPrice" onkeypress="return utils.preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="endPrice">{listing.to}</label>
@@ -108,10 +109,11 @@
                   </div>
                 </div>
               </div>
-              <div class="mdl-cell mdl-cell--6-col" style="border:1px solid #448aff;">
-                <div id="area-range" class="mdl-grid">
-                  <p>{listing.area} <strong style="color: #9c27b0;">{listing.areaUnits}</strong></p>
-                  <div class="mdl-cell mdl-cell--6-col">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch" style="border:1px solid rgb(96,125,139);">
+                <div id="area-range" class="mdl-grid"><div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--middle">
+                    <p>{listing.area} <strong style="color: rgb(255,82,82);;">{estate.areaUnits}</strong></p>
+                  </div>
+                  <div class="mdl-cell mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-area-start" id="area-start" onkeypress="return utils.preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="area-start">{listing.from}</label>
@@ -119,7 +121,7 @@
                       <div class="error-msg" id="error-msg-area-start"></div>
                     </div>
                   </div>
-                  <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-cell mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                       <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-area-end" id="area-end" onkeypress="return utils.preventDotAndSpace(event);"/>
                       <label class="mdl-textfield__label" for="area-end">{listing.to}</label>
@@ -131,13 +133,12 @@
               </div>
             </div>
             <div class="mdl-grid">
-              <div class="mdl-cell mdl-cell--12-col">
+              <div class="mdl-cell mdl-cell--12-col  mdl-cell--middle">
                 <a id="advanced-filters" href="#">{btns.advancedFilters}</a>
               </div>
-              <div id="estate-filters" class="mdl-cell mdl-cell--12-col visuallyhidden" style="border:1px solid #448aff;">
+              <div id="estate-filters" class="mdl-cell mdl-cell--12-col visuallyhidden" style="border:1px solid rgb(96,125,139);">
                 <div class="mdl-grid">
-                  <p style="width: 100%">{estate.amenities.title}</p>
-                  <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--top">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2">
                     <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input">
                     <span class="mdl-checkbox__label">{estate.amenities.furnished}</span>
@@ -151,7 +152,7 @@
                     <span class="mdl-checkbox__label">{estate.amenities.cooling}</span>
                     </label>
                   </div>
-                  <div class="mdl-cell mdl-cell--6-col">
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--top">
                     <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-5">
                       <input type="checkbox" id="checkbox-5" class="mdl-checkbox__input">
                       <span class="mdl-checkbox__label">{estate.amenities.view}</span>
@@ -164,17 +165,21 @@
                 </div>
               </div>
             </div>
-            <div class="mdl-grid spaced">
-              <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.search}">
-              <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="button" value="{btns.clear}">
+            <div class="mdl-grid mdl-grid--no-spacing">
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+              <input id="clearFilters" class="input-align-center mdl-button mdl-js-button " type="button" value="{btns.clear}"></div>
+              <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
+              <input id="invokeFilters" class="input-align-center mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="button" value="{btns.search}"></div>
             </div>
           </form>
         </div>
-        <div id='estate-card'>
+
           <form action="#" class="estate-cards "></form>
-        </div>
+
       </div>
+      <div id="results" class="results visuallyhidden"></div>
     </div>
+
     <div class="map" id="map"> </div>
   </div>
 
@@ -186,6 +191,8 @@
   <script src="/libs/dustjs-helpers/dist/dust-helpers.min.js"></script>
   <script src="/libs/material-design-lite/material.min.js"></script>
   <script src="/libs/lodash/dist/lodash.min.js"></script>
+  <script src="/libs/moment/moment.js"></script>
+  <script src="/libs/cloudinary-jquery/cloudinary-jquery.min.js"></script>
   <script src="/libs/toastr/toastr.min.js"></script>
   <script src="/libs/getmdl-select/src/js/getmdl-select.js"></script>
   <script src="/libs/auth0-lock/build/auth0-lock.min.js"></script>
@@ -198,6 +205,7 @@
   <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/valueRange.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/results.js" crossorigin="anonymous"></script>
   <script type="text/javascript">
     var lock = new Auth0Lock('{env.AUTH0_CLIENT_ID}', '{env.AUTH0_DOMAIN}');
     $('#adminLogin').click(function() {
