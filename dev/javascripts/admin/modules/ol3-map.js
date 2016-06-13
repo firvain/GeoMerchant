@@ -1,4 +1,4 @@
-App.config.modules.map = (function (window, document, undefined, Promise, ol, App) {
+App.config.modules.map = (function ol3Map(window, document, Promise, ol, App) {
   'use strict';
   var center = [3677385, 4120949];
   var extent = [3652772, 4112808, 3700000, 4132797];
@@ -175,4 +175,4 @@ App.config.modules.map = (function (window, document, undefined, Promise, ol, Ap
   return {
     initialize: initialize
   };
-}(window, document, undefined, Promise, ol, App));
+}(window, document, Promise, ol, App));

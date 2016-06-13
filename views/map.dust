@@ -43,7 +43,7 @@
           <div class="mdl-tooltip" for="language">{langChange}</div>
         </button>
       </nav>
-      <div class="infobox-content">
+      <div class="infobox-content" id="infobox-content">
         <div class="filters">
           <form name="filters" action="#" autocomplete="off">
             <div class="mdl-grid">
@@ -63,7 +63,7 @@
             <div class="mdl-grid">
               <div class="mdl-cell mdl-cell--6-col mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--stretch">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
-                  <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.apartment}" readonly tabIndex="-1" data-val="{estate.type.apartment}">
+                  <input class="mdl-textfield__input" type="text" id="estateType" value="{estate.type.apartment}" readonly tabIndex="-1" data-val="{estate.type.apartment}" data-type="special">
                   <label for="estateType">
                   <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
                   </label>
@@ -93,7 +93,7 @@
                   <p>{listing.price} <strong style="color: rgb(255,82,82);;">&euro;</strong></p></div>
                   <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-start" id="startPrice" onkeypress="return utils.preventDotAndSpace(event);"/>
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-start" data-type="number" id="startPrice"/>
                       <label class="mdl-textfield__label" for="startPrice">{listing.from}</label>
                       <span class="mdl-textfield__error">{listing.priceError}</span>
                       <div class="error-msg" id="error-msg-price-start"></div>
@@ -101,7 +101,7 @@
                   </div>
                   <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-end" id="endPrice" onkeypress="return utils.preventDotAndSpace(event);"/>
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-price-end" data-type="number" id="endPrice"/>
                       <label class="mdl-textfield__label" for="endPrice">{listing.to}</label>
                       <span class="mdl-textfield__error">{listing.priceError}</span>
                       <div class="error-msg" id="error-msg-price-end"> </div>
@@ -115,7 +115,7 @@
                   </div>
                   <div class="mdl-cell mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-area-start" id="area-start" onkeypress="return utils.preventDotAndSpace(event);"/>
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-type="number" data-parsley-errors-container="#error-msg-area-start" id="area-start"/>
                       <label class="mdl-textfield__label" for="area-start">{listing.from}</label>
                       <span class="mdl-textfield__error">{listing.priceError}</span>
                       <div class="error-msg" id="error-msg-area-start"></div>
@@ -123,7 +123,7 @@
                   </div>
                   <div class="mdl-cell mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-cell--middle">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-parsley-errors-container="#error-msg-area-end" id="area-end" onkeypress="return utils.preventDotAndSpace(event);"/>
+                      <input class="mdl-textfield__input" type="text" data-parsley-type="integer" data-parsley-range="[0 , 2147483647]" data-type="number" data-parsley-errors-container="#error-msg-area-end" id="area-end"/>
                       <label class="mdl-textfield__label" for="area-end">{listing.to}</label>
                       <span class="mdl-textfield__error">{listing.priceError}</span>
                       <div class="error-msg" id="error-msg-area-end"> </div>
@@ -184,6 +184,7 @@
   </div>
 
   <!-- inject:js -->
+  <script src="/libs/bowser/src/bowser.js"></script>
   <script src="/libs/openlayers/dist/ol.js"></script>
   <script src="/libs/bluebird/js/browser/bluebird.min.js"></script>
   <script src="/libs/jquery/dist/jquery.min.js"></script>

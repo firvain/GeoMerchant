@@ -1,10 +1,36 @@
-var filters = (function filters(window, document, Promise, $, utils, Parsley, info, moment) {
+App.config.modules.filters = (function filters(window, document, Promise, $, Parsley, moment, App) {
   'use strict';
+  var lang = document.documentElement.lang;
+  var dustBluebird = App.config.promises.dustBluebird;
+  var utils = App.utils;
+
   var xy1 = ol.proj.transform([3652772, 4112808], 'EPSG:3857', 'EPSG:4326');
   var xy2 = ol.proj.transform([3700000, 4132797], 'EPSG:3857', 'EPSG:4326');
   var extent = _.concat(xy1, xy2);
   var bbox = extent;
-  function addResults(data, map) {
+  function assignValidators() {
+    var content = document.getElementById('infobox-content');
+    var inputs = content.querySelectorAll('input[type=text]');
+    [].forEach.call(inputs, function makeParsleyInputs(el) {
+      el.addEventListener('blur', function sanitize() {
+        var str = this.value;
+        var sanitizedStr;
+        if (this.dataset.type === 'number') {
+          sanitizedStr = str.replace(/[/\D/ ]/gi, '');
+        } else if (this.dataset.type === 'alphanum') {
+          sanitizedStr = str.replace(/[^a-z0-9A-ZA-zΑ-Ωα-ωίϊΐόάέύϋΰήώ ]/gi, '');
+        } else if (this.dataset.type === 'special') {
+          sanitizedStr = str.replace(/[^0-9 \/]/gi, '');
+        } else if (this.dataset.type === 'date') {
+          sanitizedStr = str.replace(/[^0-9 \-]/gi, '');
+        }
+        this.value = sanitizedStr;
+        utils.removeClass(this.parentNode, 'is-invalid');
+      });
+    });
+  }
+  function addResults(data) {
+    var map = App.config.commons.map;
     var geoJSONFormat = new ol.format.GeoJSON({
       defaultDataProjection: 'EPSG:4326'
     });
@@ -15,13 +41,14 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
       f.setId(f.getProperties().gid);
     });
     utils.findById(map, 'filteredEstates').getSource().addFeatures(features);
-    if (trans.lang === 'el') {
+    if (lang === 'el') {
       toastr.info('Βρέθηκαν ' + features.length + ' ιδιοκτησίες!');
     } else {
       toastr.info('Found ' + features.length + ' estates!');
     }
   }
-  function clearResults(map) {
+  function clearResults() {
+    var map = App.config.commons.map;
     utils.findById(map, 'filteredEstates').getSource().clear();
     utils.findById(map, 'select').getSource().clear();
     map.getInteractions().forEach(function findInteractionById(i) {
@@ -33,10 +60,11 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
     $(map.getViewport()).off('mouseenter');
     bbox = extent;
     utils.findById(map, 'estates').setVisible(true);
-    info.init(map);
-    $('#results').addClass('visuallyhidden').removeAttr('style').empty();
+    App.config.modules.info.init();
+    $('#results').addClass('visuallyhidden').removeAttr('style')
+    .empty();
   }
-  function setOptions(map) {
+  function setOptions() {
     var filterData = {};
     filterData.estateType = $('#estateType').val();
     filterData.leaseType = $('input[name=options]:checked').val() !== undefined ? $('input[name=options]:checked').val() : 'Rent';
@@ -52,7 +80,9 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
     filterData.bbox = bbox;
     return filterData;
   }
-  function getResults(options, map) {
+  function getResults(options) {
+    var map = App.config.commons.map;
+    var trans = _.cloneDeep(App.config.commons.trans);
     Promise.resolve(
       $.ajax({
         url: 'http://127.0.0.1:3000/api/listing/filters',
@@ -62,6 +92,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
       })
     )
     .then(function resolve(data) {
+
       var renderData = {};
 
       var results = [];
@@ -70,13 +101,13 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
       utils.findById(map, 'poi').getSource().clear();
       utils.findById(map, 'filteredEstates').getSource().clear();
       // utils.findById(map, 'select').getSource().clear();
-      addResults(data, map);
-      _.forEach(data.features, function(value, key) {
+      addResults(data);
+      _.forEach(data.features, function(value) {
         var address;
         var dateStart;
         var dateEnd;
         var coordinates = ol.proj.transform(value.geometry.coordinates, 'EPSG:3857', 'EPSG:4326');
-        if (trans.lang === 'el') {
+        if (lang === 'el') {
           address = value.properties.street_el + ' ' + value.properties.street_number;
           dateStart = moment(value.properties.date_start).format('DD-MM-YYYY');
           dateEnd = moment(value.properties.end).format('DD-MM-YYYY');
@@ -100,18 +131,10 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
           coordinates: coordinates
         });
       });
-      console.log(results);
       renderData.results = results;
       return renderData;
     })
     .then(function resolve(data) {
-      // var height = $('.infobox').height() - $('.actions').height() - $('.infobox-content').height() - 40;
-      // console.log(height);
-      // if (height > 0) {
-      //   $('.results').height(height);
-      // } else {
-      //   $('.results').height(400);
-      // }
       dustBluebird.renderAsync('results', data)
       .then(function resolveDust(d) {
         $('#results').removeClass('visuallyhidden');
@@ -139,7 +162,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
     });
   }
   function chooseByArea(draw) {
-    var map = draw.getMap();
+    var map = App.config.commons.map;
     $(map.getViewport()).mouseleave(function leaveMapForAreaSelection(event) {
       event.preventDefault();
       event.stopPropagation();
@@ -161,7 +184,8 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
       bbox = _.concat(transformedCoordinates[0], transformedCoordinates[1]);
     });
   }
-  function init(map) {
+  function init() {
+    var map = App.config.commons.map;
     var drawInteraction = new ol.interaction.Draw({
       source: utils.findById(map, 'select').getSource(),
       type: 'LineString',
@@ -178,23 +202,24 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
     $('#checkbox-6').change(function enableAreaSelection() {
       if (this.checked) {
         map.addInteraction(drawInteraction);
-        info.disable(map);
+        App.config.modules.info.disable();
         chooseByArea(drawInteraction);
       } else {
-        info.init(map);
+        App.config.modules.info.init();
         map.removeInteraction(drawInteraction);
         drawInteraction.setActive(false);
         utils.findById(map, 'select').getSource().clear();
         bbox = extent;
       }
     });
+    assignValidators();
     $('#invokeFilters').click(function invokeFilters(event) {
       var options;
       event.preventDefault();
       event.stopPropagation();
-      options = setOptions(map);
+      options = setOptions();
       if ($('form[name=filters]').parsley().validate()) {
-        getResults(options, map);
+        getResults(options);
       }
     });
     $('#clearFilters').click(function clearFilters(event) {
@@ -216,7 +241,7 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
           .removeClass('is-dirty');
         } else {
           $(el).attr('data-val', 'Apartment');
-          if (trans.lang === 'el') {
+          if (lang === 'el') {
             $(el).val('Διαμέρισμα');
           } else {
             $('#estateType').val('Apartment');
@@ -228,4 +253,4 @@ var filters = (function filters(window, document, Promise, $, utils, Parsley, in
   return {
     init: init
   };
-}(window, document, Promise, $, utils, Parsley, info, moment));
+}(window, document, Promise, $, Parsley, moment, App));

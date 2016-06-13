@@ -178,7 +178,7 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
 gulp.task('watch', function() {
     gulp.watch('dev/javascripts/map/**/*.*', ['clean-map-scripts','clean-map-css','inject-map']).on('error', gutil.log);
     gulp.watch('dev/javascripts/admin/**/*.*', ['clean-admin-scripts','clean-admin-css','inject-admin']).on('error', gutil.log);
-    gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);
+    // gulp.watch('dev/stylesheets/**/*.css', ['clean-css','minify-css-map','minify-css-admin']).on('error', gutil.log);
     gulp.watch('templates/*.dust', ['dust-compile'])
         .on('error', gutil.log);
 });

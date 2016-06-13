@@ -1,5 +1,6 @@
-var mymap = (function (window, document, undefined, Promise, ol, utils) {
+App.config.modules.map = (function ol3Map(window, document, Promise, ol, App) {
   'use strict';
+  var lang = document.documentElement.lang;
   var center = [3677385, 4120949];
   var extent = [3652772, 4112808, 3700000, 4132797];
   var geoJSONFormat = new ol.format.GeoJSON({
@@ -82,7 +83,7 @@ var mymap = (function (window, document, undefined, Promise, ol, utils) {
       var styleCache = {};
       var symbol = feature.get('style');
       var text;
-      if (window.trans.lang === 'el') {
+      if (lang === 'el') {
         text = feature.get('name_el');
       } else {
         text = feature.get('name_en');
@@ -261,7 +262,8 @@ var mymap = (function (window, document, undefined, Promise, ol, utils) {
       });
     }
   };
-  var initialize = function initialize(trans) {
+  var initialize = function initialize() {
+     var trans = _.cloneDeep(App.config.commons.trans);
     var layers = Object.keys(mapLayers).map(function addMapLayers(key) {
       if (key !== 'bing') { return mapLayers[key](trans); }
       return null;
@@ -304,4 +306,4 @@ var mymap = (function (window, document, undefined, Promise, ol, utils) {
   return {
     initialize: initialize
   };
-}(window, document, undefined, Promise, ol, utils));
+}(window, document, Promise, ol, App));

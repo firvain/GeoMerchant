@@ -17,7 +17,8 @@ window.App.config = {
     info: {},
     edit: {},
     delete: {},
-    insert: {}
+    insert: {},
+    filters: {}
   }
 };
 window.App.utils = {};

@@ -1,9 +1,7 @@
-var trans;
-var userMap = (function userMap(window, document, Promise, $, mymap, info, filters) {
+var userMap = (function userMap(window, document, Promise, $, App) {
   'use strict';
   var context = 'map';
   var lang = document.documentElement.lang;
-  // var globals = {};
   var $loading = $('.mdl-spinner');
   $(document)
   .ajaxStart(function start() {
@@ -43,26 +41,23 @@ var userMap = (function userMap(window, document, Promise, $, mymap, info, filte
         }
       })
       )
-      .then(function resolve(data) {
-        var map;
-        trans = data;
-        map = mymap.initialize(trans);
-        map1 = map;
-        return map;
-      })
-      .then(function resolve(map) {
-        info.init(map);
-        filters.init(map);
-      })
-      .catch(function error(e) {
-        console.log(e);
-      });
+    .then(function resolve(data) {
+      App.config.commons.trans = data;
+      App.config.commons.map = App.config.modules.map.initialize();
+    })
+    .then(function resolve() {
+      App.config.modules.info.init();
+      App.config.modules.filters.init();
+    })
+    .catch(function error(e) {
+      console.log(e);
+    });
   }
 
   return {
     init: init
   };
-}(window, document, Promise, jQuery, mymap, info, filters));
+}(window, document, Promise, jQuery, App));
 
 
 // jQuery(document).ready(function ($) {

@@ -1,9 +1,14 @@
-var info = (function info(window, document, Promise, $, utils) {
+App.config.modules.info = (function info(window, document, Promise, $, App) {
   'use strict';
+  var lang = document.documentElement.lang;
+  var dustBluebird = App.config.promises.dustBluebird;
+  var utils = App.utils;
+
   var geoJSONFormat = new ol.format.GeoJSON({
     defaultDataProjection: 'EPSG:4326'
   });
   function extraInfoModal(feature) {
+    var trans = _.cloneDeep(App.config.commons.trans);
     var modalPromise;
     var obj = {};
     if (feature.get('rent')) {
@@ -13,7 +18,7 @@ var info = (function info(window, document, Promise, $, utils) {
     }
     obj.type = feature.get('estatetype');
     obj.gid = feature.get('gid');
-    if (trans.lang === 'el') {
+    if (lang === 'el') {
       obj.address = feature.get('street_el') + '' +  feature.get('street_number');
       obj.contact = {
         name: feature.getProperties().name_el,
@@ -89,6 +94,7 @@ var info = (function info(window, document, Promise, $, utils) {
     });
   }
   function renderEstateCards(feature) {
+    var trans = _.cloneDeep(App.config.commons.trans);
     var estateCardsPromise;
     var obj = {};
     if (feature.get('rent')) {
@@ -98,7 +104,7 @@ var info = (function info(window, document, Promise, $, utils) {
     }
     obj.type = feature.get('estatetype');
     obj.gid = feature.get('gid');
-    if (trans.lang === 'el') {
+    if (lang === 'el') {
       obj.address = feature.get('street_el') + '' +  feature.get('street_number');
     } else {
       obj.address = feature.get('street_en') + '' +  feature.get('street_number');
@@ -178,7 +184,7 @@ var info = (function info(window, document, Promise, $, utils) {
         map.getView().setZoom(16);
         Promise.resolve(
           $.ajax({
-            url: 'http://127.0.0.1:3000/db/uses/' + f.getProperties().gid,
+            url: 'http://127.0.0.1:3000/api/uses/' + f.getProperties().gid,
             type: 'GET',
             dataType: 'json'
           })
@@ -234,7 +240,6 @@ var info = (function info(window, document, Promise, $, utils) {
           utils.findById(map, 'poi').getSource().addFeatures(features);
           map.getView().fit(utils.findById(map, 'poi').getSource().getExtent(), map.getSize());
           toastr.info('Found ' + features.length + ' Points of Interest in 8 minute distance!');
-          console.log(trans);
         })
         .catch(function error(e) {
           if (e.status === 404) {
@@ -250,14 +255,16 @@ var info = (function info(window, document, Promise, $, utils) {
     }
   }
 
-  function init(map) {
+  function init() {
+    var map = App.config.commons.map;
     map.on('click', selectFeature);
   }
-  function disable(map) {
+  function disable() {
+    var map = App.config.commons.map;
     map.un('click', selectFeature);
   }
   return {
     init: init,
     disable: disable
   };
-}(window, document, Promise, jQuery, utils));
+}(window, document, Promise, jQuery, App));

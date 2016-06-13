@@ -12,6 +12,8 @@ module.exports = {
         "Promise": true,
         "jQuery": true,
         "App": true,
-        "dialogPolyfill": true
+        "dialogPolyfill": true,
+        "Parsley": true,
+        "moment": true
     }
 };
