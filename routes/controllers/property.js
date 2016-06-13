@@ -87,23 +87,24 @@ router.route('/')
   });
 })
 .post(function insertProperty(req, res, next) {
-  var estatetype = '\'' + req.body.estateType + '\'';
-  var estatetypeEn = '\'' + req.body.estateType_en + '\'';
-  var estatearea = '\'' + req.body.estatearea + '\'';
-  var plotarea = '\'' + req.body.plotarea + '\'';
+  console.log(req.body);
+  var estatetype = '\'' + req.body.estatetype + '\'';
+  var estatetypeEn = '\'' + req.body.estatetypeEn + '\'';
+  var estatearea = '\'' + req.body.area + '\'';
+  var plotarea = '\'' + req.body.plotArea + '\'';
   var bedrooms = '\'' + req.body.bedrooms + '\'';
   var parking = '\'' + req.body.parking + '\'';
   var furnished = '\'' + req.body.furnished + '\'';
   var title = '\'' + req.body.title + '\'';
   var year = '\'' + req.body.year + '\'';
-  var parcelNum = '\'' + req.body.parcel_num + '\'';
-  var planNum = '\'' + req.body.plan_num + '\'';
-  var areaName = '\'' + req.body.area_name + '\'';
-  var streetEl = '\'' + req.body.street_el + '\'';
-  var streetNumber = '\'' + req.body.street_number + '\'';
-  var psCode = '\'' + req.body.ps_code + '\'';
+  var parcelNum = '\'' + req.body.parcelNumber + '\'';
+  var planNum = '\'' + req.body.planNumber + '\'';
+  var areaName = '\'' + req.body.areaName + '\'';
+  var streetEl = '\'' + req.body.streetEl + '\'';
+  var streetNumber = '\'' + req.body.streetNumber + '\'';
+  var psCode = '\'' + req.body.pscode + '\'';
   var floor = '\'' + req.body.floor + '\'';
-  var streetEn = '\'' + req.body.street_en + '\'';
+  var streetEn = '\'' + req.body.streetEn + '\'';
   var isnew = '\'' + req.body.isnew + '\'';
   var view = '\'' + req.body.view + '\'';
   var heating = '\'' + req.body.heating + '\'';
@@ -128,8 +129,9 @@ router.route('/')
       process.nextTick(function queryDB() {
         var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
         var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
-        var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) RETURNING gid';
-        client.query('INSERT INTO public.property ' + columns + 'VALUES (' + values + geom, function query1(queryErr, queryRes) {
+        var geom = ',ST_Transform(ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',3857),4326)';
+        client.query('INSERT INTO property ' + columns + 'VALUES (' + values + geom + ') RETURNING gid;', function query1(queryErr, queryRes) {
+          console.log(this.text);
           var propertygid;
           if (queryErr) {
             res.status(500).json({
@@ -140,20 +142,21 @@ router.route('/')
           }
           propertygid = queryRes.rows[0].gid;
           client.query('INSERT INTO public.owner_property (owner_id,property_gid) VALUES (' + adminId + ',' + propertygid + ')',
-          function query2(queryError, queryResult) {
-            if (queryError) {
-              res.status(500).json({
-                msg: 'Internal Server Error'
+            function query2(queryError, queryResult) {
+              if (queryError) {
+                res.status(500).json({
+                  msg: 'Internal Server Error'
+                });
+                logger.error(queryError);
+                return rollback(client, done);
+              }
+              client.query('COMMIT', done);
+              res.status(201).json({
+                msg: 'Successfully Created',
+                gid: queryRes.rows[0].gid
               });
-              logger.error(queryError);
-              return rollback(client, done);
-            }
-            client.query('COMMIT', done);
-            res.status(201).json({
-              msg: 'Successfully Created'
+              return true;
             });
-            return true;
-          });
           return true;
         });
       });
@@ -164,6 +167,7 @@ router.route('/')
 })
 .delete(function deleteProperty(req, res) {
   var gid = req.body.gid;
+  console.log(gid);
   pg.connect(config.connection, function connectToPG(err, client, done) {
     if (err) {
       res.status(503).json({
@@ -179,8 +183,9 @@ router.route('/')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var text = 'DELETE FROM public.property WHERE gid= $1';
+        var text = 'DELETE FROM public.property WHERE gid= $1 RETURNING gid as id;';
         client.query(text, [gid], function query1(queryErr, queryRes) {
+          console.log(this.text);
           if (queryErr) {
             res.status(500).json({
               msg: 'Internal Server Error'
@@ -191,7 +196,7 @@ router.route('/')
           client.query('COMMIT', done);
           res.status(200).json({
             msg: 'Successfully Deleted',
-            propertygid: gid
+            propertyId: queryRes.rows[0].id
           });
           return true;
         });
@@ -202,24 +207,23 @@ router.route('/')
   });
 })
 .put(function updateProperty(req, res) {
-
-  var estatetype = '\'' + req.body.estateType + '\'';
-  var estatetypeEn = '\'' + req.body.estateType_en + '\'';
-  var estatearea = '\'' + req.body.estatearea + '\'';
-  var plotarea = '\'' + req.body.plotarea + '\'';
+  var estatetype = '\'' + req.body.estatetype + '\'';
+  var estatetypeEn = '\'' + req.body.estatetypeEn + '\'';
+  var estatearea = '\'' + req.body.area + '\'';
+  var plotarea = '\'' + req.body.plotArea + '\'';
   var bedrooms = '\'' + req.body.bedrooms + '\'';
   var parking = '\'' + req.body.parking + '\'';
   var furnished = '\'' + req.body.furnished + '\'';
   var title = '\'' + req.body.title + '\'';
   var year = '\'' + req.body.year + '\'';
-  var parcelNum = '\'' + req.body.parcel_num + '\'';
-  var planNum = '\'' + req.body.plan_num + '\'';
-  var areaName = '\'' + req.body.area_name + '\'';
-  var streetEl = '\'' + req.body.street_el + '\'';
-  var streetNumber = '\'' + req.body.street_number + '\'';
-  var psCode = '\'' + req.body.ps_code + '\'';
+  var parcelNum = '\'' + req.body.parcelNumber + '\'';
+  var planNum = '\'' + req.body.planNumber + '\'';
+  var areaName = '\'' + req.body.areaName + '\'';
+  var streetEl = '\'' + req.body.streetEl + '\'';
+  var streetNumber = '\'' + req.body.streetNumber + '\'';
+  var psCode = '\'' + req.body.pscode + '\'';
   var floor = '\'' + req.body.floor + '\'';
-  var streetEn = '\'' + req.body.street_en + '\'';
+  var streetEn = '\'' + req.body.streetEn + '\'';
   var isnew = '\'' + req.body.isnew + '\'';
   var view = '\'' + req.body.view + '\'';
   var heating = '\'' + req.body.heating + '\'';
@@ -242,25 +246,25 @@ router.route('/')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,title,year,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom) ';
-        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + title + ',' + year + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
-        var geom = ',ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',4326)) ';
-        client.query('UPDATE public.property SET ' + columns + '= (' + values + geom + 'WHERE gid=$1', [gid],
-        function query1(queryErr, queryRes) {
-          if (queryErr) {
-            res.status(500).json({
-              msg: 'Internal Server Error'
+        var columns = '(estatetype,estatetype_en,estatearea,plotarea,bedrooms,parking,furnished,year,parcel_num,plan_num,area_name,street_el,street_number,ps_code,floor,street_en,isnew,view,heating,cooling,the_geom,title) ';
+        var values = estatetype + ',' + estatetypeEn + ',' + estatearea + ',' + plotarea + ',' + bedrooms + ',' + parking + ',' + furnished + ',' + year + ',' + parcelNum + ',' + planNum + ',' + areaName + ',' + streetEl + ',' + streetNumber + ',' + psCode + ',' + floor + ',' + streetEn + ',' + isnew + ',' + view + ',' + heating + ',' + cooling;
+        var geom = ',ST_Transform(ST_GeomFromText(\'POINT(' + x + ' ' + y + ')\',3857),4326) ';
+        client.query('UPDATE public.property SET ' + columns + '= (' + values + geom + ',' + title + ') WHERE gid=$1 RETURNING gid as gid', [gid],
+          function query1(queryErr, queryRes) {
+            if (queryErr) {
+              res.status(500).json({
+                msg: 'Internal Server Error'
+              });
+              logger.error(queryErr);
+              return rollback(client, done);
+            }
+            client.query('COMMIT', done);
+            res.status(200).json({
+              msg: 'Successfully Updated',
+              propertyGid: queryRes.rows[0].gid
             });
-            logger.error(queryErr);
-            return rollback(client, done);
-          }
-          client.query('COMMIT', done);
-          res.status(200).json({
-            msg: 'Successfully Updated',
-            propertygid: gid
+            return true;
           });
-          return true;
-        });
         return true;
       });
       return true;

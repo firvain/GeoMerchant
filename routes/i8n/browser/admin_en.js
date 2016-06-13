@@ -18,6 +18,7 @@ module.exports = {
       villa: 'Villa'
     },
     gid: 'Estate ID',
+    areaName: 'Location',
     area: 'Area',
     areaUnits: 'sq.m.',
     address: 'Address',
@@ -26,6 +27,7 @@ module.exports = {
     floor: 'Floor',
     plotArea: 'Plot Area',
     parcelNumber: 'Parcel Number',
+    planNumber: 'Building Permit',
     year: 'Construction Year',
     amenities: {
       title: 'Title Deed',
@@ -37,6 +39,9 @@ module.exports = {
       cooling: 'Air Condition',
       isnew: 'Newly Build',
       bedrooms: 'Bedrooms'
+    },
+    location: {
+      change: 'Change Estate Coordinates'
     }
   },
   listing: {
@@ -86,7 +91,8 @@ module.exports = {
       404: 'No properties found!'
     },
     notNumber: 'Input is not a number!',
-    listing404: 'Cant find Listing!'
+    listing404: 'Can not find Listing!',
+    required: 'Required Value'
   },
   titles: {
     areaUnits: 'sq.m.',

@@ -23,7 +23,7 @@ router.route('/all')
     'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,' +
     'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.street_number,public.property.ps_code,' +
     'public.property.floor,public.property.street_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' +
-    'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,public.listing.sale,public.listing.rent,' +
+    'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.pets,public.listing.sale,public.listing.rent,' +
     'public.owner.phone2';
     qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid);';
     client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom,
@@ -100,7 +100,7 @@ router.route('/filters')
     'property.street_el, property.ps_code, property.floor, property.street_en, property.street_number,' +
     'property."isnew", owner.name_el, owner.lastname_el, owner.fathername_el, owner.name_en,' +
     'owner.lastname_en, owner.fathername_en, owner.phone1, owner.email, listing.date_start, listing.date_end,' +
-    'listing.price, listing.prefered_customer, listing.pets, listing.sale, listing.rent, owner.phone2';
+    'listing.price, listing.pets, listing.sale, listing.rent, owner.phone2';
     qfrom = ' owner_property  INNER JOIN  owner ON ( owner_property.owner_id =  owner.id) ' +
     'INNER JOIN  property ON ( owner_property.property_gid =  property.gid) ' +
     'INNER JOIN  listing ON ( property.gid =  listing.property_gid) ';
@@ -184,7 +184,7 @@ router.route('/')
       logger.error('Could not connect to postgres');
       return err;
     }
-    text = 'SELECT id,to_char(date_end,\'DD-MM-YYYY\') as date_end,to_char(date_start,\'DD-MM-YYYY\') as date_start,price,pets,prefered_customer,sale,rent FROM public.listing WHERE public.listing.property_gid=$1;';
+    text = 'SELECT id,to_char(date_end,\'DD-MM-YYYY\') as date_end,to_char(date_start,\'DD-MM-YYYY\') as date_start,price,pets,sale,rent FROM public.listing WHERE public.listing.property_gid=$1;';
     client.query(text, [propertyGid], function queryDB(queryErr, queryRes) {
       done();
       if (queryErr) {
@@ -206,11 +206,10 @@ router.route('/')
   });
 })
 .post(function insertListing(req, res) {
-  var propertyGid = '\'' + req.body.property_gid + '\'';
-  var dateStart = '\'' + req.body.date_start + '\'';
-  var dateEnd = '\'' + req.body.date_end + '\'';
+  var propertyGid = '\'' + req.body.gid + '\'';
+  var dateStart = '\'' + req.body.dateStart + '\'';
+  var dateEnd = '\'' + req.body.dateEnd + '\'';
   var pets = '\'' + req.body.pets + '\'';
-  var preferedCustomer = '\'' + req.body.prefered_customer + '\'';
   var price = '\'' + req.body.price + '\'';
   var rent = '\'' + req.body.rent + '\'';
   var sale = '\'' + req.body.sale + '\'';
@@ -229,10 +228,11 @@ router.route('/')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var columns = '(property_gid,date_start,date_end,price,pets,prefered_customer,rent,sale) ';
-        var values = propertyGid + ',' + 'to_date(' + dateStart + ',\'DD-MM-YYYY\')' + ',' + 'to_date(' + dateEnd + ',\'DD-MM-YYYY\')' + ',' + price + ',' + pets + ',' + preferedCustomer + ',' + rent + ',' + sale;
+        var columns = '(property_gid,date_start,date_end,price,pets,rent,sale) ';
+        var values = propertyGid + ',' + 'to_date(' + dateStart + ',\'DD-MM-YYYY\')' + ',' + 'to_date(' + dateEnd + ',\'DD-MM-YYYY\')' + ',' + price + ',' + pets + ',' + rent + ',' + sale;
         client.query('INSERT INTO public.listing ' + columns + 'VALUES (' + values + ');',
-          function queryResult(queryErr) {
+          function queryResult(queryErr, queryRes) {
+            console.log(this.text);
             if (queryErr) {
               res.status(500).json({
                 msg: 'Internal Server Error'
@@ -254,12 +254,11 @@ router.route('/')
   });
 })
 .put(function updateListing(req, res) {
-  var listingId = req.body.listing_id;
-  var propertyGid = '\'' + req.body.property_gid + '\'';
-  var dateStart = '\'' + req.body.date_start + '\'';
-  var dateEnd = '\'' + req.body.date_end + '\'';
+  var listingId = req.body.id;
+  var propertyGid = '\'' + req.body.gid + '\'';
+  var dateStart = '\'' + req.body.dateStart + '\'';
+  var dateEnd = '\'' + req.body.dateEnd + '\'';
   var pets = '\'' + req.body.pets + '\'';
-  var preferedCustomer = '\'' + req.body.prefered_customer + '\'';
   var price = '\'' + req.body.price + '\'';
   var rent = '\'' + req.body.rent + '\'';
   var sale = '\'' + req.body.sale + '\'';
@@ -278,10 +277,11 @@ router.route('/')
         return rollback(client, done);
       }
       process.nextTick(function queryDB() {
-        var columns = '(property_gid,date_start,date_end,price,pets,prefered_customer,rent,sale) ';
-        var values = propertyGid + ',' + 'to_date(' + dateStart + ',\'DD-MM-YYYY\')' + ',' + 'to_date(' + dateEnd + ',\'DD-MM-YYYY\')' + ',' + price + ',' + pets + ',' + preferedCustomer + ',' + rent + ',' + sale;
-        client.query('UPDATE public.listing SET ' + columns + ' = (' + values + ') WHERE id=$1;', [listingId],
-        function queryResult(queryErr) {
+        var columns = '(property_gid,date_start,date_end,price,pets,rent,sale) ';
+        var values = propertyGid + ', to_date(' + dateStart + ',\'DD-MM-YYYY\'), to_date(' + dateEnd + ',\'DD-MM-YYYY\'), ' + price + ',' + pets + ',' + rent + ',' + sale;
+        client.query('UPDATE public.listing SET ' + columns + ' = (' + values + ') WHERE id=$1 RETURNING id as id;', [listingId],
+        function queryResult(queryErr, queryRes) {
+          console.log(this.text);
           if (queryErr) {
             res.status(500).json({
               msg: 'Internal Server Error'
@@ -292,7 +292,7 @@ router.route('/')
           client.query('COMMIT', done);
           res.status(200).json({
             msg: 'Successfully Updated',
-            propertyId: listingId
+            listingId: queryRes.rows[0].id
           });
           return true;
         });
@@ -303,7 +303,8 @@ router.route('/')
   });
 })
 .delete(function deleteListing(req, res) {
-  var listingId = req.body.listing_id;
+  console.log(req.body);
+  var listingId = req.body.id;
   pg.connect(config.connection, function connectToPG(err, client, done) {
     if (err) {
       res.status(503).json({
@@ -320,9 +321,10 @@ router.route('/')
           return rollback(client, done);
         }
         process.nextTick(function queryDB() {
-          client.query('DELETE from public.listing WHERE public.listing.property_gid=$1;',
+          client.query('DELETE from public.listing WHERE public.listing.id=$1 RETURNING id as id;',
             [listingId],
             function queryResult(queryErr, queryRes) {
+              console.log(this.text);
               if (queryErr) {
                 res.sendStatus(500);
                 logger.error(queryErr);
@@ -332,13 +334,13 @@ router.route('/')
               if (queryRes.rowCount === 0) {
                 res.status(404).json({
                   msg: 'Sorry, we cannot find listing!',
-                  propertyId: listingId
+                  propertyId: queryRes.rows[0].id
                 });
                 return false;
               }
               res.status(200).json({
                 msg: 'Successfully Deleted',
-                propertyId: listingId
+                propertyId: queryRes.rows[0].id
               });
               return true;
             });

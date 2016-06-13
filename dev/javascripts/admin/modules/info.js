@@ -1,11 +1,9 @@
 App.config.modules.info = (function info(window, document, Promise, $, App) {
   'use strict';
-  var geoJSONFormat = new ol.format.GeoJSON({
-    defaultDataProjection: 'EPSG:4326'
-  });
   var lang = document.documentElement.lang;
   var editButton = document.querySelector('#edit');
-  var infoBoxContent = document.querySelector('#infobox-content');
+  var deleteButton = document.querySelector('#delete');
+  var infoBoxContent = document.querySelector('#appwrapper__infobox-content');
   var dustBluebird = App.config.promises.dustBluebird;
   var utils = App.utils;
   function dustEstateInfo(data) {
@@ -24,7 +22,16 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
     var coordinates;
     var estate;
     var gid;
-    var renderData = App.config.commons.trans;
+    var renderData = _.cloneDeep(App.config.commons.trans);
+    var style = new ol.style.Style({
+      image: new ol.style.Icon(({
+        src: './images/pins/generic-48.png',
+        anchorOrigin: 'bottom-left',
+        anchor: [0.5, 0],
+        scale: 1,
+        color: 'rgb(255,82,82)'
+      }))
+    });
     // var coordinate = evt.coordinate;
     var clickedFeature = map.forEachFeatureAtPixel(evt.pixel, function findFeature(feature, layer) {
       return {
@@ -38,13 +45,16 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
       return false;
     }, this);
     if (clickedFeature) {
+      utils.findById(map, 'estates').getSource().getFeatures()
+      .forEach(function resetStyle(feature) {
+        feature.setStyle(null);
+      });
       estate = clickedFeature.feature;
       coordinates = estate.getGeometry().getCoordinates();
       map.getView().setCenter(coordinates);
       map.getView().setZoom(16);
       gid = estate.getProperties().gid;
-      utils.removeClass(editButton, 'mdl-button--accent');
-      utils.removeClass(editButton, 'mdl-button--raised');
+      estate.setStyle(style);
       var p1 = Promise.resolve(
         $.ajax({
           url: 'http://127.0.0.1:3000/api/property',
@@ -53,7 +63,7 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
             gid: gid
           }
         })
-      );
+        );
       p1.then(function resolve(data) {
         var feature = data.features[0];
         App.config.cache.activeEstate = feature.properties;
@@ -63,6 +73,9 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
         if (lang === 'el') {
           renderData.values = {
             gid: feature.properties.gid,
+            x: coordinates[0],
+            y: coordinates[1],
+            areaName: feature.properties.area_name,
             estateType: feature.properties.estatetype,
             address: feature.properties.street_el,
             addressNumber: feature.properties.street_number,
@@ -71,6 +84,7 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
             bedrooms: feature.properties.bedrooms,
             floor: feature.properties.floor,
             year: feature.properties.year,
+            planNumber: feature.properties.plan_num,
             plotArea: feature.properties.plotarea,
             parcelNumber: feature.properties.parcel_num,
             parking: feature.properties.parking,
@@ -84,6 +98,9 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
         } else {
           renderData.values = {
             gid: feature.properties.gid,
+            x: feature.geometry.coordinates[0],
+            y: feature.geometry.coordinates[1],
+            areaName: feature.properties.area_name,
             estateType: feature.properties.estatetype_en,
             address: feature.properties.street_en,
             addressNumber: feature.properties.street_number,
@@ -92,6 +109,7 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
             bedrooms: feature.properties.bedrooms,
             floor: feature.properties.floor,
             year: feature.properties.year,
+            planNumber: feature.properties.plan_num,
             plotArea: feature.properties.plotarea,
             parcelNumber: feature.properties.parcel_num,
             parking: feature.properties.parking,
@@ -115,26 +133,32 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
             gid: gid
           }
         })
-      )
+        )
       .then(function resolve(data) {
         App.config.cache.activeEstateListing = data;
         renderData.listing.values = data;
+        renderData.listing.values.date_start = utils.handleDate(data.date_start, lang);
+        renderData.listing.values.date_end = utils.handleDate(data.date_end, lang);
         renderData.listing.exists = true;
       })
       .catch(function error(e) {
+        var snackbarContainer = document.querySelector('#appwrapper__snackbar');
+        var data = { message: App.config.commons.trans.errors.listing404 };
         console.log(e);
-
         if (e.status === 404) {
-          renderData.listing.values = {};
           renderData.listing.exists = false;
+          snackbarContainer.MaterialSnackbar.showSnackbar(data);
         }
       });
-      Promise.each([p1, p2], function e() {
+      Promise.each([p1, p2], function e(result) {
       })
       .then(function resolve() {
         dustEstateInfo(renderData);
         editButton.removeAttribute('disabled');
+        deleteButton.removeAttribute('disabled');
+
         utils.addClass(editButton, 'mdl-button--accent');
+        utils.addClass(deleteButton, 'mdl-button--accent');
       })
       .catch(function error(e) {
         console.log(e);
@@ -143,13 +167,19 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
       infoBoxContent.innerHTML = '';
       utils.addClass(infoBoxContent, 'visuallyhidden');
       editButton.setAttribute('disabled', true);
-      utils.removeClass(editButton, 'mdl-button--accent');
-      utils.removeClass(editButton, 'mdl-button--raised');
+
+      deleteButton.setAttribute('disabled', true);
+
+      utils.findById(map, 'estates').getSource().getFeatures()
+      .forEach(function resetStyle(feature) {
+        feature.setStyle(null);
+      });
     }
   }
 
   function init() {
     var map = App.config.commons.map;
+    document.querySelector('body').dataset.active = 'info';
     map.on('click', selectFeature);
   }
   function disable() {

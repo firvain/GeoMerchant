@@ -11,6 +11,7 @@ module.exports = {
         "dust": true,
         "Promise": true,
         "jQuery": true,
-        "App": true
+        "App": true,
+        "dialogPolyfill": true
     }
 };

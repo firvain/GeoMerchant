@@ -15,7 +15,9 @@ window.App.config = {
   modules: {
     map: {},
     info: {},
-    edit: {}
+    edit: {},
+    delete: {},
+    insert: {}
   }
 };
 window.App.utils = {};

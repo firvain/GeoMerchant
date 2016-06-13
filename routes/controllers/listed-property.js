@@ -23,7 +23,7 @@ router.route('/listed')
     'public.property.parking,public.property.furnished,public.property.view,public.property.heating,public.property.cooling,public.property.title,public.property.year,' +
     'public.property.parcel_num,public.property.plan_num,public.property.area_name,public.property.street_el,public.property.street_number,public.property.ps_code,' +
     'public.property.floor,public.property.street_en,public.property."isnew",public.owner.name_el,public.owner.lastname_el,public.owner.fathername_el,public.owner.name_en,public.owner.lastname_en,public.owner.fathername_en,' +
-    'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.prefered_customer,public.listing.pets,public.listing.sale,public.listing.rent,' +
+    'public.owner.phone1,public.owner.email,public.listing.date_start,public.listing.date_end,public.listing.price,public.listing.pets,public.listing.sale,public.listing.rent,' +
     'public.owner.phone2';
     qfrom = 'public.owner_property ' + 'INNER JOIN public.owner ON (public.owner_property.owner_id = public.owner.id) ' + 'INNER JOIN public.property ON (public.owner_property.property_gid = public.property.gid) ' + 'INNER JOIN public.listing ON (public.property.gid = public.listing.property_gid);';
     client.query('SELECT ' + qstring + ',ST_AsGeoJSON(public.property.the_geom) as geom FROM ' + qfrom,
@@ -100,7 +100,7 @@ router.route('/listed/filters')
     'property.street_el, property.ps_code, property.floor, property.street_en, property.street_number,' +
     'property."isnew", owner.name_el, owner.lastname_el, owner.fathername_el, owner.name_en,' +
     'owner.lastname_en, owner.fathername_en, owner.phone1, owner.email, listing.date_start, listing.date_end,' +
-    'listing.price, listing.prefered_customer, listing.pets, listing.sale, listing.rent, owner.phone2';
+    'listing.price, listing.pets, listing.sale, listing.rent, owner.phone2';
     qfrom = ' owner_property  INNER JOIN  owner ON ( owner_property.owner_id =  owner.id) ' +
     'INNER JOIN  property ON ( owner_property.property_gid =  property.gid) ' +
     'INNER JOIN  listing ON ( property.gid =  listing.property_gid) ';

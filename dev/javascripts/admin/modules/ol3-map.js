@@ -76,6 +76,11 @@ App.config.modules.map = (function (window, document, undefined, Promise, ol, Ap
             });
             self.addFeatures(features);
           })
+          .then(function resolve() {
+            self.getFeatures().forEach(function addIds(feature) {
+              feature.setId(feature.getProperties().gid);
+            });
+          })
           .catch(function error(e) {
             console.log(e);
             if (e.status === 404) {
@@ -110,12 +115,19 @@ App.config.modules.map = (function (window, document, undefined, Promise, ol, Ap
         name: trans.layers.mapBox
       });
     },
-    estates: function estates(trans){
+    estates: function estates() {
       return new ol.layer.Vector({
         source: mapSources.estates(),
         id: 'estates',
         visible: true,
         style: mapStyles.estates
+      });
+    },
+    newEstates: function newEstates(trans) {
+      return new ol.layer.Vector({
+        source: new ol.source.Vector(),
+        id: 'newEstates',
+        visible: false
       });
     }
   };
@@ -126,7 +138,7 @@ App.config.modules.map = (function (window, document, undefined, Promise, ol, Ap
       return null;
     });
     return new ol.Map({
-      target: 'map',
+      target: 'appwrapper__map',
       layers: _.compact(layers),
       loadTilesWhileAnimating: true,
       loadTilesWhileInteracting: true,

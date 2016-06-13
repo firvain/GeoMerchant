@@ -1,0 +1,22 @@
+<h6 class="mdl-dialog__title">{title}</h6>
+{@eq key="{choose}" value="true" type="boolean"}
+<div class="mdl-dialog__content">
+  <label class="mdl-radio mdl-js-radio" for="mdl-dialog__content-estate">
+    <input type="radio" id="mdl-dialog__content-estate" class="mdl-radio__button" name="options" value="1" >
+    <span class="mdl-radio__label">Estate And Listing</span>
+  </label>
+  <label class="mdl-radio mdl-js-radio" for="mdl-dialog__content-listing">
+    <input type="radio" id="mdl-dialog__content-listing" class="mdl-radio__button" name="options" value="2" checked>
+    <span class="mdl-radio__label">Listing</span>
+  </label>
+  <p style="padding: 0;">This action can not be undone</p>
+</div>
+{:else}
+<div class="mdl-dialog__content">
+  <p>This action can not be undone</p>
+</div>
+{/eq}
+<div class="mdl-dialog__actions">
+  <button id="confirmDelete" type="button" class="mdl-button mdl-button--accent">Confirm</button>
+  <button id="cancelDelete" type="button" class="mdl-button">Cancel</button>
+</div>

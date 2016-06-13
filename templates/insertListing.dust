@@ -1,0 +1,62 @@
+<section id="listing" class="listing">
+  <div id='listing__idAndType' class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+      <div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
+        <input class="mdl-textfield__input" type="text" id="listing__idAndType-type" {@eq key=listing.values.sale type="boolean" value="true"} value="{listing.sale}" {:else} value="{listing.rent} " {/eq}" readonly tabIndex="-1"  data-type="special">
+        <label for="listing__idAndType-type">
+          <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+        </label>
+        <label for="listing__idAndType-type" class="mdl-textfield__label">{listing.type}</label>
+        <ul for="listing__idAndType-type" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+          <li class="mdl-menu__item" data-val='{listing.sale}'>{listing.sale}</li>
+          <li class="mdl-menu__item" data-val='{listing.rent}'>{listing.rent}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id='listing__general' class="mdl-grid">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="listing__general-price" value="{listing.values.price}"   data-type="number">
+        <label class="mdl-textfield__label" for="listing__general-price">{listing.price}</label>
+        <span class="mdl-textfield__error">{errors.required}</span>
+      </div>
+      <div id="listing__general-pets-wrapper" class="listing__general-pets-wrapper {@eq key=listing.values.sale type="boolean" value="true"}visuallyhidden{/eq}">
+        <label class="mdl-checkbox mdl-js-checkbox" for="listing__general-pets">
+          <input type="checkbox" id="listing__general-pets" class="mdl-checkbox__input" {@eq key="{listing.values.pets}" value="true" type="boolean"} checked {/eq} >
+          <span class="mdl-checkbox__label">{listing.pets}</span>
+        </label>
+      </div>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--stretch">
+      <div class="mdl-grid" style="padding: 0;">
+        <div class="mdl-cell mdl-cell--10-col mdl-cell--stretch">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="listing__general-dateStart" value="{listing.values.date_start}"   data-type="date" disabled>
+            <label class="mdl-textfield__label" for="listing__general-dateStart">{listing.dateStart}</label>
+            <span class="mdl-textfield__error">{errors.required}</span>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--middle">
+          <button id='infobox__date-start' class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" >
+            <i class="material-icons">date_range</i>
+          </button>
+        </div>
+      </div>
+      <div class="mdl-grid" style="padding: 0;">
+        <div class="mdl-cell mdl-cell--10-col mdl-cell--stretch">
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="listing__general-dateEnd" value="{listing.values.date_end}" data-type="date" disabled>
+            <label class="mdl-textfield__label" for="listing__general-dateEnd">{listing.dateEnd}</label>
+            <span class="mdl-textfield__error">{errors.required}</span>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--middle">
+          <button id='infobox__date-end' class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" >
+            <i class="material-icons">date_range</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

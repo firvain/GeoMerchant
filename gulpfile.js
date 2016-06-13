@@ -71,6 +71,8 @@ gulp.task('scripts-admin', function(cb) {
         'dev/javascripts/admin/modules/ol3-map.js',
         'dev/javascripts/admin/modules/info.js',
         'dev/javascripts/admin/modules/edit.js',
+        'dev/javascripts/admin/modules/delete.js',
+        'dev/javascripts/admin/modules/insert.js',
         'dev/javascripts/admin/index.js'
         ])
         .pipe(sourcemaps.init())
@@ -117,6 +119,7 @@ gulp.task('inject-map',['scripts-map','minify-css-map'], function () {
   var target = gulp.src('./views/map.dust');
   var appStream = gulp.src(['./public/js/map.min.js', './public/css/map.min.css'], {read: false});
   var vendorStream = gulp.src([
+    './public/libs/bowser/src/bowser.js',
     './public/libs/openlayers/dist/ol.js',
     './public/libs/bluebird/js/browser/bluebird.min.js',
     './public/libs/jquery/dist/jquery.min.js',
@@ -135,7 +138,7 @@ gulp.task('inject-map',['scripts-map','minify-css-map'], function () {
     './public/libs/openlayers/dist/ol.css',
     './public/libs/material-design-lite/material.min.css',
     './public/libs/toastr/toastr.min.css',
-    './public/libs/getmdl-select/getmdl-select.min.css'
+    './public/libs/getmdl-select/getmdl-select.min.css',
     ], {read: false});
 
   return target.pipe(inject(series(vendorStream, appStream), {ignorePath: 'public'}))
@@ -145,6 +148,7 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
   var target = gulp.src('./views/admin.dust');
   var appStream = gulp.src(['./public/js/admin.min.js', './public/css/admin.min.css'], {read: false});
   var vendorStream = gulp.src([
+    './public/libs/bowser/src/bowser.js',
     './public/libs/openlayers/dist/ol.js',
     './public/libs/bluebird/js/browser/bluebird.min.js',
     './public/libs/jquery/dist/jquery.min.js',
@@ -157,8 +161,13 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
     './public/libs/getmdl-select/src/js/getmdl-select.js',
     './public/libs/md-date-time-picker/dist/js/draggabilly.pkgd.min.js',
     './public/libs/md-date-time-picker/dist/js/mdDateTimePicker.min.js',
-    './public/libs/dropzone/dist/min/dropzone.min.js',
+    // './public/libs/dropzone/dist/min/dropzone.min.js',
+    // './public/libs/blueimp-file-upload/js/vendor/jquery.ui.widget.js',
+    // './public/libs/blueimp-file-upload/js/jquery.iframe-transport.js',
+    // './public/libs/blueimp-file-upload/js/jquery.fileupload.js',
+    // // './public/libs/blueimp-file-upload/js/jquery.fileupload-image.js',
     './public/libs/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.min.js',
+    './public/libs/cloudinary.js',
     './public/libs/parsleyjs/dist/parsley.min.js',
     './public/libs/dialog-polyfill/dialog-polyfill.js',
     './public/libs/normalize-css/normalize.css',
@@ -166,7 +175,7 @@ gulp.task('inject-admin',['scripts-admin','minify-css-admin'], function () {
     './public/libs/material-design-lite/material.min.css',
     './public/libs/toastr/toastr.min.css',
     './public/libs/getmdl-select/getmdl-select.min.css',
-    './public/libs/md-date-time-picker/dist/css/mdDateTimePicker.min.css'
+    './public/libs/md-date-time-picker/dist/css/mdDateTimePicker.min.css',
     ], {read: false});
   return target.pipe(inject(series(vendorStream, appStream), {ignorePath: 'public'}))
     .pipe(gulp.dest('./views'));

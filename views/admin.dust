@@ -20,24 +20,27 @@
 
     </head>
 
-  <body>
+  <body data-active="info">
     <div class="appwrapper">
       <div class="spiner-wrapper visuallyhidden">
         <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner mdl-spinner-big"></div>
       </div>
+      <dialog class="appwrapper__dialog mdl-dialog">
+
+      </dialog>
       {! <div id="modal" class="modal visuallyhidden">
         <button id="modal-close" class="mdl-button mdl-js-button mdl-button--icon modal-close"> <i class="material-icons">close</i></button>
         <div class="modal-content"></div>
       </div> !}
 
-      <div class="infobox">
-        <nav class="actions">
+      <div id="appwrapper__infobox" class="appwrapper__infobox">
+        <nav id="appwrapper__infobox-nav" class="appwrapper__infobox-nav">
           <span>Welcome {user.nickname}!</span>
           <button class="mdl-button mdl-js-button mdl-button--icon" id="insert">
             <i class="material-icons">add</i>
             <div class="mdl-tooltip" for="insert">{btns.insert}</div>
           </button>
-          <button class="mdl-button mdl-js-button mdl-button--icon" id="delete">
+          <button class="mdl-button mdl-js-button mdl-button--icon" id="delete" disabled>
             <i class="material-icons">delete</i>
             <div class="mdl-tooltip" for="delete">{btns.delete}</div>
           </button>
@@ -49,6 +52,15 @@
             <i class="material-icons">exit_to_app</i>
             <div class="mdl-tooltip" for="logout">{btns.logout}</div>
           </button>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable" style="    vertical-align: middle;">
+             <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+               <i class="material-icons">search</i>
+             </label>
+             <div class="mdl-textfield__expandable-holder">
+               <input class="mdl-textfield__input" type="text" id="search">
+               <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+             </div>
+           </div>
           <div style="display: inline-block;">
             <button class="mdl-button mdl-js-button mdl-button--icon" id="enter-fullscreen">
               <i class="material-icons">fullscreen</i>
@@ -61,14 +73,19 @@
               <div class="mdl-tooltip" for="exit-fullscreen">{btns.exitFullscreen}</div>
             </button>
           </div>
+          <span id="activeModule">Information</span>
         </nav>
-        <div id='infobox-content' class="visuallyhidden">
+        <div id='appwrapper__infobox-content' class="visuallyhidden">
         </div>
       </div>
-      <div class="map" id="map"> </div>
-
+      <div class="appwrapper__map" id="appwrapper__map"> </div>
+      <div class="appwrapper__snackbar mdl-js-snackbar mdl-snackbar" id="appwrapper__snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div>
     </div>
     <!-- inject:js -->
+    <script src="/libs/bowser/src/bowser.js"></script>
     <script src="/libs/openlayers/dist/ol.js"></script>
     <script src="/libs/bluebird/js/browser/bluebird.min.js"></script>
     <script src="/libs/jquery/dist/jquery.min.js"></script>
@@ -81,8 +98,8 @@
     <script src="/libs/getmdl-select/src/js/getmdl-select.js"></script>
     <script src="/libs/md-date-time-picker/dist/js/draggabilly.pkgd.min.js"></script>
     <script src="/libs/md-date-time-picker/dist/js/mdDateTimePicker.min.js"></script>
-    <script src="/libs/dropzone/dist/min/dropzone.min.js"></script>
     <script src="/libs/cloudinary-jquery-file-upload/cloudinary-jquery-file-upload.min.js"></script>
+    <script src="/libs/cloudinary.js"></script>
     <script src="/libs/parsleyjs/dist/parsley.min.js"></script>
     <script src="/libs/dialog-polyfill/dialog-polyfill.js"></script>
     <script src="/js/admin.min.js"></script>
@@ -94,6 +111,9 @@
     <script src="/js/tpl/propertyInsert.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/propertyUpdate.js" crossorigin="anonymous"></script>
     <script src="/js/tpl/listingInsert.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/deleteDialog.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/insert.js" crossorigin="anonymous"></script>
+    <script src="/js/tpl/insertListing.js" crossorigin="anonymous"></script>
 
    {!  <script src='/vendor/cloudinary/jquery.ui.widget.js' type='text/javascript'></script>
     <script src='/vendor/cloudinary/jquery.iframe-transport.js' type='text/javascript'></script>

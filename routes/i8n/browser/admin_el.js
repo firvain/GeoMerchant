@@ -18,6 +18,7 @@ module.exports = {
       villa: 'Έπαυλη'
     },
     gid: 'Κωδικός Ακινήτου',
+    areaName: 'Περιοχή',
     area: 'Εμβαδό',
     areaUnits: 'τ.μ.',
     address: 'Διεύθυνση',
@@ -27,6 +28,7 @@ module.exports = {
     year: 'Έτος Κατασκευής',
     plotArea: 'Εμβαδό Οικοπέδου',
     parcelNumber: 'Αριθμός Τεμαχίου',
+    planNumber: 'Αριθμός Αδείας',
     amenities: {
       title: 'Τίτλος Κυριότητας',
       parking: 'Χώρος Στάθμεσης',
@@ -37,6 +39,9 @@ module.exports = {
       cooling: 'Κλιματισμός',
       isnew: 'Νεόδμητο',
       bedrooms: 'Υπνοδωμάτια'
+    },
+    location: {
+      change: 'Αλλαγή της θέσης του Ακινήτου'
     }
   },
   listing: {
@@ -86,7 +91,8 @@ module.exports = {
       404: 'Δεν Βρεθηκαν Ιδιοκτησίες'
     },
     notNumber: 'Η τιμή δεν είναι αριθμός!',
-    listing404: 'Δεν βρέθηκε Αγγελία!'
+    listing404: 'Δεν βρέθηκε Αγγελία!',
+    required: 'Η τιμή είναι Υποχρεωτική'
   },
   titles: {
     areaUnits: 'τ.μ.',
