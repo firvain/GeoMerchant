@@ -133,12 +133,14 @@ gulp.task('inject-map',['scripts-map','minify-css-map'], function () {
     './public/libs/getmdl-select/src/js/getmdl-select.js',
     './public/libs/auth0-lock/build/auth0-lock.min.js',
     './public/libs/parsleyjs/dist/parsley.min.js',
+    './public/libs/clusterize/clusterize.min.js',
     './public/libs/dialog-polyfill/dialog-polyfill.js',
     './public/libs/normalize-css/normalize.css',
     './public/libs/openlayers/dist/ol.css',
     './public/libs/material-design-lite/material.min.css',
     './public/libs/toastr/toastr.min.css',
     './public/libs/getmdl-select/getmdl-select.min.css',
+    './public/libs/clusterize/clusterize.css',
     ], {read: false});
 
   return target.pipe(inject(series(vendorStream, appStream), {ignorePath: 'public'}))
