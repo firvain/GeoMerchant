@@ -5,7 +5,7 @@ var logger = require('../../utils/logger');
 var pg = require('pg');
 var router = express.Router();
 
-router.route('/uses/:propertygid')
+router.route('/:propertygid')
 .get(function getUses(req, res) {
   var propertyGid = req.params.propertygid;
   pg.connect(config.connection, function connectToPG(err, client, done) {

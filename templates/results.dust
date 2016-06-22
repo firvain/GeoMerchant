@@ -1,0 +1,14 @@
+<div id="scrollArea" class="clusterize-scroll">
+  <ul id="contentArea" class="results-list mdl-list clusterize-content">
+  {#results}
+    <li class="mdl-list__item mdl-list__item--two-line" data-gid={gid}>
+      <span class="mdl-list__item-primary-content">
+        <span>{address}</span>
+        <span class="mdl-list__item-sub-title">{title.price}{~s}{price}{~s}&euro; - {title.area}{~s}{area}{~s}{title.areaUnits}</span>
+      </span>
+      <span class="mdl-list__item-secondary-content" id="zoom{gid}">
+        <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">zoom_in</i></a>
+    </li>
+  {/results}
+  </ul>
+</div>

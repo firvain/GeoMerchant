@@ -30,9 +30,20 @@ module.exports = {
   phone: 'Τηλέφωνο',
   email: 'Ηλεκτρονική Διεύθυνση',
   btns: {
-    insert: 'εισαγωγη',
-    delete: 'διαγραφη',
-    update: 'ενημερωση',
-    logout: 'αποσυνδεση'
+    estateProperties: 'Επιλέξτε Χαρακτηριστικά Ακινήτου',
+    chooseArea: 'Αναζήτηση Βάση Περιοχής στο Χάρτη',
+    clear: 'Καθαρισμός',
+    search: 'Αναζήτηση',
+    login: 'Σύνδεση',
+    insert: 'Εισαγωγή',
+    delete: 'Διαγραφή',
+    edit: 'Επεξεργασία',
+    logout: 'Αποσύνδεση',
+    update: 'Ενημέρωση',
+    advancedFilters: 'Περισσότερα Κριτήρια',
+    info: 'Πληροφορίες',
+    close: 'Κλείσιμο',
+    enterFullscreen: 'Πλήρης Οθόνη',
+    exitFullscreen: 'Έξοδος από Πληρη Οθόνη'
   }
 };

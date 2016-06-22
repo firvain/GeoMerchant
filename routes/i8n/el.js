@@ -2,38 +2,12 @@ module.exports = {
   lang: 'el',
   altLang: 'en',
   langChange: 'English',
-  title: 'Geomerchant',
   basemap: 'Υπόβαθρο',
-  btns: {
-    clear: 'Καθαρισμός',
-    search: 'Αναζήτηση',
-    sale: 'Αγορά',
-    rent: 'Ενοικίαση',
-    parking: 'Στάθμεση',
-    furnished: 'Επιπλωμένο',
-    pets: 'Κατοικίδια',
-    view: 'Θέα',
-    heating: 'Θέρμανση',
-    cooling: 'Κλιματισμός',
-    newbuild: 'Νεόδμητο',
-    login: 'Σύνδεση',
-    insert: 'εισαγωγη',
-    delete: 'διαγραφη',
-    update: 'ενημερωση',
-    logout: 'αποσυνδεση',
-    advancedFilters: 'Περισσότερα Κριτήρια'
+  layers: {
+    mapBox: 'Χάρτης',
+    bing: 'Δορυφορική Εικόνα',
+    estates: 'Ακίνητα'
   },
-  priceTitle: 'Επιλέξτε Τιμή Ακινήτου',
-  price: 'Τιμή',
-  from: 'Από',
-  to: 'Εώς',
-  andMore: 'και πάνω',
-  or: 'ή Εισάγετε Τιμές',
-  priceError: 'Η τιμή δεν είναι αριθμός!',
-  estateCode: 'Κωδικός Ιδιοκτησίας',
-  estateProperties: 'Επιλέξτε Χαρακτηριστικά Ακινήτου',
-  chooseArea: ' Αναζήτηση Βάση Περιοχής στο Χάρτη',
-  listingType: 'Είδος Αγγελίας',
   estate: {
     title: 'Τύπος Ιδιοκτησίας',
     type: {
@@ -42,14 +16,60 @@ module.exports = {
       store: 'Κατάστημα',
       maisonette: 'Μεζονέτα',
       villa: 'Έπαυλη'
+    },
+    gid: 'Κωδικός Ακινήτου',
+    area: 'Εμβαδό',
+    areaUnits: 'τ.μ.',
+    address: 'Διεύθυνση',
+    amenities: {
+      title: 'Χαρακτηριστικά Ακινήτου',
+      parking: 'Χώρος Στάθμεσης',
+      furnished: 'Επιπλωμένο',
+      pets: 'Κατοικίδια',
+      view: 'Θέα',
+      heating: 'Θέρμανση',
+      cooling: 'Κλιματισμός',
+      isnew: 'Νεόδμητο',
+      bedrooms: 'Υπνοδωμάτια'
     }
   },
-  area: 'Εμβαδό',
-  address: 'Διευθυνση',
-  bedrooms: 'Υπνοδωμάτια',
-  contactInfo: 'Στοιχεία Επικοινωνίας',
-  name: 'Όνομα',
-  lastname: 'Επίθετο',
-  phone: 'Τηλέφωνο',
-  email: 'Ηλεκτρονική Διεύθυνση'
+  listing: {
+    price: 'Τιμή Ακινήτου',
+    area: 'Εμβαδό ακινήτου',
+    type: 'Τύπος Αγγελίας',
+    sale: 'Πώληση',
+    rent: 'Ενοικίαση',
+    from: 'από',
+    to: 'εώς',
+    andMore: 'και πάνω',
+    or: 'ή Εισάγετε Τιμή',
+    priceError: 'Η τιμή δεν είναι αριθμός'
+  },
+  btns: {
+    estateProperties: 'Επιλέξτε Χαρακτηριστικά Ακινήτου',
+    chooseArea: 'Ορισμός Περιοχής για Αναζήτηση',
+    clear: 'Καθαρισμός',
+    search: 'Αναζήτηση',
+    login: 'Σύνδεση',
+    insert: 'Εισαγωγή',
+    delete: 'Διαγραφή',
+    update: 'Ενημέρωση',
+    logout: 'Αποσύνδεση',
+    advancedFilters: 'Περισσότερα Κριτήρια',
+    info: 'Πληροφορίες',
+    close: 'Κλείσιμο'
+  },
+  contact: {
+    contactInfo: 'Στοιχεία Επικοινωνίας',
+    name: 'Όνομα',
+    lastname: 'Επίθετο',
+    phone: 'Τηλέφωνο',
+    email: 'Ηλεκτρονική Διεύθυνση'
+  },
+  errors: {
+    internal: 'Παρουσιάστηκε σφάλμα, παρακαλώ δοκιμάστε αργότερα!',
+    property: {
+      404: 'Δεν Βρεθηκαν Ιδιοκτησίες'
+    }
+  }
 };

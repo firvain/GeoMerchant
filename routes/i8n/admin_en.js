@@ -29,9 +29,20 @@ module.exports = {
   phone: 'Telephone',
   email: 'Email',
   btns: {
-    insert: 'insert',
-    delete: 'delete',
-    update: 'update',
-    logout: 'logout'
+    estateProperties: 'Choose Estate Amenities',
+    chooseArea: 'Search By Area on Map',
+    clear: 'Clear',
+    search: 'Search',
+    login: 'Login',
+    insert: 'Insert',
+    delete: 'Delete',
+    edit: 'Edit',
+    logout: 'Logout',
+    update: 'Update',
+    advancedFilters: 'Advanced Filters',
+    info: 'Info',
+    close: 'Close',
+    enterFullscreen: 'Fullscreen',
+    exitFullscreen: 'Exit Fullscreen'
   }
 };

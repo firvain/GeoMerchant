@@ -1,0 +1,181 @@
+<div class="mdl-cell mdl-cell--12-col mdl-cell--stretch estate-info-general">
+  <ul class="mdl-list">
+    <li class="mdl-list__item">
+      <span id="gid" class="mdl-list__item-primary-content">
+        <i class="mdi mdi-key"></i>
+        {gid}
+      </span>
+      <div class="mdl-tooltip" for="gid">gid</div>
+      <span id="estateType" class="mdl-list__item-primary-content">
+        <i class="mdi mdi-home-modern"></i>
+        {estateType}
+      </span>
+      <span id="address" class="mdl-list__item-primary-content">
+        <i class="mdi mdi-compass"></i>
+        {address}
+      </span>
+    </li>
+  </ul>
+</div>
+<div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+  <ul class="mdl-list">
+    <li class="mdl-list__item">
+      <span id="estateArea" class="mdl-list__item-primary-content">
+        {titles.estateArea}:{~s}{estateArea}{~s}{titles.areaUnits}
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span id="bedrooms" class="mdl-list__item-primary-content">
+        {amenities.bedrooms}:{~s}{bedrooms}
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span id="floor" class="mdl-list__item-primary-content">
+        {titles.floor}:{~s}{floor}
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span id="year" class="mdl-list__item-primary-content">
+        {titles.year}:{~s}{year}
+      </span>
+    </li>
+  </ul>
+</div>
+<div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+  <ul class="mdl-list">
+    <li class="mdl-list__item">
+      <span id="plot-area" class="mdl-list__item-primary-content">
+        {titles.plotArea}:{~s}{plotArea}{~s}{titles.areaUnits}
+      </span>
+    </li>
+    <li class="mdl-list__item">
+      <span id="parcel-number" class="mdl-list__item-primary-content">
+        {titles.parcelNumber}:{~s}{parcelNumber}
+      </span>
+    </li>
+    <li class="mdl-list__item">
+     <span  class="mdl-list__item-primary-content">
+       {titles.listing}
+     </span>
+     <span class="mdl-list__item-secondary-action">
+       <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--listing">
+         <input type="checkbox" id="list-checkbox--listing" class="mdl-checkbox__input" {@eq key=listing.exists type="boolean" value="true"} checked {/eq} disabled/>
+       </label>
+     </span>
+   </li>
+ </ul>
+</div>
+<div class="mdl-grid mdl-grid--no-spacing" style="width: 100%;">
+  <div class="mdl-cell mdl-cell--6-col">
+    <ul class="mdl-list">
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.parking}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--parking">
+            <input type="checkbox" id="list-checkbox-parking" class="mdl-checkbox__input" {@eq key=parking type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.furnished}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--furnished">
+            <input type="checkbox" id="list-checkbox--furnished" class="mdl-checkbox__input" {@eq key=furnished type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.isnew}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--isnew">
+            <input type="checkbox" id="list-checkbox-isnew" class="mdl-checkbox__input" {@eq key=isnew type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="mdl-cell mdl-cell--6-col">
+    <ul class="mdl-list">
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.heating}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--heating">
+            <input type="checkbox" id="list-checkbox-heating" class="mdl-checkbox__input" {@eq key=heating type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.cooling}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--cooling">
+            <input type="checkbox" id="list-checkbox-cooling" class="mdl-checkbox__input" {@eq key=cooling type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          {amenities.view}
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--view">
+            <input type="checkbox" id="list-checkbox-view" class="mdl-checkbox__input" {@eq key=view type="boolean" value="true"} checked {/eq} disabled/>
+          </label>
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+{@eq key=listing.exists type="boolean" value="true"}
+<div class="mdl-grid mdl-grid--no-spacing" style="width: 100%;">
+  <div class="mdl-cell mdl-cell--12-col">
+    <ul class="mdl-list listing-info-general">
+      <li class="mdl-list__item">
+        <span id="listing-id" class="mdl-list__item-primary-content">
+          <i class="mdi mdi-key"></i>
+          {listing.id}
+        </span>
+        <span id="listing-type" class="mdl-list__item-primary-content">
+          <i class="mdi mdi-format-list-bulleted-type"></i>
+          {@eq key=listing.sale type="boolean" value="true"}{titles.sale}{:else}{titles.rent}{/eq}
+        </span>
+        <span id="listing-price" class="mdl-list__item-primary-content">
+          <i class="mdi mdi-currency-eur"></i>
+          {listing.price}
+        </span>
+      </li>
+    </ul>
+    <ul class="mdl-list">
+      <li class="mdl-list__item">
+        <span id="listing-date-start" class="mdl-list__item-primary-content">
+          <i class="mdi mdi-calendar"></i>
+          {listing.date_start}
+        </span>
+        <span id="listing-date-end" class="mdl-list__item-primary-content">
+          <i class="mdi mdi-calendar" style="color: rgb(255,82,82);"></i>
+          {listing.date_end}
+        </span>
+        {@eq key=listing.rent type="boolean" value="true"}{listing.sale}
+          <span class="mdl-list__item-primary-content">
+            {titles.pets}
+          </span>
+          <span class="mdl-list__item-secondary-action">
+            <label class="mdl-checkbox mdl-js-checkbox" for="list-checkbox--pets">
+              <input type="checkbox" id="list-checkbox--pets" class="mdl-checkbox__input" {@eq key=listing.pets type="boolean" value="true"} checked {/eq} disabled/>
+            </label>
+          </span>
+        {/eq}
+      </li>
+    </ul>
+  </div>
+</div>
+{/eq}

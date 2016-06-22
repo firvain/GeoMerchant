@@ -1,17 +1,4 @@
-.modalDialog {
-  transition: opacity 400ms ease-in;
-  pointer-events: none;
-
-  opacity: 0;
-}
-
-.modalDialog:target {
-  pointer-events: auto;
-
-  opacity: 1;
-}
-
-.modalwraper {
+.modal {
   position: absolute;
   z-index: 99999;
   top: 50%;
@@ -23,12 +10,12 @@
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 
-  opacity: inherit;
+
   border-radius: 10px;
   background: #fff;
 }
 
-.close {
+.modal-close {
   position: absolute;
   top: 10px;
   right: 12px;
@@ -36,8 +23,8 @@
   color: #212121;
 }
 
-.close:hover {
-  color: #7b1fa2;
+.modal-close:hover {
+  color: rgb(255,82,82);
 }
 
 
@@ -51,7 +38,7 @@
 /* Portrait */
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-  .modalDialog > div {
+  .modal > div {
     width: 300px;
   }
 }
@@ -60,7 +47,7 @@
 /* Landscape */
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
-  .modalDialog > div {
+  .modal > div {
     width: 400px;
   }
 }
@@ -72,7 +59,7 @@
 /* Portrait */
 
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
-  .modalDialog > div {
+  .modal > div {
     width: 300px;
   }
 }
@@ -81,7 +68,7 @@
 /* Landscape */
 
 @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
-  .modalDialog > div {
+  .modal > div {
     width: 400px;
   }
 }
@@ -93,7 +80,7 @@
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: portrait) {
-  .modalDialog > div {
+  .modal > div {
     width: 300px;
   }
 }
@@ -104,7 +91,7 @@
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: landscape) {
-  .modalDialog > div {
+  .modal > div {
     width: 400px;
   }
 }
@@ -119,7 +106,7 @@
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: portrait) {
-  .modalDialog > div {
+  .modal > div {
     width: 300px;
   }
 }
@@ -130,7 +117,7 @@
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 3)
   and (orientation: landscape) {
-  .modalDialog > div {
+  .modal > div {
     width: 400px;
   }
 }

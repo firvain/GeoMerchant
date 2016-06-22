@@ -1,39 +1,13 @@
 module.exports = {
   lang: 'en',
   altLang: '',
-  langChange: 'Greek',
-  title: 'Geomerchant',
-  basemap: 'BaseMap',
-  btns: {
-    clear: 'Clear',
-    search: 'Search',
-    sale: 'Buy',
-    rent: 'Rent',
-    parking: 'Parking',
-    furnished: 'Furnished',
-    pets: 'Pets Allowed',
-    view: 'View',
-    heating: 'Heating',
-    cooling: 'Air Condition',
-    newbuild: 'Newly Build',
-    login: 'Login',
-    insert: 'insert',
-    delete: 'delete',
-    update: 'update',
-    logout: 'logout',
-    advancedFilters: 'Advanced Filters'
+  langChange: 'Ελληνικά',
+  basemap: 'Υπόβαθρο',
+  layers: {
+    mapBox: 'Χάρτης',
+    bing: 'Δορυφορική εικόνα',
+    estates: 'Ακίνητα'
   },
-  priceTitle: 'Choose Estate Price',
-  price: 'Price',
-  from: 'From',
-  to: 'To',
-  andMore: 'and more',
-  or: 'or Enter Price',
-  priceError: 'Input is not a number!',
-  estateCode: 'Estate Code',
-  estateProperties: 'Choose Estate Properites',
-  chooseArea: 'Search By Map Area',
-  listingType: 'Listing Type',
   estate: {
     title: 'Estate Type',
     type: {
@@ -42,13 +16,60 @@ module.exports = {
       store: 'Store',
       maisonette: 'Maisonette',
       villa: 'Villa'
+    },
+    gid: 'Estate ID',
+    area: 'Area',
+    areaUnits: 'sq.m.',
+    address: 'Address',
+    amenities: {
+      title: 'Amenities',
+      parking: 'Parking',
+      furnished: 'Furnished',
+      pets: 'Pets',
+      view: 'View',
+      heating: 'Heating',
+      cooling: 'Air Condition',
+      isnew: 'Newly Build',
+      bedrooms: 'Bedrooms'
     }
   },
-  area: 'Size',
-  address: 'Address',
-  bedrooms: 'Bedrooms',
-  contactInfo: 'Contact Info',
-  name: 'Name',
-  lastname: 'Last Name',
-  phone: 'Telephone'
+  listing: {
+    price: 'Estate Price',
+    area: 'Estate area',
+    type: 'Listing Type',
+    sale: 'Sale',
+    rent: 'Rent',
+    from: 'from',
+    to: 'to',
+    andMore: 'and more',
+    or: 'or Enter Price',
+    priceError: 'Input is not a number!'
+  },
+  btns: {
+    estateProperties: 'Choose Estate Amenities',
+    chooseArea: 'Define Search Area on Map',
+    clear: 'Clear',
+    search: 'Search',
+    login: 'Login',
+    insert: 'Insert',
+    delete: 'Delete',
+    update: 'Update',
+    logout: 'Logout',
+    advancedFilters: 'Advanced Filters',
+    info: 'Info',
+    close: 'Close'
+  },
+  contact: {
+    contactInfo: 'Contact Info',
+    name: 'Name',
+    lastname: 'Last Name',
+    phone: 'Phone Number',
+    email: 'Email'
+  },
+  errors: {
+    internal: 'An error occured, please try again later!',
+    property: {
+      404: 'No properties found!'
+    }
+  }
 };

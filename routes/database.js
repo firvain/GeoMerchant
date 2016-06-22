@@ -7,9 +7,9 @@ var pg = require('pg');
 
 var router;
 
-var listings = require('./controllers/listing');
+// var listings = require('./controllers/listing');
 var uses = require('./controllers/uses');
-var listed = require('./controllers/listed-property');
+// var listed = require('./controllers/listed-property');
 var property = require('./controllers/property');
 
 
@@ -22,8 +22,8 @@ pg.defaults.poolSize = 25;
 // get an instance of router
 router = express.Router();
 router.use('/', uses);
-router.use('/', listed);
-router.use('/',  property);
-router.use('/',  listings);
+// router.use('/', listed);
+router.use('/', ensureLoggedIn, property);
+// router.use('/', ensureLoggedIn, listings);
 
 module.exports = router;

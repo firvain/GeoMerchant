@@ -1,0 +1,128 @@
+.appwrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow:hidden;
+
+}
+.spiner-wrapper {
+  position: absolute;
+  z-index: 99999;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+}
+.mdl-spinner-big {
+  width: 80px!important;
+  height: 80px!important;
+}
+.appwrapper__infobox {
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+  flex: 1 0 30%;
+  background-color: #fff;
+}
+@media (max-width: 839px) and (min-width: 480px) {
+  .appwrapper__infobox {
+    flex: 1 0 40%;
+  }
+}
+@media (max-width: 479px) {
+  .appwrapper__infobox {
+    flex: 1 0 40%;
+  }
+}
+.appwrapper__map {
+  position: relative;
+  flex: 1 0 70%;
+
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 839px) and (min-width: 480px) {
+  .appwrapper__map {
+    flex: 1 0 60%;
+  }
+}
+@media (max-width: 479px) {
+  .appwrapper__map {
+    flex: 1 0 60%;
+  }
+}
+.appwrapper__infobox-nav {
+
+  padding-right:0.5em;
+  padding-left:0.5em;
+  border-bottom:0.5em solid rgb(255,82,82);
+}
+
+.confirmBtns .mdl-cell{
+  text-align: center;
+}
+.mdl-textfield.is-disabled .mdl-textfield__input {
+  color: inherit;
+}
+.mdl-textfield.is-disabled.is-disabled .mdl-textfield__label {
+  color: inherit;
+}
+.mdl-checkbox.is-disabled .mdl-checkbox__label{
+  color: inherit;
+}
+.mdl-switch.is-disabled .mdl-switch__label {
+  color: inherit;
+ }
+.appwrapper__infobox .mdl-grid {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.appwrapper__infobox .mdl-cell {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.listing-disabled, .confirmBtns-disabled {
+  background-color:  rgba(0, 0, 0, 0.2);
+}
+.estate + .listing {
+  border-top: 0.2em solid rgb(255,82,82);
+}
+.unclickable {
+  pointer-events: none;
+}
+.mdl-cell--centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.mdl-cell--centered p {
+  margin: 0;
+}
+#estate__general_estate-year ~ span {
+  font-size: 10px;
+}
+#estate__general_estate-planNumber ~ span {
+  font-size: 10px;
+}
+.appwrapper__infobox-nav .mdl-textfield--expandable {
+  padding: 0;
+}
+.appwrapper__infobox-nav .mdl-textfield--expandable > label {
+  bottom: 0;
+}
+.mdl-dialog__title {
+  font-size: 1.143em;
+  padding: 0;
+  text-align: center;
+}
+.upload-images {
+  padding-top: 8px;
+}
+.dropzone-area {
+  width:auto;
+  height: 10em;
+  border: 0.2em dashed  rgb(255,82,82);
+}

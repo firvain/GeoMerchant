@@ -8,6 +8,12 @@ module.exports = {
         "toastr": true,
         "ol": true,
         "_": true,
-        "dust": true
+        "dust": true,
+        "Promise": true,
+        "jQuery": true,
+        "App": true,
+        "dialogPolyfill": true,
+        "Parsley": true,
+        "moment": true
     }
 };
