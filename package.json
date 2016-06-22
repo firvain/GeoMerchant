@@ -1,6 +1,6 @@
 {
   "name": "geomerchant",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "start": "pm2 start processes.json",
@@ -42,7 +42,7 @@
     "passport": "^0.3.2",
     "passport-auth0": "^0.5.2",
     "path-exists": "^3.0.0",
-    "pg": "^5.1.0",
+    "pg": "5.1.0",
     "serve-favicon": "~2.3.0",
     "toastr": "^2.1.2",
     "winston": "^2.2.0",
