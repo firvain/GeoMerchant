@@ -1,4 +1,5 @@
-  <ul class="results-list mdl-list">
+<div id="scrollArea" class="clusterize-scroll">
+  <ul id="contentArea" class="results-list mdl-list clusterize-content">
   {#results}
     <li class="mdl-list__item mdl-list__item--two-line" data-gid={gid}>
       <span class="mdl-list__item-primary-content">
@@ -10,4 +11,4 @@
     </li>
   {/results}
   </ul>
-
+</div>

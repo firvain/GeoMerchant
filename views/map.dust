@@ -10,13 +10,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
   <!-- inject:css -->
-  <link rel="stylesheet" href="/libs/normalize-css/normalize.css">
-  <link rel="stylesheet" href="/libs/openlayers/dist/ol.css">
-  <link rel="stylesheet" href="/libs/material-design-lite/material.min.css">
-  <link rel="stylesheet" href="/libs/toastr/toastr.min.css">
-  <link rel="stylesheet" href="/libs/getmdl-select/getmdl-select.min.css">
-  <link rel="stylesheet" href="/libs/clusterize/clusterize.css">
-  <link rel="stylesheet" href="/css/map.min.css">
+  <link rel="stylesheet" href="/vendor/normalize.css">
+  <link rel="stylesheet" href="/vendor/ol.css">
+  <link rel="stylesheet" href="/vendor/material.blue_grey-red.min.css">
+  <link rel="stylesheet" href="/vendor/toastr.min.css">
+  <link rel="stylesheet" href="/vendor/getmdl-select.min.css">
+  <link rel="stylesheet" href="/vendor/clusterize.css">
+  <link rel="stylesheet" href="/vendor/dialog-polyfill.css">
+  <link rel="stylesheet" href="/css/map.css">
   <!-- endinject -->
   {! <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.purple-indigo.min.css" /> !}
 </head>
@@ -137,6 +138,8 @@
               <div class="mdl-cell mdl-cell--12-col  mdl-cell--middle">
                 <a id="advanced-filters" href="#">{btns.advancedFilters}</a>
               </div>
+            </div>
+            <div class="mdl-grid">
               <div id="estate-filters" class="mdl-cell mdl-cell--12-col visuallyhidden" style="border:1px solid rgb(96,125,139);">
                 <div class="mdl-grid">
                   <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-cell--top">
@@ -178,37 +181,37 @@
           <form action="#" class="estate-cards "></form>
 
       </div>
-      <div id="results" class="results visuallyhidden"></div>
+      <div id="results" class="visuallyhidden"></div>
     </div>
 
     <div class="map" id="map"> </div>
   </div>
 
   <!-- inject:js -->
-  <script src="/libs/bowser/src/bowser.js"></script>
-  <script src="/libs/openlayers/dist/ol.js"></script>
-  <script src="/libs/bluebird/js/browser/bluebird.min.js"></script>
-  <script src="/libs/jquery/dist/jquery.min.js"></script>
-  <script src="/libs/dustjs-linkedin/dist/dust-full.min.js"></script>
-  <script src="/libs/dustjs-helpers/dist/dust-helpers.min.js"></script>
-  <script src="/libs/material-design-lite/material.min.js"></script>
-  <script src="/libs/lodash/dist/lodash.min.js"></script>
-  <script src="/libs/moment/moment.js"></script>
-  <script src="/libs/cloudinary-jquery/cloudinary-jquery.min.js"></script>
-  <script src="/libs/toastr/toastr.min.js"></script>
-  <script src="/libs/getmdl-select/src/js/getmdl-select.js"></script>
-  <script src="/libs/auth0-lock/build/auth0-lock.min.js"></script>
-  <script src="/libs/parsleyjs/dist/parsley.min.js"></script>
-  <script src="/libs/clusterize/clusterize.min.js"></script>
-  <script src="/libs/dialog-polyfill/dialog-polyfill.js"></script>
-  <script src="/js/map.min.js"></script>
+  <script src="/vendor/bowser.min.js"></script>
+  <script src="/vendor/ol.js"></script>
+  <script src="/vendor/bluebird.min.js"></script>
+  <script src="/vendor/jquery.min.js"></script>
+  <script src="/vendor/dust-core.min.js"></script>
+  <script src="/vendor/dust-helpers.min.js"></script>
+  <script src="/vendor/material.min.js"></script>
+  <script src="/vendor/lodash.min.js"></script>
+  <script src="/vendor/moment.min.js"></script>
+  <script src="/vendor/toastr.min.js"></script>
+  <script src="/vendor/cloudinary-jquery-file-upload.min.js"></script>
+  <script src="/vendor/getmdl-select.min.js"></script>
+  <script src="/vendor/auth0-lock.min.js"></script>
+  <script src="/vendor/parsley.min.js"></script>
+  <script src="/vendor/clusterize.min.js"></script>
+  <script src="/vendor/dialog-polyfill.js"></script>
+  <script src="/js/map.js"></script>
   <!-- endinject -->
   <!-- ======= Templates =======  -->
-  <script src="/js/tpl/estateInfo.js" crossorigin="anonymous"></script>
-  <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
+  <script src="/js/templates.js" crossorigin="anonymous"></script>
+{!   <script src="/js/tpl/estateCards.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/modalInfo.js" crossorigin="anonymous"></script>
   <script src="/js/tpl/valueRange.js" crossorigin="anonymous"></script>
-  <script src="/js/tpl/results.js" crossorigin="anonymous"></script>
+  <script src="/js/tpl/results.js" crossorigin="anonymous"></script> !}
   <script type="text/javascript">
     var lock = new Auth0Lock('{env.AUTH0_CLIENT_ID}', '{env.AUTH0_DOMAIN}');
     $('#adminLogin').click(function() {

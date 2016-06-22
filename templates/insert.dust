@@ -21,10 +21,12 @@
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="estate__info-areaName" value="{values.areaName}"    data-type="alphanum">
         <label class="mdl-textfield__label" for="estate__info-gid">{estate.areaName}</label>
+        <span class="mdl-textfield__error">{errors.required}</span>
       </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="estate__general_estate-address" value="{values.address}"   data-type="alphanum">
         <label class="mdl-textfield__label" for="estate__general_estate-address">{estate.address}</label>
+        <span class="mdl-textfield__error">{errors.required}</span>
       </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text"  id="estate__general_estate-addressNumber" value="{values.addressNumber}"  data-type="number">
@@ -32,7 +34,7 @@
         <span class="mdl-textfield__error">{errors.required}</span>
       </div>
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text"  id="estate__general_estate-pscode" value="{values.pscode}"   data-type="number">
+        <input class="mdl-textfield__input" type="text"  id="estate__general_estate-pscode" value="{values.pscode}"  data-type="number">
         <label class="mdl-textfield__label" for="estate__general_estate-pscode">{estate.pscode}</label>
         <span class="mdl-textfield__error">{errors.required}</span>
       </div>

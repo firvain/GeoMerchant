@@ -92,9 +92,7 @@ App.config.modules.filters = (function filters(window, document, Promise, $, Par
       })
     )
     .then(function resolve(data) {
-
       var renderData = {};
-
       var results = [];
 
       utils.findById(map, 'estates').setVisible(false);
@@ -136,12 +134,16 @@ App.config.modules.filters = (function filters(window, document, Promise, $, Par
     })
     .then(function resolve(data) {
       dustBluebird.renderAsync('results', data)
-      .then(function resolveDust(d) {
-        $('#results').removeClass('visuallyhidden');
-        $('#results').html(d);
-        $('.results-list').find('i').each(function addZoomToResults() {
-          var gid = $(this).parents('li').data('gid');
-          $(this).click(function zoomToGid(event) {
+      .then(function resolveDust(result) {
+        var results = document.getElementById('results');
+        utils.removeClass(results, 'visuallyhidden');
+        results.innerHTML = result;
+      })
+      .then(function resolvez() {
+        var zooms = document.getElementById('contentArea').querySelectorAll('i');
+        zooms.forEach(function addZoomToResults(zoom) {
+          zoom.addEventListener('click', function zoomToGid() {
+            var gid = zoom.parentNode.parentNode.parentNode.dataset.gid;
             var coordinates = utils.findById(map, 'filteredEstates').getSource().getFeatureById(gid)
             .getGeometry()
             .getCoordinates();
@@ -151,7 +153,14 @@ App.config.modules.filters = (function filters(window, document, Promise, $, Par
         });
       });
     })
+    .then(function resolve() {
+      var clusterize = new Clusterize({
+        scrollId: 'scrollArea',
+        contentId: 'contentArea'
+      });
+    })
     .catch(function error(e) {
+      console.log(e);
       if (e.status === 404) {
         toastr.error(trans.errors.property[404]);
       } else if (e.status === 503) {

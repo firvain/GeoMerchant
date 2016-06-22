@@ -1,93 +1,50 @@
-.main-container
-{
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
-    overflow: hidden;
-            flex-direction: column;
-
-    height: 100%;
-    padding: 8em;
-
-    -webkit-flex-direction: column;
-        -ms-flex-direction: column;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-            align-items: stretch;
-    /*justify-content: center;*/
+.appwrapper {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 100%;
 }
+.spiner-wrapper {
+  position: absolute;
+  z-index: 99999;
+  top: 50%;
+  left: 50%;
 
-.divider
-{
-    position: relative;
-
-    -webkit-animation-delay: .4s;
-            animation-delay: .4s;
-
-    border-bottom: 3px solid  #fff;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
-
-.main-container .title
-{
-    font-size: 2em;
+.mdl-spinner-big {
+  width: 80px!important;
+  height: 80px!important;
 }
+.map {
+  position: relative;
+  flex: 1 0 70%;
 
-.main-container .menu
-{
-    position: relative;
-    left: 0;
-
-    margin-left: 0;
-    padding-left: 0;
-
-    -webkit-animation-delay: 1.4s;
-            animation-delay: 1.4s;
+  width: 100%;
+  height: 100%;
 }
-
-.main-container .menu-item,
-.main-container .menu-open-button
-{
-    line-height: 180px;
-
-    top: 90px;
-
-    width: 180px;
-    height: 180px;
-    margin-left: -90px;
-
-    transition: -webkit-transform ease-out 200ms;
-    transition:         transform ease-out 200ms;
-
-    color: #fff;
-    border-radius: 100%;
+@media (max-width: 839px) and (min-width: 480px) {
+  .map {
+    flex: 1 0 60%;
+  }
 }
-
-.main-container .menu-open-button:hover
-{
-    background: #fff;
+@media (max-width: 479px) {
+  .map {
+    flex: 1 0 60%;
+  }
 }
+.controls {
+  position: absolute;
+  z-index: 10;
+  top: 7.000em;
+  left: .429em;
 
-.main-container .menu-open-button:hover .hamburger
-{
-    background: rgb(255,82,82);
-}
+  width: 28.571em;
+  height: auto;
+  padding: .429em;
 
-.main-container .menu-open:checked ~ .menu-item:nth-child(4)
-{
-    transition-duration: 190ms;
-    -webkit-transform: translate3d(180px, 0, 0);
-            transform: translate3d(180px, 0, 0);
-}
-
-.main-container .menu-open:checked ~ .menu-item:nth-child(3)
-{
-    transition-duration: 190ms;
-    -webkit-transform: translate3d(-180px, 0, 0);
-            transform: translate3d(-180px, 0, 0);
-}
-.menu-item .flag-icon
-{
-    line-height: 4em;
-
-    width: 4.333em;
+  background: #bfbdff;
+  box-shadow: .429em .429em .357em 0 rgba(50, 50, 50, .75);
 }

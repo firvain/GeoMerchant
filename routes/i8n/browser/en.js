@@ -22,7 +22,7 @@ module.exports = {
     areaUnits: 'sq.m.',
     address: 'Address',
     amenities: {
-      title: 'Amenities',
+      title: 'Title Deed',
       parking: 'Parking',
       furnished: 'Furnished',
       pets: 'Pets',

@@ -71,9 +71,7 @@
 /* .mdl-checkbox > span {
   white-space: nowrap;
 } */
-.results {
-  position: relative;
-  overflow-y: auto;
-  padding: 8px;
-  margin: 8px;
+
+.clusterize-scroll {
+  max-height: 300px;
 }

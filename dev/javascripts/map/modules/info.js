@@ -9,23 +9,23 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
   });
   function extraInfoModal(feature) {
     var trans = _.cloneDeep(App.config.commons.trans);
-    var modalPromise;
     var obj = {};
     if (feature.get('rent')) {
       obj.listing_type = trans.listing.rent;
     } else {
       obj.listing_type = trans.listing.sale;
     }
-    obj.type = feature.get('estatetype');
     obj.gid = feature.get('gid');
     if (lang === 'el') {
-      obj.address = feature.get('street_el') + '' +  feature.get('street_number');
+      obj.type = feature.get('estatetype');
+      obj.address = feature.get('street_el') + '' + feature.get('street_number');
       obj.contact = {
         name: feature.getProperties().name_el,
         lastname: feature.getProperties().lastname_el
       };
     } else {
-      obj.address = feature.get('street_en') + '' +  feature.get('street_number');
+      obj.type = feature.get('estatetype_en');
+      obj.address = feature.get('street_en') + '' + feature.get('street_number');
       obj.contact = {
         name: feature.getProperties().name_en,
         lastname: feature.getProperties().lastname_en
@@ -34,7 +34,7 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
     obj.area = feature.get('estatearea');
     obj.bedrooms = feature.get('bedrooms');
     obj.price = feature.get('price');
-    obj.title = {
+    obj.titles = {
       gid: trans.estate.gid,
       listing_type: trans.listing.type,
       address: trans.estate.address,
@@ -52,10 +52,16 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
       name: trans.contact.name,
       lastname: trans.contact.lastname,
       phone: trans.contact.phone,
-      email: trans.contact.email
+      email: trans.contact.email,
+      title: trans.estate.amenities.title
     };
-    obj.isnew = feature.get('isnew');
     obj.furnished = feature.get('furnished');
+    obj.heating = feature.get('heating');
+    obj.cooling = feature.get('cooling');
+    obj.isnew = feature.get('isnew');
+    obj.view = feature.get('view');
+    obj.parking = feature.get('parking');
+    obj.title = feature.get('title');
     obj.pets = feature.get('pets');
     obj.btns = {
       info: trans.btns.info,
@@ -67,18 +73,19 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
       obj.contact.phone = feature.getProperties().phone1;
     }
     obj.contact.email = feature.getProperties().email;
-
-    modalPromise = dustBluebird.renderAsync('modalInfo', obj)
+    dustBluebird.renderAsync('modalInfo', obj)
     .then(function resolve(data) {
       $('#modal').removeClass('visuallyhidden');
       $('.modal-content').html(data);
     })
     .then(function resolve() {
+      var url = $.cloudinary.url(feature.get('gid').toString(), { format: 'json', type: 'list' });
       Promise.resolve(
-        $.get('http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + feature.get('gid') + '.jpg')
+        $.get(url)
       )
-      .then(function resolveCloudinary() {
-        $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + feature.get('gid') + '.jpg)');
+      .then(function resolveCloudinary(data) {
+        $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/v' + data.resources[0].version
+        + '/' + data.resources[0].public_id + '.' + data.resources[0].format);
       })
       .catch(function error(e) {
         if (e.status === 404) {
@@ -95,19 +102,19 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
   }
   function renderEstateCards(feature) {
     var trans = _.cloneDeep(App.config.commons.trans);
-    var estateCardsPromise;
     var obj = {};
     if (feature.get('rent')) {
       obj.listing_type = trans.listing.rent;
     } else {
       obj.listing_type = trans.listing.sale;
     }
-    obj.type = feature.get('estatetype');
     obj.gid = feature.get('gid');
     if (lang === 'el') {
-      obj.address = feature.get('street_el') + '' +  feature.get('street_number');
+      obj.type = feature.get('estatetype');
+      obj.address = feature.get('street_el') + '' + feature.get('street_number');
     } else {
-      obj.address = feature.get('street_en') + '' +  feature.get('street_number');
+      obj.type = feature.get('estatetype_en');
+      obj.address = feature.get('street_en') + '' + feature.get('street_number');
     }
     obj.area = feature.get('estatearea');
     obj.bedrooms = feature.get('bedrooms');
@@ -129,20 +136,22 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
       info: trans.btns.info,
       close: trans.btns.close
     };
-    estateCardsPromise = dustBluebird.renderAsync('estateCards', obj)
+    dustBluebird.renderAsync('estateCards', obj)
     .then(function resolve(data) {
       $('.estate-cards').html(data);
     })
     .then(function resolve() {
+      var url = $.cloudinary.url(feature.get('gid').toString(), { format: 'json', type: 'list' });
       Promise.resolve(
-        $.get('http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + feature.get('gid') + '.jpg')
+        $.get(url)
       )
-      .then(function resolveCloudinary() {
-        $('.big-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/h_222,c_scale/' + feature.get('gid') + '.jpg)');
+      .then(function resolveCloudinary(data) {
+        $('.estate-image').css('background-image', 'url(http://res.cloudinary.com/firvain/image/upload/v' + data.resources[0].version
+        + '/' + data.resources[0].public_id + '.' + data.resources[0].format);
       })
       .catch(function error(e) {
         if (e.status === 404) {
-          $('.big-image').css('background-image', 'url(/images/no_image_available.png)');
+          $('.estate-image').css('background-image', 'url(/images/no_image_available.png)');
         }
       });
     })
@@ -158,6 +167,9 @@ App.config.modules.info = (function info(window, document, Promise, $, App) {
     })
     .catch(function error(e) {
       console.log(e);
+      if (e.status === 404) {
+        $('.big-image').css('background-image', 'url(/images/no_image_available.png)');
+      }
     });
   }
   function selectFeature(evt) {

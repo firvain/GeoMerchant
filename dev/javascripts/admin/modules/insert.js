@@ -1,4 +1,4 @@
-App.config.modules.insert = (function edit(window, document, Promise, $, App, dPick, moment, dialogPolyfill, cloudinary) {
+App.config.modules.insert = (function edit(window, document, Promise, $, App, dPick, moment, dialogPolyfill, cloudinary, bowser) {
   'use strict';
   var lang = document.documentElement.lang;
   var body = document.querySelector('body');
@@ -13,6 +13,16 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
       content.innerHTML = '';
       document.getElementById('activeModule').innerHTML = 'Information';
     }
+  }
+  function invalidate() {
+    var inputs = content.querySelectorAll('input[type=text]');
+    Array.prototype.map.call(inputs, function setInvalid(obj) {
+      if (obj.value === '') {
+        utils.addClass(obj.parentNode, 'is-invalid');
+      } else {
+        utils.removeClass(obj.parentNode, 'is-invalid');
+      }
+    });
   }
   function checkEmpty() {
     var inputs = content.querySelectorAll('input[type=text]');
@@ -57,8 +67,8 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
         }
       });
     });
+
     if (dateStartInput !== null) {
-      console.log(dateStartInput.value);
       dateStartPicker = new dPick.default({
         type: 'date',
         init: moment(),
@@ -69,19 +79,37 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
       observeDatePicker.observe(document.getElementById('mddtp-picker__date'), {
         attributes: true
       });
-      dateStartInput.addEventListener('onOk', function displayPickedate() {
-        utils.addClass(this.parentNode, 'is-dirty');
-        this.value = dateStartPicker.time.format(format).toString();
-      });
+      if (bowser.name !== 'Chrome') {
+        dateStartInput.removeAttribute('disabled');
+        dateStartInput.addEventListener('onOk', function displayPickedate() {
+          utils.addClass(this.parentNode, 'is-dirty');
+          this.value = dateStartPicker.time.format(format).toString();
+          this.disabled = true;
+        });
+      } else {
+        dateStartInput.addEventListener('onOk', function displayPickedate() {
+          utils.addClass(this.parentNode, 'is-dirty');
+          this.value = dateStartPicker.time.format(format).toString();
+        });
+      }
       dateStartBtn.addEventListener('click', function showDatePicker() {
         dateStartPicker.toggle();
       });
     }
     if (dateEndInput !== null) {
-      dateEndInput.addEventListener('onOk', function displayPickedate() {
-        utils.addClass(this.parentNode, 'is-dirty');
-        this.value = dateEndPicker.time.format(format).toString();
-      });
+      if (bowser.name !== 'Chrome') {
+        dateEndInput.removeAttribute('disabled');
+        dateEndInput.addEventListener('onOk', function displayPickedate() {
+          utils.addClass(this.parentNode, 'is-dirty');
+          this.value = dateEndPicker.time.format(format).toString();
+          this.disabled = true;
+        });
+      } else {
+        dateEndInput.addEventListener('onOk', function displayPickedate() {
+          utils.addClass(this.parentNode, 'is-dirty');
+          this.value = dateEndPicker.time.format(format).toString();
+        });
+      }
       dateEndPicker = new dPick.default({
         type: 'date',
         init: moment(),
@@ -250,7 +278,8 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
         upload_preset: 'testupload',
         folder: gid,
         client_allowed_formats: 'jpg',
-        theme: 'minimal'
+        theme: 'minimal',
+        tags: gid
       };
       cloudinary.openUploadWidget(uploadOptions, function upload(error, result) {
         console.log(error, result);
@@ -323,6 +352,8 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
           ajaxData = collectValues(false);
           ajaxData.gid = document.getElementById('estate__info-gid').value;
           ajaxListing(ajaxData);
+        } else {
+          invalidate();
         }
       });
     })
@@ -372,6 +403,8 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
           if (checkEmpty() !== true) {
             ajaxData = collectValues(true);
             ajaxEstateAndListing(ajaxData);
+          } else {
+            invalidate();
           }
         });
       });
@@ -438,4 +471,4 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
   return {
     init: init
   };
-}(window, document, Promise, jQuery, App, mdDateTimePicker, moment, dialogPolyfill, cloudinary));
+}(window, document, Promise, jQuery, App, mdDateTimePicker, moment, dialogPolyfill, cloudinary, bowser));

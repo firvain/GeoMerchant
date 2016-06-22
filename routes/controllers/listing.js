@@ -141,6 +141,7 @@ router.route('/filters')
     sqlQuery += qarea;
     client.query(sqlQuery,
       function queryDB(queryErr, queryRes) {
+        console.log(this.text);
         done();
         if (queryErr) {
           res.sendStatus(500);

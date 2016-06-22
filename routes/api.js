@@ -6,7 +6,9 @@ var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn('/map/login'
 var language = require('./controllers/language');
 var property = require('./controllers/property');
 var listing = require('./controllers/listing');
+var uses = require('./controllers/uses');
 router.use('/', language);
 router.use('/property', property);
 router.use('/listing', listing);
+router.use('/uses', uses);
 module.exports = router;

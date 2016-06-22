@@ -22,7 +22,7 @@ module.exports = {
     areaUnits: 'τ.μ.',
     address: 'Διεύθυνση',
     amenities: {
-      title: 'Χαρακτηριστικά Ακινήτου',
+      title: 'Τίτλος Κυριότητας',
       parking: 'Χώρος Στάθμεσης',
       furnished: 'Επιπλωμένο',
       pets: 'Κατοικίδια',
