@@ -5,7 +5,7 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
   var utils = App.utils;
   var dustBluebird = App.config.promises.dustBluebird;
   var content = document.getElementById('appwrapper__infobox-content');
-  var addButton = document.getElementById('insert');
+  // var addButton = document.getElementById('insert');
   var info = App.config.modules.info;
   var drawnCollection = new ol.Collection();
   function clearContent() {
@@ -261,9 +261,7 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
     return filteredValues;
   }
   function ajaxEstateAndListing(data) {
-    console.log(data);
     data.estate.adminId = window.id;
-    console.log(data.estate);
     Promise.resolve(
       $.ajax({
         url: 'http://127.0.0.1:3000/api/property',
@@ -282,7 +280,10 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
         tags: gid
       };
       cloudinary.openUploadWidget(uploadOptions, function upload(error, result) {
-        console.log(error, result);
+        if (error) {
+          return 0;
+        }
+        return 1;
       });
       return gid;
     })
@@ -295,9 +296,12 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
       });
     })
     .finally(function closeInsert() {
+      var map = App.config.commons.map;
       clearContent();
       utils.addClass(content, 'visuallyhidden');
       body.dataset.active = 'info';
+      utils.findById(map, 'newEstates').getSource().clear();
+      utils.findById(map, 'estates').getSource().clear();
       info.init();
     })
     .catch(function error(e) {
@@ -419,7 +423,16 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
     var draw = new ol.interaction.Draw({
       features: drawnCollection,
       source: utils.findById(map, 'newEstates').getSource(),
-      type: 'Point'
+      type: 'Point',
+      style: new ol.style.Style({
+        image: new ol.style.Icon(({
+          src: './images/pins/generic-48.png',
+          anchorOrigin: 'bottom-left',
+          anchor: [0.5, 0],
+          scale: 1,
+          color: 'rgb(96, 125, 139)'
+        }))
+      })
     });
     draw.set('id', 'newEstate');
     draw.setActive(false);
@@ -439,7 +452,6 @@ App.config.modules.insert = (function edit(window, document, Promise, $, App, dP
     var draw = getInteraction('newEstate');
     var newEstates = utils.findById(map, 'newEstates');
     info.disable();
-    console.log(checkEstate());
     if (checkEstate() === 0) {
       document.getElementById('activeModule').innerHTML = 'Add Estate And Listing';
       draw.setActive(true);

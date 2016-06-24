@@ -127,7 +127,16 @@ App.config.modules.map = (function ol3Map(window, document, Promise, ol, App) {
       return new ol.layer.Vector({
         source: new ol.source.Vector(),
         id: 'newEstates',
-        visible: false
+        visible: false,
+        style: new ol.style.Style({
+          image: new ol.style.Icon(({
+            src: './images/pins/generic-48.png',
+            anchorOrigin: 'bottom-left',
+            anchor: [0.5, 0],
+            scale: 1,
+            color: 'rgb(96, 125, 139)'
+          }))
+        })
       });
     }
   };

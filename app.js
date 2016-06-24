@@ -56,9 +56,12 @@ app.set('views', path.join(__dirname, 'views'));
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(cors());
 app.use(flash());
+/*eslint-disable */
 if (app.get('env') === 'production') {
   app.use(morganLogger('combined', {
-    skip(req, res) { return res.statusCode < 400; },
+    skip: function (req, res) {
+      return res.statusCode < 400;
+    },
     stream: logger.stream,
   }));
 } else {
@@ -66,6 +69,7 @@ if (app.get('env') === 'production') {
     stream: logger.stream,
   }));
 }
+/*eslint-enable */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -117,4 +121,3 @@ app.use(function (err, req, res, next) {
   });
 });
 module.exports = app;
-

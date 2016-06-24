@@ -64,3 +64,6 @@ public/libs
 .bower-cache
 .bower-registry
 .bower-tmp
+
+
+ .imdone
