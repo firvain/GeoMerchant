@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/vendor/getmdl-select.min.css">
     <link rel="stylesheet" href="/vendor/mdDateTimePicker.min.css">
     <link rel="stylesheet" href="/vendor/dialog-polyfill.css">
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin.min.css">
     <!-- endinject -->
 
     </head>
@@ -103,7 +103,7 @@
     <script src="/libs/cloudinary.js"></script>
     <script src="/vendor/parsley.min.js"></script>
     <script src="/vendor/dialog-polyfill.js"></script>
-    <script src="/js/admin.js"></script>
+    <script src="/js/admin.min.js"></script>
     <!-- endinject -->
     <script src="/libs/jQuery-Modal-Dialog-Plugin-For-Material-Design-Lite/mdl-jquery-modal-dialog.js"></script>
     {! ======= Templates ======= !}

@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/vendor/getmdl-select.min.css">
   <link rel="stylesheet" href="/vendor/clusterize.css">
   <link rel="stylesheet" href="/vendor/dialog-polyfill.css">
-  <link rel="stylesheet" href="/css/map.css">
+  <link rel="stylesheet" href="/css/map.min.css">
   <!-- endinject -->
   {! <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.3/material.purple-indigo.min.css" /> !}
 </head>
@@ -204,7 +204,7 @@
   <script src="/vendor/parsley.min.js"></script>
   <script src="/vendor/clusterize.min.js"></script>
   <script src="/vendor/dialog-polyfill.js"></script>
-  <script src="/js/map.js"></script>
+  <script src="/js/map.min.js"></script>
   <!-- endinject -->
   <!-- ======= Templates =======  -->
   <script src="/js/templates.js" crossorigin="anonymous"></script>

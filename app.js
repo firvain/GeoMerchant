@@ -76,7 +76,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 // static files by express
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 // Passport setup and init//
 app.use(session({
   secret: 'shhhhhhhhh',
