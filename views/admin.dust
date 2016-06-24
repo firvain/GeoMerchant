@@ -105,7 +105,7 @@
     <script src="/vendor/dialog-polyfill.js"></script>
     <script src="/js/admin.js"></script>
     <!-- endinject -->
-    <script src="/libs/jQuery-Modal-Dialog-Plugin-For-Material-Design-Lite/mdl-jquery-modal-dialog.js"></script>
+{!     <script src="/libs/jQuery-Modal-Dialog-Plugin-For-Material-Design-Lite/mdl-jquery-modal-dialog.js"></script> !}
     {! ======= Templates ======= !}
     <script src="/js/templates.js" crossorigin="anonymous"></script>
 {!     <script src="/js/tpl/edit.js" crossorigin="anonymous"></script>
